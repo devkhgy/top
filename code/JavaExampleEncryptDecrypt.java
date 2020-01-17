@@ -53,8 +53,8 @@ public class Main {
 	final static Base64.Decoder decoder = Base64.getDecoder();
 	final static Base64.Encoder encoder = Base64.getEncoder();
 
-    /*
-     ** Encrytion & Decrytion sample by JAVA 8 or higher
+	/*
+	 ** Encrytion & Decrytion sample by JAVA 8 or higher
 	 */
 	public static void main(String[] args) throws Exception {
 		
@@ -133,7 +133,7 @@ public class Main {
 			}
 		});
 	}
-    
+
 	private static class TrustAllHostnameVerifier implements HostnameVerifier {
 		@Override
 		public boolean verify(String hostname, SSLSession session) {
@@ -154,7 +154,7 @@ public class Main {
 
 		return ssfFactory;
 	}
-    
+
 	public static class MyTrustManager implements X509TrustManager {
 		@Override
 		public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
