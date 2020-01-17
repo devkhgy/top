@@ -35,7 +35,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class Main {
+public class JavaExampleEncryptDecrypt {
 	private static SimpleDateFormat dateFormatWithZone = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
 			Locale.getDefault());
 	public static Gson gson = new GsonBuilder().disableHtmlEscaping().create();
@@ -78,19 +78,21 @@ public class Main {
 
 		String cVal = putJsonObject(map);
 		// Encrypt data
+		System.out.println("Data before encrytion: " + cVal);
 		String enString = Encrypt(cVal, cKey);
 		map.clear();
-		map.put("iv", Main.ivKey);
+		map.put("iv", ivKey);
 		map.put("value", enString);
 		String finalText = putJsonObject(map);
 		
 		String dataBeforeSending = Base64.getEncoder().encodeToString(finalText.getBytes("UTF-8"));
 		System.out.println("The body of the request: " + dataBeforeSending);
-		// 解密
+		
 		try {
-			String DeString = Decrypt(response, cKey);
+			// Decrypt data
+			String deString = Decrypt(dataBeforeSending, cKey);
 			// Verify the data should be identical after decrytion
-			System.out.println("Data after decrytion" + DeString);
+			System.out.println("Data after decrytion: " + deString);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 //			e.printStackTrace();
@@ -118,7 +120,7 @@ public class Main {
 			@Override
 			public void onFailure(Call call, IOException e) {
 				// TODO Auto-generated method stub
-				System.out.println("onFailure " + e.getMessage());// get failure if exception
+				System.out.println("onFailure: " + e.getMessage());// get failure if exception
 			}
 
 			@Override
@@ -197,9 +199,11 @@ public class Main {
 					return originalString;
 				} catch (Exception e) {
 					System.out.println(e.toString());
+//					e.printStackTrace();
 				}
 			} catch (Exception ex) {
-				System.out.println(ex.toString());
+				System.out.println(e.toString());
+//				e.printStackTrace();
 			}
 			return null;
 		}
