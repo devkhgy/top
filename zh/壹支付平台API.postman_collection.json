@@ -1,0 +1,483 @@
+{
+	"info": {
+		"_postman_id": "324913ee-44c9-4047-a66c-67e648bbf586",
+		"name": "壹支付平台API",
+		"description": "<p>修订记录</p>\r\n\r\n<table>\r\n    <tr>\r\n        <td>日期</td>\r\n        <td>描述</td>\r\n        <td>版本号</td>\r\n        <td>编辑</td>\r\n    </tr>\r\n    <tr>\r\n        <td>2019-10-01</td>\r\n        <td>初始版本</td>\r\n        <td>v1.0.0</td>\r\n        <td>Ivan</td>\r\n    </tr>\r\n</table>\r\n\r\n# 请注意\r\n\r\n在 UAT 环境的转帐交易\r\n\r\n若选择测试用银行代码\r\n\r\n则所有交易皆以模拟的方式替代\r\n\r\n并不会真实完成现金交易\r\n\r\n但是若所选用的银行为正式银行代码\r\n\r\n将会向网银执行真实的转帐交易\r\n\r\n会从所选择的银行帐户**执行真正的现金交易**",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "支付",
+			"item": [
+				{
+					"name": "支付",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "sh_order_no",
+									"value": "",
+									"description": "* __string(50)__\n* 商户订单号, 该订单号将作为接口的返回数据<br>\n`该值需在商户系统内唯一存在`",
+									"type": "text"
+								},
+								{
+									"key": "order_amount",
+									"value": "",
+									"description": "* __decimal(14,6)__\n* 订单提交金额, 单位元<br>\n`保留2位小数`",
+									"type": "text"
+								},
+								{
+									"key": "order_type",
+									"value": "100",
+									"description": "* __string(10)__\n* 订单支付类型<br>\n`100: 网银类型`",
+									"type": "text"
+								},
+								{
+									"key": "bank_code",
+									"value": "",
+									"description": "* __string(50)__\n* 银行代码, 网银支付时提供<br>\n参考[银行代码列表](#0bc3706f-0bab-48e5-9c55-7745d8588d7a)",
+									"type": "text"
+								},
+								{
+									"key": "created_at",
+									"value": "",
+									"description": "* __string(20)__\n* 订单发起时间,<br>\n格式: `2019-10-10 00:00:00`",
+									"type": "text"
+								},
+								{
+									"key": "notify_url",
+									"value": "",
+									"description": "* __string(100)__\n* 异步通知商户地址<br>",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "note",
+									"value": "",
+									"description": "* __string(100)__\n* 备注",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://[壹支付平台网址]/[商户识别码]/SH/sendPay",
+							"protocol": "https",
+							"host": [
+								"[壹支付平台网址]"
+							],
+							"path": [
+								"[商户识别码]",
+								"SH",
+								"sendPay"
+							]
+						},
+						"description": "<h2>由商户对壹支付平台发起请求</h2>\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/SendPayFlow.png)\n\n>支付接口返回数据结构\n\n字段          | 描述\n:---:|:---\nerror_code    |错误代码, 参考[错误代码列表](#49436352-ad18-4d12-8cce-a1f0db01c050)\ndata          |回传信息\ndata.url      |充值网站网址<br>`可用网站位址数组, 请进行测速後择一跳转`\ndata.token    |跳转至充值网站验证用口令, <br> 示例:`{充值网站网址}?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN`\n\n\n\n>支付接口返回示例\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"url\": [\n      \"depoist1.com\",\n      \"depoist2.com\",\n      \"depoist3.com\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "支付结果通知",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "sh_order_no",
+									"value": "",
+									"description": "* __string(50)__\n* 商户订单号, 该订单号将作为接口的返回数据<br>\n`该值需在商户系统内唯一存在`",
+									"type": "text"
+								},
+								{
+									"key": "order_amount",
+									"value": "",
+									"description": "* __decimal(14,6)__\n* 订单提交金额, 单位元<br>\n`保留2位小数`",
+									"type": "text"
+								},
+								{
+									"key": "result",
+									"value": "",
+									"description": "* __string(20)__\n* 支付结果<br>\n`success: 成功, fail: 失败`",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://[商户平台位址]/notify/sendPay",
+							"protocol": "https",
+							"host": [
+								"[商户平台位址]"
+							],
+							"path": [
+								"notify",
+								"sendPay"
+							]
+						},
+						"description": "<h2>由商户平台提供接口</h2>\n\n完成支付後，壹支付平台处理完成後透过 `notify_url` 地址通知商户\n\n>支付查询接口返回数据结构\n\n字段          | 描述\n:---:|:---\nresult        |是否接收成功，success: 是\n\n\n>支付交易完成通知接口返回示范\n\n```json\n{\n  \"result\": \"success\"\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "支付查询",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "sh_order_no",
+									"value": "",
+									"description": "* __string(50)__\n* 商户订单号, 该订单号将作为接口的返回数据<br>\n`该值需在商户系统内唯一存在`",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://[壹支付平台网址]/[商户识别码]/SH/queryPay",
+							"protocol": "https",
+							"host": [
+								"[壹支付平台网址]"
+							],
+							"path": [
+								"[商户识别码]",
+								"SH",
+								"queryPay"
+							]
+						},
+						"description": "<h2>由商户对壹支付平台发起请求</h2>\n\n>支付查询接口返回数据结构\n\n字段              | 描述\n:---:|:---\nerror_code        |错误代码, 参考[错误代码列表](#49436352-ad18-4d12-8cce-a1f0db01c050)\ndata              |回传信息\ndata.sh_order_no  |商户系统订单号, 该订单号将作为接口的返回数据\ndata.order_type   |订单支付类型<br><table><tr><td>type</td><td>name</td></tr><tr><td>100</td><td>网银</td></tr></table>\ndata.order_amount |订单提交金额\ndata.status       |参考[订单状态](#53553cc5-6c45-41fa-8a58-b5f11907e6e5)\ndata.created_at   |订单创建时间, 格式: `Y-m-d H:i:s`\ndata.finished_at  |订单完成时间, 格式: `Y-m-d H:i:s`\n\n\n>支付查询接口返回示例\n```json\n{\n   \"error_code\": 200,\n   \"data\": {\n      \"sh_order_no\": \"ORDERNO0001\",\n      \"order_type\": \"100\",\n      \"order_amount\": 100.00,\n      \"order_status\": 3,\n      \"created_at\": \"2019-10-10 00:00:00\",\n      \"finished_at\": \"2019-10-10 00:05:05\",\n   }\n}\n\n```"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "代付",
+			"item": [
+				{
+					"name": "代付",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "sh_order_no",
+									"value": "",
+									"description": "* __string(50)__\n* 商户订单号, 该订单号将作为接口的返回数据<br>\n`该值需在商户系统内唯一存在`",
+									"type": "text"
+								},
+								{
+									"key": "bank_code",
+									"value": "",
+									"description": "* __string(50)__\n* 银行代码, 网银支付时提供<br>\n请参考[银行代码列表](#0bc3706f-0bab-48e5-9c55-7745d8588d7a)",
+									"type": "text"
+								},
+								{
+									"key": "bank_account",
+									"value": "",
+									"description": "* __string(50)__\n* 银行帐户<br>",
+									"type": "text"
+								},
+								{
+									"key": "bank_user_name",
+									"value": "",
+									"description": "* __string(50)__\n* 银行户名<br>",
+									"type": "text"
+								},
+								{
+									"key": "order_amount",
+									"value": "",
+									"description": "* __decimal(14,6)__\n* 订单提交金额, 单位元<br>\n`保留2位小数`",
+									"type": "text"
+								},
+								{
+									"key": "notify_url",
+									"value": "",
+									"description": "* __string(100)__\n* 异步通知商户地址<br>",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "note",
+									"value": "",
+									"description": "* __string(100)__\n* 备注",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://[壹支付平台网址]/[商户识别码]/SH/sendWithdraw",
+							"protocol": "https",
+							"host": [
+								"[壹支付平台网址]"
+							],
+							"path": [
+								"[商户识别码]",
+								"SH",
+								"sendWithdraw"
+							]
+						},
+						"description": "<h2>由商户对壹支付平台发起请求</h2>\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/SendWithdrawFlow.png)\n\n>代付接口返回数据结构\n\n字段          | 描述\n:---:|:---\nerror_code    |错误代码, 参考[错误代码列表](#ab38f992-3bf7-4398-8b58-ef4677a6c9ba)\ndata          |回传信息\ndata.order_no |壹支付平台单号, 格式: `{商户代码}{商户订单号}`\n\n\n\n>代付接口返回示例\n```json\n{\n   \"error_code\": 200,\n   \"data\": {\n      \"order_no\": \"2TX5d8dc37804727\"\n   }\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "代付结果通知",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "sh_order_no",
+									"value": "",
+									"description": "* __string(50)__\n* 商户订单号, 该订单号将作为接口的返回数据<br>\n`该值需在商户系统内唯一存在`",
+									"type": "text"
+								},
+								{
+									"key": "order_amount",
+									"value": "",
+									"description": "* __decimal(14,6)__\n* 订单提交金额, 单位元<br>\n`保留2位小数`",
+									"type": "text"
+								},
+								{
+									"key": "result",
+									"value": "",
+									"description": "* __string(20)__\n* 代付结果<br>\n`success: 成功, fail: 失败`",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://[商户平台位址]/notify/sendWithdraw",
+							"protocol": "https",
+							"host": [
+								"[商户平台位址]"
+							],
+							"path": [
+								"notify",
+								"sendWithdraw"
+							]
+						},
+						"description": "<h2>由商户平台提供接口</h2>\n\n完成代付後，壹支付平台处理完成後透过 `notify_url` 地址通知商户\n\n>支付查询接口返回数据结构\n\n字段          | 描述\n:---:|:---\nresult        |是否接收成功，success: 是\n\n\n>代付交易完成通知接口返回示范\n```json\n{\n  \"result\": \"success\"\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "代付查询",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "sh_order_no",
+									"value": "",
+									"description": "* __string(50)__\n* 商户订单号, 该订单号将作为接口的返回数据<br>\n`该值需在商户系统内唯一存在`",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://[壹支付平台网址]/[商户识别码]/SH/queryWithdraw",
+							"protocol": "https",
+							"host": [
+								"[壹支付平台网址]"
+							],
+							"path": [
+								"[商户识别码]",
+								"SH",
+								"queryWithdraw"
+							]
+						},
+						"description": "<h2>由商户对壹支付平台发起请求</h2>\n\n>支付查询接口返回数据结构\n\n字段              | 描述\n:---:|:---\nerror_code        |错误代码, 参考[错误代码列表](#49436352-ad18-4d12-8cce-a1f0db01c050)\ndata              |回传信息\ndata.sh_order_no  |商户系统订单号, 该订单号将作为接口的返回数据\ndata.order_amount |订单提交金额\ndata.status       |参考[订单状态](#53553cc5-6c45-41fa-8a58-b5f11907e6e5)\ndata.created_at   |订单创建时间, 格式: `Y-m-d H:i:s`\ndata.finished_at  |订单完成时间, 格式: `Y-m-d H:i:s`\n\n\n>支付查询接口返回示例\n```json\n{\n   \"error_code\": 200,\n   \"data\": {\n      \"sh_order_no\": \"ORDERNO0001\",\n      \"order_amount\": 100.00,\n      \"order_status\": 3,\n      \"created_at\": \"2019-10-10 00:00:00\",\n      \"finished_at\": \"2019-10-10 00:05:05\",\n   }\n}\n```"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "附件",
+			"item": [
+				{
+					"name": "银行代码列表",
+					"request": {
+						"method": "VIEW",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "测试用银行代码列表 (UAT 环境专用)\n----------------\nbank_code | bank |\n:---:|:---:|\nTEST_HGY    |TEST_HGY\n\n<!--\n越南银行代码列表\n----------------\nbank_code | bank |\n:---:|:---:|\nSAC    |Sacombank\nDAB    |DONGA bank\nTCB    |TECHCOMBANK\nBIDV   |BIDV\nVTB    |VietinBank\nEXB    |EXIMBANK\nVIB    |VIB\nMSB    |MSB\nVCB    |Vietcombank\nACB    |ACB\nAGR    |AGRIBANK\n-->\n\n泰国银行代码列表\n----------------\nbank_code | bank |\n:---:|:---:|\nBKB    |Bangkok Bank\nKB     |K-Cyber Bank\nSCB    |SCB\nKTB    |KTB netbank\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
+					},
+					"response": []
+				},
+				{
+					"name": "订单状态",
+					"request": {
+						"method": "VIEW",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "status | name | description |\n:-----:|:----:|:------------|\n1    |pending        |等待中                               |\n2    |Processing     |处理中                               |\n3    |Completed      |交易成功                             |\n4    |Manual process |失败后进行人工操作, 可能為成功或失败 |\n5    |Failed         |交易失败                             |\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
+					},
+					"response": []
+				},
+				{
+					"name": "错误代码列表",
+					"request": {
+						"method": "VIEW",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "错误代码 | 错误信息 |\n:-------:|:---------|\n200    |成功          |\n403    |权限错误      |\n404    |资源不存在    |\n405    |请求方法错误  |\n422    |验证错误      |\n500    |伺服器错误    |\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
+					},
+					"response": []
+				},
+				{
+					"name": "AES 加解密",
+					"request": {
+						"method": "VIEW",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "## 1. 加密规格\n\n|名稱 | 描述 |\n|:---:|:---:|\n加密模式  |__AES-128-CBC__\n商户密钥  |__商户密钥__ 於壹支付後台配发生成，原值为 16 bytes 進行 base64 编码，商户需将其妥善保存\nIV        |__初始向量值__，由发起请求者产生随机 16 bytes 進行 base64 编码所建立的 IV 值\nPadding   |__PKCS#7__\n\n## 2. 加密流程\n\n__注意: 无论是商户平台或壹支付平台的请求及回应 payload 皆需经过 AES-128-CBC 加密。__\n\n步骤:\n\n__1.__ 将原始的请求参数 parameters 组成 JSON 字串。\n\n```json\n{\n    \"sh_order_no\":\"5dc3dd5c74b5c\",\n    \"order_amount\":100,\n    \"order_type\":\"100\",\n    \"bank_code\":\"VCB\",\n    \"created_at\":\"2019-11-01 00:00:00\",\n    \"notify_url\":\"https:\\/\\/test.domain\",\n    \"note\":\"note\"\n}\n```\n\n__2.__ 将生成的 JSON 字串进行 AES 加密处理，并与 iv 组织为 JSON 字串。\n\n```json\n{\n    \"iv\":\"iHoGTaaZHV08\\/iiHeoBbJA==\",\n    \"value\":\"W19Y1qs6emAZpgyoFOZzyyEbkGErrAmwml01YrmDkFqO2nM0Cfbvhq4DqF6rBxCUyqSi\\/JvZ+BWdo9cL+FA9O30Bmdgook3TZFgHI\\/fM6jlswzsAAuDEYNUF01wZwgTK\\/2Rr2bBYf\\/rIkEDcxqaNHCpCWlNtmAy2qJGIMatRhra4PvphgZXXjY9aEz8uLokc7WhWrvjlNZCjsjZbDAWwxWkEbxjsCb5TysxPuqzmpFg=\"\n}\n```\n\n__3.__ 使用 Base64 编码，可使用 Curl 尝试发送请求。\n\n```bash\ncurl -X POST \\\nhttp(s)://[OneWallet API URL]/SH/sendPay \\\n-d \\\n__eyJpdiI6ImlIb0dUYWFaSFYwOFwvaWlIZW9CYkpBPT0iLCJ2YWx1ZSI6IlcxOVkxcXM2ZW1BWnBneW9GT1p6eXlFYmtHRXJyQW13bWwwMVlybURrRnFPMm5NMENmYnZocTREcUY2ckJ4Q1V5cVNpXC9KdlorQldkbzljTCtGQTlPMzBCbWRnb29rM1RaRmdISVwvZk02amxzd3pzQUF1REVZTlVGMDF3WndnVEtcLzJScjJiQllmXC9ySWtFRGN4cWFOSENwQ1dsTnRtQXkycUpHSU1hdFJocmE0UHZwaGdaWFhqWTlhRXo4dUxva2M3V2hXcnZqbE5aQ2pzalpiREFXd3hXa0VieGpzQ2I1VHlzeFB1cXptcEZnPSJ9__\n```\n\n## 3. 解密流程\n\n步骤:\n\n__1.__ 取得密文内容\n\n__eyJpdiI6ImlIb0dUYWFaSFYwOFwvaWlIZW9CYkpBPT0iLCJ2YWx1ZSI6IlcxOVkxcXM2ZW1BWnBneW9GT1p6eXlFYmtHRXJyQW13bWwwMVlybURrRnFPMm5NMENmYnZocTREcUY2ckJ4Q1V5cVNpXC9KdlorQldkbzljTCtGQTlPMzBCbWRnb29rM1RaRmdISVwvZk02amxzd3pzQUF1REVZTlVGMDF3WndnVEtcLzJScjJiQllmXC9ySWtFRGN4cWFOSENwQ1dsTnRtQXkycUpHSU1hdFJocmE0UHZwaGdaWFhqWTlhRXo4dUxva2M3V2hXcnZqbE5aQ2pzalpiREFXd3hXa0VieGpzQ2I1VHlzeFB1cXptcEZnPSJ9__\n\n__2.__ 利用 Base64 解码后，本次若是成功的请求将会取得 __iv__ 和 __value__ 字段，若是错误的请求则会是以 __error_code__ 替代。\n\n成功请求:\n\n```json\n{\n    \"iv\":\"iHoGTaaZHV08\\/iiHeoBbJA==\",\n    \"value\":\"W19Y1qs6emAZpgyoFOZzyyEbkGErrAmwml01YrmDkFqO2nM0Cfbvhq4DqF6rBxCUyqSi\\/JvZ+BWdo9cL+FA9O30Bmdgook3TZFgHI\\/fM6jlswzsAAuDEYNUF01wZwgTK\\/2Rr2bBYf\\/rIkEDcxqaNHCpCWlNtmAy2qJGIMatRhra4PvphgZXXjY9aEz8uLokc7WhWrvjlNZCjsjZbDAWwxWkEbxjsCb5TysxPuqzmpFg=\"\n}\n```\n\n错误请求:\n\n```json\n{\n    \"error_code\":500,\n}\n```\n\n__3.__ 利用 __value__ 、 __IV__ 和 __Merchant Key__ 解密后就可获得原始的回应内容。\n\n```json\n{\n    \"sh_order_no\":\"5dc3dd5c74b5c\",\n    \"order_amount\":100,\n    \"order_type\":\"100\",\n    \"bank_code\":\"VCB\",\n    \"created_at\":\"2019-11-01 00:00:00\",\n    \"notify_url\":\"https:\\/\\/test.domain\",\n    \"note\":\"note\"\n}\n```\n\n## 4. 您可参考以下几种不同程式语言加解密示例：\n\n- [__PHP__](https://github.com/devkhgy/top/blob/doc/code/PHP_example_encrypt_decrypt.php)\n- [__C#__](https://github.com/devkhgy/top/blob/doc/code/CSharp_example_encrypt_decrypt.cs)\n- [__Java__](https://github.com/devkhgy/top/blob/doc/code/JavaExampleEncryptDecrypt.java)"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ea22ea35-c7d3-473a-a202-e4708847a3e4",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "597bc2d0-7c78-4af0-b316-64edefe15609",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "522d5294-97ef-4751-8268-b1a12a59331c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ad2b89e5-0fa8-4293-9df6-0a54ea4ea84f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
