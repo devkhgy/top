@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Speed Test Of Deposite</title>
+  </head>
+  <body></body>
+  <script type="text/javascript">
+    // You may get the `response` from the `Bank Deposite API` of OneWallet
+    var response = {
+      error_code: 200,
+      data: {
+        order_amount: 10.01,
+        request_amount: 10.01,
+		// You have to know which sites is most quickly.
+        url: [
+          'https://domain1.com/login?token=xxxxxx',
+          'https://domain2.com/login?token=xxxxxx',
+          'https://domain3.com/login?token=xxxxxx'
+        ],
+        token: 'xxxxxx'
+      }
+    }
+	
+    var url = response.data.url
+    var hostData = url.map(function(url) {
+      var exUrl = url.split('/')
+      return exUrl[0] + '//' + exUrl[2]
+    })
+	
+    function imgLoad() {
+      this.errCount = 0 // the count of error
+      this.retryCount = 0 // the count of retried
+      this.maxRetry = 5 // the max count of retried
+      this.errorMessage = "Something's wrong with all of the routes, please try again."
+      this.count = hostData.length
+      this.imgNotLoad = true
+      this.imgonLoad = this.imgonLoad.bind(this)
+      this.imgonLoadError = this.imgonLoadError.bind(this)
+      this.reset = this.reset.bind(this)
+      this.test = this.test.bind(this)
+      this.img = []
+      this.test()
+    }
+	
+    imgLoad.prototype = {
+      reset: function() {
+        this.retryCount++
+        this.errCount = 0
+        this.imgNotLoad = true
+        this.img = []
+        this.test()
+      },
+      // Speed Test
+      test: function() {
+        var imgPath = '/images/bg.jpg'
+        for (var i = 0; i < this.count; i++) {
+          this.img[i] = new Image()
+          this.img[i].onload = this.imgonLoad.bind(this, url[i])
+          this.img[i].onerror = this.imgonLoadError
+          this.img[i].src = hostData[i] + imgPath + '?time=' + +new Date()
+        }
+      },
+      imgonLoad: function(url) {
+        if (this.imgNotLoad) {
+          this.imgNotLoad = false
+          window.location.href = url
+        }
+      },
+      imgonLoadError: function(b) {
+        if (++this.errCount === this.count) {
+          if (this.retryCount < this.maxRetry) {
+            this.reset()
+          } else {
+            alert(this.errorMessage)
+          }
+        }
+      }
+    }
+    new imgLoad()
+  </script>
+</html>
