@@ -2,30 +2,118 @@
 	"info": {
 		"_postman_id": "4788996f-88b5-419f-b99f-ccddc8018b74",
 		"name": "OneWallet API",
-		"description": "<p>Revision Record</p>\r\n\r\n<table>\r\n    <tr>\r\n        <td>Date</td>\r\n        <td>Description</td>\r\n        <td>Ver</td>\r\n        <td>Modifier</td>\r\n    </tr>\r\n    <tr>\r\n        <td>2019-10-01</td>\r\n        <td>Initialization</td>\r\n        <td>v1.0.0</td>\r\n        <td>Ivan</td>\r\n    </tr>\r\n</table>\r\n\r\n# Warning\r\n\r\nIn UAT, all transactions with testing banks will be mocked.\r\n\r\nYou need to be aware that picking non-testing\r\nbanks will proceed with an *ACTUAL* transaction.",
+		"description": "### Revision Record ###\r\n\r\n| Date | Description | Ver | Modifier |\r\n|---|---|---|---|\r\n| 2019-10-01 | Initialization | v1.0.0 | Ivan |\r\n| 2020-01-30 | The parameter __notify_url__ has been altered: <li>It's length from 100 to 255</li><li>Please offer your notification callback URL to __OneWallet__ service. We will put your __notify_url__ address on IP whitelist first. </li> | v1.0.1 | Ray |\r\n| 2020-01-31 | [Troubleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9)| v1.0.2 | Ray |\r\n| 2020-02-03 | New parameter(s) joined in each API <li>Bank Deposit API: request_amount</li><li>QRPay Deposit API:  request_amount</li><li>Deposit Query API: request_amount</li><li>Deposit Notification API: request_amount,  order_amount</li><li>Withdrawal Query API: paid_amount</li><li>Withdrawal Notification API: paid_amount</li> |v1.0.3|Ray|\r\n| 2020-02-12 |Remove payment request parameter: created_at <li>Bank Deposit API Definition</li><li>QRPay Deposit API Definition</li>|v1.0.4|Ray|\r\n| 2020-03-03 |[Troubleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9) : There are 2 new error types<br><li>DepositVerificationError</li><li>WithdrawalVerificationError</li>|v1.0.5|Ray|\r\n| 2020-03-05 |[Bank Code](#cc7d8d7a-6b7b-4297-ab96-9982aa88c66a)<br>New bank code __TMB Bank__ involved in the list. | v1.0.6 |Ray|\r\n|2020-03-19|Add Gateway Order ID|v1.0.7|Ray|\r\n\r\n### Warning ###\r\n\r\n+ In UAT, all transactions with testing banks will be mocked. You need to be aware that picking non-testing banks will proceed with an **ACTUAL** transaction.\r\n+ The timezone used in all One Wallet responses is **GMT + 8 (Beijing)**",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
+			"name": "Important infomation",
+			"item": [
+				{
+					"name": "Integration URL",
+					"request": {
+						"method": "VIEW",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/IntergrationUrl.png)"
+					},
+					"response": []
+				},
+				{
+					"name": "Bank Code",
+					"request": {
+						"method": "VIEW",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "Test Bank Code (Only UAT)\n----------------\nbank_code | bank |\n:---:|:---:|\nTEST_HGY    |TEST_HGY\n\n<!--\nVietnam Bank Code\n----------------\nbank_code | bank |\n:---:|:---:|\nSAC    |Sacombank\nDAB    |DONGA bank\nTCB    |TECHCOMBANK\nBIDV   |BIDV\nVTB    |VietinBank\nEXB    |EXIMBANK\nVIB    |VIB\nMSB    |MSB\nVCB    |Vietcombank\nACB    |ACB\nAGR    |AGRIBANK\n-->\n\nThailand Bank Code\n----------------\nbank_code | bank |\n:---:|:---:|\nBBL | Bangkok Bank\nKB  | Kasikorn Bank\nSCB | Siam Commercial Bank\nKTB | Krung Thai Bank\nBAY | BANK OF AYUDHYA\nTMB | TMB Bank\n\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
+					},
+					"response": []
+				},
+				{
+					"name": "Order Status",
+					"request": {
+						"method": "VIEW",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "status | name | description |\n:-----:|:----:|:------------|\n1    |Pending        |Transaction is pending                                                                     |\n2    |Processing     |Transaction is processing                                                                  |\n3    |Completed      |Transaction is completed                                                                   |\n4    |Manual process |This transaction is necessary to be in contact with OneWallet if status is Manual Process.  |\n5    |Failed         |Transaction is failed                                                                      |\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
+					},
+					"response": []
+				},
+				{
+					"name": "Error Code",
+					"request": {
+						"method": "VIEW",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "error_code | message |\n:-------:|:---------|\n200    |Success                 |\n403    |Permission error        |\n404    |Resource does not exist |\n405    |Method not allowed      |\n422    |Verification error      |\n500    |Server error            |\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
+					},
+					"response": []
+				},
+				{
+					"name": "Troubleshooting & FAQ",
+					"request": {
+						"method": "VIEW",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "## Notes: There are two kinds of error type. One is `BasicError` for none sensitive information and bypassing in plaintext. Another is `EncrytionError` for sensitive information and bypassing in ciphertext. ##\r\n\r\nPlaintext Ciphertext\r\n\r\n| Error Type | Error Message | Description |\r\n|---|---|---|\r\n| `BasicError` | The API request method must be __POST__ | You may use the improper method in the request of API service, like GET, PUT, DELETE, and so forth. |\r\n| `BasicError` | The request payload is empty | Please check your protocol of API service. Use __https://__ instead of __http://__, and make sure the method must be __POST__. |\r\n| `BasicError` | Invalid merchant id | Go __Merchant Back Office__, our OneWallet backend could help to get your merchant id.  |\r\n| `EncrytionError` | Could not decrypt the data | Please refer to Encryption process of [AES Encryption & Decryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d). |\r\n| `EncrytionError` | The notify url not in the whitelist | Please offer your notification callback URL to OneWallet service. We will put your notify_url address on our whitelist first. |\r\n| `EncrytionError` | The payload is invalid | This error happens when the body of the request is invalid. Just put the data payload encryted in your body without any keys. Here is an incorrect example as below:<br>__data=payload__|\r\n| `EncrytionError` | json decode failed | OneWallet backend recevied the data payload and tried to do decrytion. If this error comes out, your encryption process may not be proper. Please refer to Encryption process of [AES Encryption & Decryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d). |\r\n| `DepositVerificationError` | IP x.x.x.x not allowed | Please goto __Merchant Back Office__, and step into __Merchant__ > __White List__. Then check your server IP has been in our white list. |\r\n| `DepositVerificationError` | No card available | Please contact us. |\r\n| `DepositVerificationError` | Deposit domain is not configured properly. | Please contact us. |\r\n| `WithdrawalVerificationError` | IP x.x.x.x not allowed | Please goto __Merchant Back Office__, and step into __Merchant__ > __White List__. Then check your server IP has been in our white list. |\r\n| `WithdrawalVerificationError` | balance is not enough | Please goto __Merchant Back Office__, and step into __Merchant__. Then check your __Available Balance__ is enough or not. |\r\n| `WithdrawalVerificationError` | No card available | Please contact us. |"
+					},
+					"response": []
+				},
+				{
+					"name": "*** AES Encryption, Decryption and Request (Must Read) ***",
+					"request": {
+						"method": "VIEW",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "# !!!Attention!!! As representative of the request should encrypt the data before sending; as representative of the response should do decrypt after receving in each API, no matter which is merchant or OneWallet.  #\r\n\r\n## 1. Specification\r\n\r\n| Parameter name |name | Description | brief | ref |\r\n|:---:|:---:|:---:|:---:|:---:|\r\n||Encryption mode    |__AES-128-CBC__|The Advanced Encryption Standard (AES) is a specification for the encryption of electronic data. CBC(Cipher Block Chaining) has been the most commonly used mode of operation. Its main drawbacks are that encryption is sequential, and that the message must be padded to a multiple of the cipher block size. One way to handle this last issue is through the method known as ciphertext stealing. Note that a one-bit change in a plaintext or initialization vector (IV) affects all following ciphertext blocks. |[wiki](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_(CBC))\r\n| encodeSHKEY | Merchant Key | __encodeSHKEY__ is provided by OneWallet backend - __Merchant Back Office__, which is ___realIV___ encoded by base64. The merchant should store it in the persistent storage.|\r\n| encodeIV | IV | The source is __realIV__ encoded by Base64 (binary-to-text encoding) | \r\n| realSHKEY | Merchat's key | Please decode __encodeSHKEY__ by Base64. The format is binary. | \r\n| realIV | The initialization vector (IV) | The initialization vector value, a 16 bytes, which is generated by sender randomly. | This purpose is hence to produce distinct ciphertexts even the same data. |[wiki](https://en.wikipedia.org/wiki/Initialization_vector)\r\n||Padding|__PKCS#7__|\r\n\r\n## 2. Encryption process\r\n  \r\n__Caution: The data of the request must be encrypted by AES-128-CBC, no matter is from the merchant or OneWallet.__\r\n  \r\nStep by step:\r\n\r\n__1st.__ Get the merchant's Key as `encodeSHKEY` from OneWallet backend - __Merchant Back Office__ (Take `encodeSHKEY` as Base64 encoded string for granted)\r\n\r\n> `For instance: WKOBlNUlzvNzh9g/9uBfqQ==`  \r\n  \r\n  \r\n__2nd.__ Produce a 16 bytes IV value as `realIV`.  \r\n  \r\n> `For instance: 2u2Ldqx19SrgAXSQr24Lcw==`  \r\n  \r\n__3rd.__ Convert your parameter(s) into JSON string.\r\n\r\n```json\r\n{\"sh_order_no\":\"20200212073344\",\"order_amount\":11.11,\"order_type\":\"100\",\"bank_code\":\"TEST_HGY\",\"notify_url\":\"https://example.com/deposit\",\"note\":\"note\"}\r\n```  \r\n  \r\n__4th.__ Encrypt the JSON string(as above) with AES-128-CBC by `realIV` and `realSHKEY`, shown as below.\r\n\r\n```string\r\n33U72GhtQqKI01o5JKh363xYxZCkre5DsndCdakdIrcvJSEDZ99VRM1+UnO2GFNN7HYRdilMMJ6oHRqNUcWlKs7433FCDwjPfKnDu4vUTnm7PG9Cme/HC77wnayeGJWbXnxd7/52gS+R8rpAQHVnDRH012GVPHIwX+RsdztyoElkcopqfmjpKgZd03ELiLXwGTl4xzQb5r3xGkvKEOQi/A==\r\n```  \r\n  \r\n  \r\n__5th.__ Put `encodeIV` into the key `iv`, Likewise, put the JSON string (had encrpted) into the key `value`. Let `iv` and `key` as JSON string.\r\n```json\r\n{\r\n    \"iv\":\"2u2Ldqx19SrgAXSQr24Lcw==\",\r\n    \"value\":\"33U72GhtQqKI01o5JKh363xYxZCkre5DsndCdakdIrcvJSEDZ99VRM1+UnO2GFNN7HYRdilMMJ6oHRqNUcWlKs7433FCDwjPfKnDu4vUTnm7PG9Cme/HC77wnayeGJWbXnxd7/52gS+R8rpAQHVnDRH012GVPHIwX+RsdztyoElkcopqfmjpKgZd03ELiLXwGTl4xzQb5r3xGkvKEOQi/A==\"\r\n}\r\n```  \r\n  \r\n__6th.__ Then do encode the JSON string by Base64.\r\n\r\n```string\r\neyJpdiI6IjJ1MkxkcXgxOVNyZ0FYU1FyMjRMY3c9PSIsInZhbHVlIjoiMzNVNzJHaHRRcUtJMDFvNUpLaDM2M3hZeFpDa3JlNURzbmRDZGFrZElyY3ZKU0VEWjk5VlJNMStVbk8yR0ZOTjdIWVJkaWxNTUo2b0hScU5VY1dsS3M3NDMzRkNEd2pQZktuRHU0dlVUbm03UEc5Q21lL0hDNzd3bmF5ZUdKV2JYbnhkNy81MmdTK1I4cnBBUUhWbkRSSDAxMkdWUEhJd1grUnNkenR5b0Vsa2NvcHFmbWpwS2daZDAzRUxpTFh3R1RsNHh6UWI1cjN4R2t2S0VPUWkvQT09In0=\r\n```  \r\n  \r\n__7th.__ How to send the request.\r\n+ Method => POST\r\n+ Body(Payload) => Encode the whole JSON data(as 6th step) by base64\r\n+ Launch a request !  \r\n\r\n```curl\r\ncurl -X POST {Merchant Back Office Integration URL}/SH/{endpoint}} \\\r\n-d \"eyJpdiI6IjJ1MkxkcXgxOVNyZ0FYU1FyMjRMY3c9PSIsInZhbHVlIjoiMzNVNzJHaHRRcUtJMDFvNUpLaDM2M3hZeFpDa3JlNURzbmRDZGFrZElyY3ZKU0VEWjk5VlJNMStVbk8yR0ZOTjdIWVJkaWxNTUo2b0hScU5VY1dsS3M3NDMzRkNEd2pQZktuRHU0dlVUbm03UEc5Q21lL0hDNzd3bmF5ZUdKV2JYbnhkNy81MmdTK1I4cnBBUUhWbkRSSDAxMkdWUEhJd1grUnNkenR5b0Vsa2NvcHFmbWpwS2daZDAzRUxpTFh3R1RsNHh6UWI1cjN4R2t2S0VPUWkvQT09In0=\"\r\n```  \r\n  \r\n  \r\n## 3. Decryption process\r\n  \r\n__Caution: The data of the response must be decrypted by AES-128-CBC, no matter is from the merchant or OneWallet.__\r\n  \r\nStep by step:\r\n\r\n__1st.__ Get the reponse data encrypted from OneWallet\r\n\r\n```string\r\neyJpdiI6IjJ1MkxkcXgxOVNyZ0FYU1FyMjRMY3c9PSIsInZhbHVlIjoiMzNVNzJHaHRRcUtJMDFvNUpLaDM2M3hZeFpDa3JlNURzbmRDZGFrZElyY3ZKU0VEWjk5VlJNMStVbk8yR0ZOTjdIWVJkaWxNTUo2b0hScU5VY1dsS3M3NDMzRkNEd2pQZktuRHU0dlVUbm03UEc5Q21lL0hDNzd3bmF5ZUdKV2JYbnhkNy81MmdTK1I4cnBBUUhWbkRSSDAxMkdWUEhJd1grUnNkenR5b0Vsa2NvcHFmbWpwS2daZDAzRUxpTFh3R1RsNHh6UWI1cjN4R2t2S0VPUWkvQT09In0=\r\n```\r\n\r\n__2nd.__ Use Base64 decode to get __iv__ and __value__ if it's correct, or an [__error_code__](#dbec66e6-bb41-4636-924b-8ea0539dbfb7) instead.\r\n\r\n> Normal Response:<br/>\r\nFor decryption, to get the `realIV` by Base64 decoding from `encodeIV`.\r\n\r\n```json\r\n{\r\n    \"iv\":\"2u2Ldqx19SrgAXSQr24Lcw==\", // Here encodeIV is.\r\n    \"value\":\"33U72GhtQqKI01o5JKh363xYxZCkre5DsndCdakdIrcvJSEDZ99VRM1+UnO2GFNN7HYRdilMMJ6oHRqNUcWlKs7433FCDwjPfKnDu4vUTnm7PG9Cme/HC77wnayeGJWbXnxd7/52gS+R8rpAQHVnDRH012GVPHIwX+RsdztyoElkcopqfmjpKgZd03ELiLXwGTl4xzQb5r3xGkvKEOQi/A==\"\r\n}\r\n```\r\n\r\n> Error Response:\r\n\r\n```json\r\n{\r\n\t\"error_code\":500\r\n}\r\n```\r\n\r\n__3rd.__ Decrypt the key `value` with `realIV` and `realSHKEY`, then suppose we will get the JSON string as data source.\r\n\r\n```json\r\n{\"sh_order_no\":\"20200212073344\",\"order_amount\":11.11,\"order_type\":\"100\",\"bank_code\":\"TEST_HGY\",\"notify_url\":\"https://example.com/deposit\",\"note\":\"note\"}\r\n```\r\n\r\n## 4. You may use our examples by different programming ways:\r\n\r\n- [__PHP__](https://github.com/devkhgy/top/blob/doc/code/PHP_example_encrypt_decrypt.php)\r\n- [__C#__](https://github.com/devkhgy/top/blob/doc/code/CSharp_example_encrypt_decrypt.cs)\r\n- [__Java__](https://github.com/devkhgy/top/blob/doc/code/JavaExampleEncryptDecrypt.java)"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ea22ea35-c7d3-473a-a202-e4708847a3e4",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "597bc2d0-7c78-4af0-b316-64edefe15609",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "Deposit",
 			"item": [
 				{
-					"name": "Deposit API Definition",
+					"name": "Bank Deposit API Definition",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -38,7 +126,7 @@
 								{
 									"key": "order_amount",
 									"value": "",
-									"description": "* __decimal(14,6)__\n* required\n* payment amount<br>\n__retain 2 decimal places__",
+									"description": "* __decimal(14,6)__\n* required\n* The amount of the order from merchant.",
 									"type": "text"
 								},
 								{
@@ -54,59 +142,39 @@
 									"type": "text"
 								},
 								{
-									"key": "created_at",
-									"value": "",
-									"description": "* __string(20)__\n* required\n* Order creation time<br>\nformatted as __Y-m-d H:i:s__",
-									"type": "text"
-								},
-								{
 									"key": "notify_url",
 									"value": "",
-									"description": "* __string(100)__\n* Asynchronous notification address, Return address of the asynchronous notification process<br>",
-									"type": "text",
-									"disabled": true
+									"description": "* __string(255)__\n* Asynchronous notification address, Return address of the asynchronous notification process.\n* MUST offer your notify_url to us first; otherwise, you will get [The notify url not in the whitelist](#f90e9510-0d5e-4489-9634-410c4f8849a9) error.\n* You may goto __Merchant Back Office__, then step into __Transaction__ to resend the outcome of the one of orders. \n* __Do NOT encode url.__\n* __e.g.1  http(s)://{your domain}/sendPay/notification__\n* __e.g.2  http(s)://{your domain}/sendPay/notification?key1=value1__",
+									"type": "text"
 								},
 								{
 									"key": "note",
 									"value": "",
 									"description": "* __string(100)__\n* Remarks",
-									"type": "text",
-									"disabled": true
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "https://[OneWallet API URL]/SH/sendPay",
+							"raw": "https://[Integration URL]/SH/sendPay",
 							"protocol": "https",
 							"host": [
-								"[OneWallet API URL]"
+								"[Integration URL]"
 							],
 							"path": [
 								"SH",
 								"sendPay"
 							]
 						},
-						"description": "## Merchant initiates a request to OneWallet service\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/SendPayFlow.png)\n\n>Deposit API Response Structure\n\n__Caution__: Must use our [AES Encryption](#f5ca20f1-3dde-4ff6-b04b-9f2cb0c265b1) to unwrap the data of body.\n\nKey           |Description\n:---:|:---\nerror_code    |[Error Code](#dbec66e6-bb41-4636-924b-8ea0539dbfb7)\ndata          |Return information\ndata.url      |Available Deposit URLs<br>__Propose to do speed-testing before redirecting__\ndata.token    |Deposit token<br>e.g., __http(s)://{one of list of data.url}?token={data.token}__\n\n>Deposit API Response Instance\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"url\": [\n      \"depoist1.com\",\n      \"depoist2.com\",\n      \"depoist3.com\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```\n\n>Deposit API Request Structure\n\n__Caution__: Must use our [AES Encryption](#f5ca20f1-3dde-4ff6-b04b-9f2cb0c265b1) to wrap the data of body."
+						"description": "# Refer to the below figure for integration URL.\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/IntergrationUrl.png)\n\n# [Before sending the request, the data must be encrypted, and vice versa.](#49c0aa9c-af68-4836-b740-55048c7a6e3d) #\n[Please refer to Encryption process of AES Encryption & Decryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d)\n\n\n## Merchant initiates a request to OneWallet service\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/SendPayFlow.png)\n\n>Deposit API Response Structure\n\n__Caution__: Must use our [AES Decryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d) to unwrap the data of body.\n\nKey           |Description\n:---:|:---\nerror_code          |[Error Code](#dbec66e6-bb41-4636-924b-8ea0539dbfb7) & [Trobleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9)\ndata                |Return information\ndata.order_id       |Gateway Order ID\ndata.order_amount   |The amount of the order from merchant\ndata.request_amount |The real amount of the order.\ndata.url            |Available Deposit URLs<br>__Propose to do speed-testing with GET request before redirecting as__ [Example](https://github.com/devkhgy/top/blob/doc/code/DepositSpeedTest.html)\ndata.token          |Deposit token\n\n>Deposit API Response Instance\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"order_id\": \"D-0103201000001\",\n    \"order_amount\": 10.01,\n    \"request_amount\": 10.01,\n    \"url\": [\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```\n\n>Deposit API Request Structure\n\n__Caution__: Must use our [AES Encryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d) to wrap the data of body."
 					},
 					"response": []
 				},
 				{
-					"name": "Deposit Notification API Definition",
+					"name": "QRPay Deposit API Definition",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -119,29 +187,91 @@
 								{
 									"key": "order_amount",
 									"value": "",
-									"description": "* __decimal(14,6)__\n* required\n* payment amount",
+									"description": "* __decimal(14,6)__\n* required\n* The amount of the order from merchant.",
 									"type": "text"
 								},
 								{
-									"key": "result",
+									"key": "order_type",
+									"value": " QRPay",
+									"description": "* __string(10)__\n* required\n* Order type<br>\n__QRPay as QR code scan to pay__",
+									"type": "text"
+								},
+								{
+									"key": "notify_url",
 									"value": "",
-									"description": "* __string(20)__\n* required\n* Payment Result<br>\n__success__ or __fail__",
+									"description": "* __string(255)__\n* Asynchronous notification address, Return address of the asynchronous notification process.\n* MUST offer your notify_url to us first; otherwise, you will get [The notify url not in the whitelist](#f90e9510-0d5e-4489-9634-410c4f8849a9) error.\n* You may goto __Merchant Back Office__, then step into __Transaction__ to resend the outcome of the one of orders. \n* __Do NOT encode url.__\n* __e.g.1  http(s)://{your domain}/sendPay/notification__\n* __e.g.2  http(s)://{your domain}/sendPay/notification?key1=value1__",
+									"type": "text"
+								},
+								{
+									"key": "note",
+									"value": "",
+									"description": "* __string(100)__\n* Remarks",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "https://[notify_url_by_merchant]/notify/sendPay",
+							"raw": "https://[Integration URL]/SH/sendPay",
 							"protocol": "https",
 							"host": [
-								"[notify_url_by_merchant]"
+								"[Integration URL]"
 							],
 							"path": [
-								"notify",
+								"SH",
 								"sendPay"
 							]
 						},
-						"description": "## Implement By Merchant\n\nIf one Deposit transaction compeletes, Merchant would be notified by OneWallet\n\n>Deposit Notification API Response Instance\n\n__Caution__: Must use our [AES Encryption](#f5ca20f1-3dde-4ff6-b04b-9f2cb0c265b1) to wrap the data of body.\n\n```json\n{\n  \"result\": \"success\"\n}\n```\n\n>Deposit Notification API Request Structure\n\n__Caution__: Must use our [AES Encryption](#f5ca20f1-3dde-4ff6-b04b-9f2cb0c265b1) to unwrap the data of body."
+						"description": "# Refer to the below figure for integration URL.\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/IntergrationUrl.png)\n\n\n# [Before sending the request, the data must be encrypted, and vice versa.](#49c0aa9c-af68-4836-b740-55048c7a6e3d) #\n[Please refer to Encryption process of AES Encryption & Decryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d)\n\n\n## Merchant initiates a request to OneWallet service\n\n![Alt text](https://github.com/devkhgy/top/blob/doc/en/SendQRPayFlow.png?raw=true)\n\n>Deposit API Response Structure\n\n__Caution__: Must use our [AES Decryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d) to unwrap the data of body.\n\nKey           |Description\n:---:|:---\nerror_code          |[Error Code](#dbec66e6-bb41-4636-924b-8ea0539dbfb7) & [Trobleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9)\ndata                |Return information.\ndata.order_id       |Gateway Order ID\ndata.order_amount   |The amount of the order from merchant.\ndata.request_amount |The real amount of the order.<br>__Caution: If amount is integer, `OneWallet` will add 2 decimal places randomly for account statement.__\ndata.url            |Available Deposit URLs<br>__Propose to do speed-testing with GET request before redirecting as__ [Example](https://github.com/devkhgy/top/blob/doc/code/DepositSpeedTest.html)\ndata.token          |Deposit token.\n\n>Deposit API Response Instance\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"order_id\": \"D-0103201000001\",\n    \"order_amount\": 10.01,\n    \"request_amount\": 10.01,\n    \"url\": [\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```\n\n>Deposit API Request Structure\n\n__Caution__: Must use our [AES Encryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d) to wrap the data of body."
+					},
+					"response": []
+				},
+				{
+					"name": "Deposit Notification API Definition",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "sh_order_no",
+									"value": "",
+									"description": "* __string(50)__\n* Merchant order number, which will be used as the response data<br>\n__The order number must be unique__",
+									"type": "text"
+								},
+								{
+									"key": "order_status",
+									"value": "",
+									"description": "* __string(20)__\n* Payment Result",
+									"type": "text"
+								},
+								{
+									"key": "order_amount",
+									"value": "",
+									"description": "* __decimal(14,6)__\n* The amount of the order from merchant.",
+									"type": "text"
+								},
+								{
+									"key": "paid_amount",
+									"value": "",
+									"description": "* __decimal(14,6)__\n* Actual payment",
+									"type": "text"
+								},
+								{
+									"key": "request_amount",
+									"value": "",
+									"description": "* __decimal(14,6)__\n* The real amount of the order.<br>__Caution: If amount is integer, `OneWallet` will add 2 decimal places randomly for account statement.__",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "[notify_url_by_merchant]",
+							"host": [
+								"[notify_url_by_merchant]"
+							]
+						},
+						"description": "# [Before receving the response, the data must be decrypted, and vice versa.](#49c0aa9c-af68-4836-b740-55048c7a6e3d) #\n[Please refer to Decryption process of AES Encryption & Decryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d)\n\n## Implement By Merchant\n\nIf one Deposit transaction compeletes, Merchant would be notified by OneWallet\n\n> Deposit Notification API Response Instance <br> Whether it's a successful transaction or not, once you get the notification from OneWallet then respond as bellow: <br> \n*** Caution: The response must be encryted. ***\n\n```json\n{\n  \"result\": \"success\"\n}\n```\n\n>Deposit Notification API Request Structure"
 					},
 					"response": []
 				},
@@ -149,19 +279,7 @@
 					"name": "Deposit Query API Definition",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -174,17 +292,17 @@
 							]
 						},
 						"url": {
-							"raw": "https://[OneWallet API URL]/SH/queryPay",
+							"raw": "https://[Integration URL]/SH/queryPay",
 							"protocol": "https",
 							"host": [
-								"[OneWallet API URL]"
+								"[Integration URL]"
 							],
 							"path": [
 								"SH",
 								"queryPay"
 							]
 						},
-						"description": "## Merchant initiates a request to OneWallet service\n\n>Deposit Query API Response Structure\n\n__Caution__: Must use our [AES Encryption](#f5ca20f1-3dde-4ff6-b04b-9f2cb0c265b1) to unwrap the data of body.\n\nKey               | Description\n:---:|:---\nerror_code        |[Error Code](#dbec66e6-bb41-4636-924b-8ea0539dbfb7)\ndata              |Return information\ndata.sh_order_no  |Merchant order number, which will be used as the response data\ndata.order_type   |Order type<br><table><tr><td>type</td><td>name</td></tr><tr><td>100</td><td>Internet Banking</td></tr></table>\ndata.order_amount |payment amount\ndata.status       |[Order Status](#85143ec1-b121-46c6-a805-cc1cdb6e1c4c)\ndata.created_at   |Order creation time, formatted as __Y-m-d H:i:s__\ndata.finished_at  |Order completion time, formatted as __Y-m-d H:i:s__\n\n>Deposit Query API Response Instance\n```json\n{\n   \"error_code\": 200,\n   \"data\": {\n      \"sh_order_no\": \"ORDERNO0001\",\n      \"order_type\": \"100\",\n      \"order_amount\": 100.00,\n      \"order_status\": 3,\n      \"created_at\": \"2019-10-10 00:00:00\",\n      \"finished_at\": \"2019-10-10 00:05:05\",\n   }\n}\n\n```\n\n>Deposit Query API Request Structure\n\n__Caution__: Must use our [AES Encryption](#f5ca20f1-3dde-4ff6-b04b-9f2cb0c265b1) to wrap the data of body."
+						"description": "# Refer to the below figure for integration URL.\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/IntergrationUrl.png)\n\n# [Before sending the request, the data must be encrypted, and vice versa.](#49c0aa9c-af68-4836-b740-55048c7a6e3d) #\n[Please refer to Encryption process of AES Encryption & Decryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d)\n\n## Merchant initiates a request to OneWallet service\n\n>Deposit Query API Response Structure\n\n__Caution__: Must use our [AES Decryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d) to unwrap the data of body.\n\nKey               | Description\n:---:|:---\nerror_code          |[Error Code](#dbec66e6-bb41-4636-924b-8ea0539dbfb7) & [Trobleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9)\ndata                |Return information\ndata.order_id       |Gateway Order ID\ndata.sh_order_no    |Merchant order number, which will be used as the response data\ndata.order_type     |Order type<br><table><tr><td>type</td><td>name</td></tr><tr><td>100</td><td>Internet Banking</td></tr></table>\ndata.status         |[Order Status](#85143ec1-b121-46c6-a805-cc1cdb6e1c4c)\ndata.order_amount   |The amount of the order from merchant.\ndata.paid_mount     |Actual payment.\ndata.request_amount |The real amount of the order.<br>__Caution: If amount is integer, `OneWallet` will add 2 decimal places randomly for account statement.__\ndata.created_at     |Order creation time, formatted as __Y-m-d H:i:s__\ndata.finished_at    |Order completion time, formatted as __Y-m-d H:i:s__\n\n>Deposit Query API Response Instance\n```json\n{\n   \"error_code\": 200,\n   \"data\": {\n      \"order_id\": \"D-0103201000001\",\n      \"sh_order_no\": \"ORDERNO0001\",\n      \"status\": 3,\n      \"order_type\": \"100\",\n      \"order_amount\": 100,\n      \"paid_amount\": 100,\n      \"request_amount\": 100.78,\n      \"created_at\": \"2019-10-10 00:00:00\",\n      \"finished_at\": \"2019-10-10 00:05:05\",\n   }\n}\n\n```\n\n>Deposit Query API Request Structure\n\n__Caution__: Must use our [AES Encryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d) to wrap the data of body."
 					},
 					"response": []
 				}
@@ -220,14 +338,7 @@
 					"name": "Withdrawal API Definition",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -258,37 +369,35 @@
 								{
 									"key": "order_amount",
 									"value": "",
-									"description": "* __decimal(14,6)__\n* required\n* payout amount",
+									"description": "* __decimal(14,6)__\n* required\n* The amount of the order from merchant.",
 									"type": "text"
 								},
 								{
 									"key": "notify_url",
 									"value": "",
-									"description": "* __string(100)__\n* Asynchronous notification address, Return address of the asynchronous notification process<br>",
-									"type": "text",
-									"disabled": true
+									"description": "* __string(255)__\n* Asynchronous notification address, Return address of the asynchronous notification process.\n* MUST offer your notify_url to us first; otherwise, you will get [The notify url not in the whitelist](#f90e9510-0d5e-4489-9634-410c4f8849a9) error.\n* You may goto __Merchant Back Office__, then step into __Transaction__ to resend the outcome of the one of orders. \n* __Do NOT encode url.__\n* __e.g.1  http(s)://{your domain}/sendPay/notification__\n* __e.g.2  http(s)://{your domain}/sendPay/notification?key1=value1__",
+									"type": "text"
 								},
 								{
 									"key": "note",
 									"value": "",
-									"description": "* __string(100)__\n* 备注",
-									"type": "text",
-									"disabled": true
+									"description": "* __string(100)__\n* Remarks",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "https://[OneWallet API URL]/SH/sendWithdraw",
+							"raw": "https://[Integration URL]/SH/sendWithdraw",
 							"protocol": "https",
 							"host": [
-								"[OneWallet API URL]"
+								"[Integration URL]"
 							],
 							"path": [
 								"SH",
 								"sendWithdraw"
 							]
 						},
-						"description": "## Merchant initiates a request to OneWallet service\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/SendWithdrawFlow.png)\n\n>Withdrawal API Response Structure\n\n__Caution__: Must use our [AES Encryption](#f5ca20f1-3dde-4ff6-b04b-9f2cb0c265b1) to unwrap the data of body.\n\nKey           |Description\n:---:|:---\nerror_code    |[Error Code](#dbec66e6-bb41-4636-924b-8ea0539dbfb7)\ndata          |Return information\ndata.order_no |Order number of OneWallet as __{Merchant Code}{Merchant Order Number}__\n\n>Withdrawal API Response Instance\n```json\n{\n   \"error_code\": 200,\n   \"data\": {\n      \"order_no\": \"2TX5d8dc37804727\"\n   }\n}\n```\n\n>Withdrawal API Request Structure\n\n__Caution__: Must use our [AES Encryption](#f5ca20f1-3dde-4ff6-b04b-9f2cb0c265b1) to wrap the data of body."
+						"description": "# Refer to the below figure for integration URL.\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/IntergrationUrl.png)\n\n# [Before sending the request, the data must be encrypted, and vice versa.](#49c0aa9c-af68-4836-b740-55048c7a6e3d) #\n[Please refer to Encryption process of AES Encryption & Decryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d)\n\n## Merchant initiates a request to OneWallet service\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/SendWithdrawFlow.png)\n\n>Withdrawal API Response Structure\n\n__Caution__: Must use our [AES Decryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d) to unwrap the data of body.\n\nKey           |Description\n:---:|:---\nerror_code       |[Error Code](#dbec66e6-bb41-4636-924b-8ea0539dbfb7) & [Trobleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9)\ndata             |Return information\ndata.order_id    |Gateway Order ID\ndata.sh_order_no |Merchant Order Number\n\n>Withdrawal API Response Instance\n```json\n{\n   \"error_code\": 200,\n   \"data\": {\n      \"order_id\": \"W-0103201000001\",\n      \"sh_order_no\": \"2TX5d8dc37804727\"\n   }\n}\n```\n\n>Withdrawal API Request Structure\n\n__Caution__: Must use our [AES Encryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d) to wrap the data of body."
 					},
 					"response": []
 				},
@@ -296,54 +405,43 @@
 					"name": "Withdrawal Notification API Definition",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
 									"key": "sh_order_no",
 									"value": "",
-									"description": "* __string(50)__\n* required\n* Merchant order number, which will be used as the response data<br>\n__The order number must be unique__",
+									"description": "* __string(50)__\n* Merchant order number, which will be used as the response data<br>\n__The order number must be unique__",
+									"type": "text"
+								},
+								{
+									"key": "order_status",
+									"value": "",
+									"description": "* __string(20)__\n* Payment Result",
 									"type": "text"
 								},
 								{
 									"key": "order_amount",
 									"value": "",
-									"description": "* __decimal(14,6)__\n* required\n* payout amount",
+									"description": "* __decimal(14,6)__\n* The amount of the order from merchant.",
 									"type": "text"
 								},
 								{
-									"key": "result",
+									"key": "paid_amount",
 									"value": "",
-									"description": "* __string(20)__\n* required\n* Payout Result<br>\n__success__ or __fail__",
+									"description": "* __decimal(14,6)__\n* Actual payment.",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "https://[notify_url_by_merchant]/notify/sendWithdraw",
-							"protocol": "https",
+							"raw": "[notify_url_by_merchant]",
 							"host": [
 								"[notify_url_by_merchant]"
-							],
-							"path": [
-								"notify",
-								"sendWithdraw"
 							]
 						},
-						"description": "## Implement By Merchant\n\nIf one Withdrawel transaction compeletes, Merchant would be notified by OneWallet\n\n>Withdrawal  Notification API Response Instance\n\n__Caution__: Must use our [AES Encryption](#f5ca20f1-3dde-4ff6-b04b-9f2cb0c265b1) to wrap the data of body.\n\n```json\n{\n  \"result\": \"success\"\n}\n```\n\n>Withdrawel Notification API Request Structure\n\n__Caution__: Must use our [AES Encryption](#f5ca20f1-3dde-4ff6-b04b-9f2cb0c265b1) to unwrap the data of body."
+						"description": "# [Before receving the response, the data must be decrypted, and vice versa.](#49c0aa9c-af68-4836-b740-55048c7a6e3d) #\n[Please refer to Decryption process of AES Encryption & Decryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d)\n\n## Implement By Merchant\n\nIf one Withdrawel transaction compeletes, Merchant would be notified by OneWallet\n\n> Withdrawal  Notification API Response Instance <br> Whether it's a successful transaction or not, once you get the notification from OneWallet then respond as bellow: <br> \n*** Caution: The response must be encryted. ***\n\n\n```json\n{\n  \"result\": \"success\"\n}\n```\n\n>Withdrawel Notification API Request Structure"
 					},
 					"response": []
 				},
@@ -351,19 +449,7 @@
 					"name": "Withdrawal Query API Definition",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -376,17 +462,17 @@
 							]
 						},
 						"url": {
-							"raw": "https://[OneWallet API URL]/SH/queryWithdraw",
+							"raw": "https://[Integration URL]/SH/queryWithdraw",
 							"protocol": "https",
 							"host": [
-								"[OneWallet API URL]"
+								"[Integration URL]"
 							],
 							"path": [
 								"SH",
 								"queryWithdraw"
 							]
 						},
-						"description": "## Merchant initiates a request to OneWallet service\n\n>Withdrawal Query API Response Structure\n\n__Caution__: Must use our [AES Encryption](#f5ca20f1-3dde-4ff6-b04b-9f2cb0c265b1) to unwrap the data of body.\n\nKey           |Description\n:---:|:---\nerror_code        |[Error Code](#dbec66e6-bb41-4636-924b-8ea0539dbfb7)\ndata              |Return information\ndata.sh_order_no  |Merchant order number, which will be used as the response data\ndata.order_amount |payout amount\ndata.status       |[Order Status](#85143ec1-b121-46c6-a805-cc1cdb6e1c4c)\ndata.created_at   |Order creation time, formatted as __Y-m-d H:i:s__\ndata.finished_at  |Order completion time, formatted as __Y-m-d H:i:s__\n\n>Withdrawal Query API Response Instance\n```json\n{\n   \"error_code\": 200,\n   \"data\": {\n      \"sh_order_no\": \"ORDERNO0001\",\n      \"order_amount\": 100.00,\n      \"order_status\": 3,\n      \"created_at\": \"2019-10-10 00:00:00\",\n      \"finished_at\": \"2019-10-10 00:05:05\",\n   }\n}\n```\n\n>Withdrawal Query API Request Structure\n\n__Caution__: Must use our [AES Encryption](#f5ca20f1-3dde-4ff6-b04b-9f2cb0c265b1) to wrap the data of body."
+						"description": "# Refer to the below figure for integration URL.\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/IntergrationUrl.png)\n\n# [Before sending the request, the data must be encrypted, and vice versa.](#49c0aa9c-af68-4836-b740-55048c7a6e3d) #\n[Please refer to Encryption process of AES Encryption & Decryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d)\n\n## Merchant initiates a request to OneWallet service\n\n>Withdrawal Query API Response Structure\n\n__Caution__: Must use our [AES Decryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d) to unwrap the data of body.\n\nKey           |Description\n:---:|:---\nerror_code        |[Error Code](#dbec66e6-bb41-4636-924b-8ea0539dbfb7) & [Trobleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9)\ndata              |Return information\ndata.order_id     |Gateway Order ID\ndata.sh_order_no  |Merchant order number, which will be used as the response data\ndata.status       |[Order Status](#85143ec1-b121-46c6-a805-cc1cdb6e1c4c)\ndata.order_amount |The amount of the order from merchant.\ndata.paid_amount  |Actual payment.\ndata.created_at   |Order creation time, formatted as __Y-m-d H:i:s__\ndata.finished_at  |Order completion time, formatted as __Y-m-d H:i:s__\n\n>Withdrawal Query API Response Instance\n```json\n{\n   \"error_code\": 200,\n   \"data\": {\n      \"order_id\": \"W-0103201000001\",\n      \"sh_order_no\": \"ORDERNO0001\",\n      \"status\": 3,\n      \"order_amount\": 100.05,\n      \"paid_amount\": 100.05,\n      \"created_at\": \"2019-10-10 00:00:00\",\n      \"finished_at\": \"2019-10-10 00:05:05\",\n   }\n}\n```\n\n>Withdrawal Query API Request Structure\n\n__Caution__: Must use our [AES Encryption](#49c0aa9c-af68-4836-b740-55048c7a6e3d) to wrap the data of body."
 					},
 					"response": []
 				}
@@ -406,82 +492,6 @@
 					"listen": "test",
 					"script": {
 						"id": "415e0600-c9e6-4724-9493-84d175692116",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Appendix",
-			"item": [
-				{
-					"name": "Bank Code",
-					"request": {
-						"method": "VIEW",
-						"header": [],
-						"url": {
-							"raw": ""
-						},
-						"description": "Test Bank Code (Only UAT)\n----------------\nbank_code | bank |\n:---:|:---:|\nTEST_HGY    |TEST_HGY\n\n<!--\nVietnam Bank Code\n----------------\nbank_code | bank |\n:---:|:---:|\nSAC    |Sacombank\nDAB    |DONGA bank\nTCB    |TECHCOMBANK\nBIDV   |BIDV\nVTB    |VietinBank\nEXB    |EXIMBANK\nVIB    |VIB\nMSB    |MSB\nVCB    |Vietcombank\nACB    |ACB\nAGR    |AGRIBANK\n-->\n\nThiland Bank Code\n----------------\nbank_code | bank |\n:---:|:---:|\nBKB    |Bangkok Bank\nKB     |K-Cyber Bank\nSCB    |SCB\nKTB    |KTB netbank\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
-					},
-					"response": []
-				},
-				{
-					"name": "Order Status",
-					"request": {
-						"method": "VIEW",
-						"header": [],
-						"url": {
-							"raw": ""
-						},
-						"description": "status | name | description |\n:-----:|:----:|:------------|\n1    |Pending        |Transaction is pending                                                                     |\n2    |Processing     |Transaction is processing                                                                  |\n3    |Completed      |Transaction is completed                                                                   |\n4    |Manual process |It would be successful or failed if transaction was failed, altered by OneWallet operator  |\n5    |Failed         |Transaction is failed                                                                      |\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
-					},
-					"response": []
-				},
-				{
-					"name": "Error Code",
-					"request": {
-						"method": "VIEW",
-						"header": [],
-						"url": {
-							"raw": ""
-						},
-						"description": "error_code | message |\n:-------:|:---------|\n200    |Success                 |\n403    |Permission error        |\n404    |Resource does not exist |\n405    |Method not allowed      |\n422    |Verification error      |\n500    |Server error            |\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
-					},
-					"response": []
-				},
-				{
-					"name": "AES Encryption & Decryption",
-					"request": {
-						"method": "VIEW",
-						"header": [],
-						"url": {
-							"raw": ""
-						},
-						"description": "## 1. Specification\n\nname | Description |\n:---:|:---:|\nEncryption mode    |__AES-128-CBC__\nMerchant Key       |__Merchant Key__ is provided by OneWallet, which had encoded by base64 encoding. The merchat should store it in the persistent storage.\nIV                 |__The Initialization Vector__, a random 16 bytes value, is generated by each request and response, which has encoded by base64 encoding.\nPadding            |__PKCS#7__\n\n## 2. Encryption process\n\n__Caution: The data of the request or response must be encoded by AES-128-CBC, no matter is from the merchant or OneWallet.__\n\nStep by step:\n\n__1st.__ Convert your parameter(s) into JSON string.\n\n```json\n{\n\t\"sh_order_no\":\"5dc3dd5c74b5c\",\n\t\"order_amount\":100,\n\t\"order_type\":\"100\",\n\t\"bank_code\":\"VCB\",\n\t\"created_at\":\"2019-11-01 00:00:00\",\n\t\"notify_url\":\"https:\\/\\/test.domain\",\n\t\"note\":\"note\"\n}\n```\n\n__2nd.__ Encode JSON string by AES-128-CBC & IV as __value__, then let __iv__ and __value__ into other JSON string.\n\n```json\n{\n\t\"iv\":\"iHoGTaaZHV08\\/iiHeoBbJA==\",\n\t\"value\":\"W19Y1qs6emAZpgyoFOZzyyEbkGErrAmwml01YrmDkFqO2nM0Cfbvhq4DqF6rBxCUyqSi\\/JvZ+BWdo9cL+FA9O30Bmdgook3TZFgHI\\/fM6jlswzsAAuDEYNUF01wZwgTK\\/2Rr2bBYf\\/rIkEDcxqaNHCpCWlNtmAy2qJGIMatRhra4PvphgZXXjY9aEz8uLokc7WhWrvjlNZCjsjZbDAWwxWkEbxjsCb5TysxPuqzmpFg=\"\n}\n```\n\n__3rd.__ Use Base64 encode to be outcome. You may try to request with Curl.\n\n```bash\ncurl -X POST \\\nhttp(s)://[OneWallet API URL]/SH/sendPay \\\n-d \\\neyJpdiI6ImlIb0dUYWFaSFYwOFwvaWlIZW9CYkpBPT0iLCJ2YWx1ZSI6IlcxOVkxcXM2ZW1BWnBneW9GT1p6eXlFYmtHRXJyQW13bWwwMVlybURrRnFPMm5NMENmYnZocTREcUY2ckJ4Q1V5cVNpXC9KdlorQldkbzljTCtGQTlPMzBCbWRnb29rM1RaRmdISVwvZk02amxzd3pzQUF1REVZTlVGMDF3WndnVEtcLzJScjJiQllmXC9ySWtFRGN4cWFOSENwQ1dsTnRtQXkycUpHSU1hdFJocmE0UHZwaGdaWFhqWTlhRXo4dUxva2M3V2hXcnZqbE5aQ2pzalpiREFXd3hXa0VieGpzQ2I1VHlzeFB1cXptcEZnPSJ9\n```\n\n## 3. Decryption process\n\nStep by step:\n\n__1st.__ Get the encrypted data\n\n__eyJpdiI6ImlIb0dUYWFaSFYwOFwvaWlIZW9CYkpBPT0iLCJ2YWx1ZSI6IlcxOVkxcXM2ZW1BWnBneW9GT1p6eXlFYmtHRXJyQW13bWwwMVlybURrRnFPMm5NMENmYnZocTREcUY2ckJ4Q1V5cVNpXC9KdlorQldkbzljTCtGQTlPMzBCbWRnb29rM1RaRmdISVwvZk02amxzd3pzQUF1REVZTlVGMDF3WndnVEtcLzJScjJiQllmXC9ySWtFRGN4cWFOSENwQ1dsTnRtQXkycUpHSU1hdFJocmE0UHZwaGdaWFhqWTlhRXo4dUxva2M3V2hXcnZqbE5aQ2pzalpiREFXd3hXa0VieGpzQ2I1VHlzeFB1cXptcEZnPSJ9__\n\n__2nd.__ Use Base64 decode to get __iv__ and __value__ if it's correct, or an __error_code__ instead.\n\nNormal Response:\n\n```json\n{\n\t\"iv\":\"iHoGTaaZHV08\\/iiHeoBbJA==\",\n\t\"value\":\"W19Y1qs6emAZpgyoFOZzyyEbkGErrAmwml01YrmDkFqO2nM0Cfbvhq4DqF6rBxCUyqSi\\/JvZ+BWdo9cL+FA9O30Bmdgook3TZFgHI\\/fM6jlswzsAAuDEYNUF01wZwgTK\\/2Rr2bBYf\\/rIkEDcxqaNHCpCWlNtmAy2qJGIMatRhra4PvphgZXXjY9aEz8uLokc7WhWrvjlNZCjsjZbDAWwxWkEbxjsCb5TysxPuqzmpFg=\"\n}\n```\n\nError Response:\n\n```json\n{\n\t\"error_code\":500,\n}\n```\n\n__3nd.__ Decode the __value__ with __IV__ and __Merchant Key__ to get the original parameter(s) or data.\n\n```json\n{\n\t\"sh_order_no\":\"5dc3dd5c74b5c\",\n\t\"order_amount\":100,\n\t\"order_type\":\"100\",\n\t\"bank_code\":\"VCB\",\n\t\"created_at\":\"2019-11-01 00:00:00\",\n\t\"notify_url\":\"https:\\/\\/test.domain\",\n\t\"note\":\"note\"\n}\n```\n\n## 4. You may use our examples by different programming ways:\n\n- [__PHP__](https://github.com/devkhgy/top/blob/doc/code/PHP_example_encrypt_decrypt.php)\n- [__C#__](https://github.com/devkhgy/top/blob/doc/code/CSharp_example_encrypt_decrypt.cs)\n- [__Java__](https://github.com/devkhgy/top/blob/doc/code/JavaExampleEncryptDecrypt.java)"
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "ea22ea35-c7d3-473a-a202-e4708847a3e4",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "597bc2d0-7c78-4af0-b316-64edefe15609",
 						"type": "text/javascript",
 						"exec": [
 							""
