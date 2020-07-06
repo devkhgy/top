@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "324913ee-44c9-4047-a66c-67e648bbf586",
 		"name": "壹支付平台API",
-		"description": "### 修订记录 ###\r\n\r\n| 日期 | 描述 | 版本号 | 编辑 |\r\n|---|---|---|---|\r\n|2019-10-01|初始版本|v1.0.0|Ivan|\r\n|2020-01-30|参数 notify_url 相关调整如下 <li>长度由 100 改为 255</li><li>必须先提供网址给壹支付加入回呼白名单</li>|v1.0.1|Ray|\r\n|2020-01-31|新增 [常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed)|v1.0.2|Ray|\r\n|2020-02-03| API 回应金额信息完善 <li>银行支付: 加入 request_amount</li><li>QRPay 支付: 加入 request_amount</li><li>支付查询: 加入 request_amount</li><li>支付结果通知: 加入 request_amount, order_amount</li><li>代付查询: 加入 paid_amount</li><li>代付结果通知: 加入 paid_amount</li> |v1.0.3|Ray|\r\n|2020-02-12|移除支付请求参数 created_at <li>银行支付</li><li>QRPay 支付</li>|v1.0.4|Ray|\r\n|2020-03-03|[常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed) 加入支付验证错误与代付验证错误|v1.0.5|Ray|\r\n|2020-03-03|新增 TMB Bank 服务|v1.0.6|Ray|\r\n|2020-03-19|新增第三方订单号|v1.0.7|Ray|\r\n|2020-04-16|新增充值网语系|v1.0.8|Ray|\r\n\r\n### 请注意 ###\r\n+ 在 UAT 环境的转帐交易，若选择测试用银行代码，则所有交易皆以模拟的方式替代，并不会真实完成现金交易，但是若所选用的银行为正式银行代码，将会向网银执行真实的转帐交易，会从所选择的银行帐户 **执行真正的现金交易**\r\n+ 壹支付所有回传时间信息均为 **北京时区(GMT+8)**",
+		"description": "### 修订记录 ###\r\n\r\n| 日期 | 描述 | 版本号 | 编辑 |\r\n|---|---|---|---|\r\n|2019-10-01|初始版本|v1.0.0|Ivan|\r\n|2020-01-30|参数 notify_url 相关调整如下 <li>长度由 100 改为 255</li><li>必须先提供网址给壹支付加入回呼白名单</li>|v1.0.1|Ray|\r\n|2020-01-31|新增 [常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed)|v1.0.2|Ray|\r\n|2020-02-03| API 回应金额信息完善 <li>银行充值: 加入 request_amount</li><li>QRPay 充值: 加入 request_amount</li><li>充值查询: 加入 request_amount</li><li>充值结果通知: 加入 request_amount, order_amount</li><li>代付查询: 加入 paid_amount</li><li>代付结果通知: 加入 paid_amount</li> |v1.0.3|Ray|\r\n|2020-02-12|移除充值请求参数 created_at <li>银行充值</li><li>QRPay 充值</li>|v1.0.4|Ray|\r\n|2020-03-03|[常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed) 加入充值验证错误与代付验证错误|v1.0.5|Ray|\r\n|2020-03-03|新增 TMB Bank 服务|v1.0.6|Ray|\r\n|2020-03-19|新增第三方订单号|v1.0.7|Ray|\r\n|2020-04-16|新增充值网语系|v1.0.8|Ray|\r\n\r\n### 请注意 ###\r\n+ 在 UAT 环境的转帐交易，若选择测试用银行代码，则所有交易皆以模拟的方式替代，并不会真实完成现金交易，但是若所选用的银行为正式银行代码，将会向网银执行真实的转帐交易，会从所选择的银行帐户 **执行真正的现金交易**\r\n+ 壹支付所有回传时间信息均为 **北京时区(GMT+8)**",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -65,7 +65,7 @@
 						"url": {
 							"raw": ""
 						},
-						"description": "### 备注：基础验证错误由於无机敏资讯且为开发便利性而采用明文回传，解密验证错误包含机敏资讯为提昇安全性则采用密文回传。 ###\r\n\r\n| 错误类型 | 错误回传信息 | 可能的错误原因 |\r\n|---|---|---|\r\n| 基础验证错误 | The API request method must be POST | 请求方法为非 POST |\r\n| 基础验证错误 | The request payload is empty |  payload 信息为空，可尝试检查是否请求错误 错误使用请求协定 ~http~ ，应改为 ```https``` <li>错误使用请求方法 GET，应改为 ```POST```</li>\r\n| 基础验证错误 | Invalid merchant id | 无效的 merchant id，请於商户後台取得正确的接入网址 |\r\n| 解密验证错误 | Could not decrypt the payload | 接入网址、商户密钥、加密流程或方法有误，请参考加解密文档 |\r\n| 解密验证错误 | The payload is invalid | payload 信息有误，可尝试检查是否 payload 附加於 body 方式有误或参考加解密文档 <li>payload 置於 body 传输即可，无须加入任何键值後传输 。</li> ```错误范例：data={payload}```|\r\n| 解密验证错误 | json decode failed | payload  信息经解密後非 JSON 格式, 请参考加解密文档 |\r\n| 支付验证错误 | IP x.x.x.x not allowed | 请检查 商户後台/商户资讯/白名单 该 IP 是否已加白於对应的 IP 类型 |\r\n| 支付验证错误 | No card available | 请联系壹支付财务 |\r\n| 支付验证错误 | Deposit domain is not configured properly, please contact us. | 请联系壹支付财务 |\r\n| 支付验证错误 | The notify url not in the whitelist | notify url(callback) 未添加入白名单内，请提供 notify url(callback) 给壹支付，进行白名单添加。 |\r\n| 代付验证错误 | IP x.x.x.x not allowed | 请检查 商户後台/商户资讯/白名单 该 IP 是否已加白於对应的 IP 类型 |\r\n| 代付验证错误 | balance is not enough | 请检查商户钱包余额是否足够处理代付订单请求 |\r\n| 代付验证错误 | No card available | 请联系壹支付财务 |\r\n| 代付验证错误 | The notify url not in the whitelist | notify url(callback) 未添加入白名单内，请提供 notify url(callback) 给壹支付，进行白名单添加。 |\r\n\r\n若发生基础验证、解密验证错误，可按照以下项目确认问题\r\n\r\n1. 请求位址\r\n\r\n    由 ***商户后台 > 接入信息*** 内的接入网址及各 API 位址所组成\r\n\r\n    请求协定固定为 **https**\r\n\r\n    范例的充值位址格式： https://domain.com/11-xxx/SH/sendPay\r\n\r\n2. 请求方法应为 **POST**\r\n\r\n    确认程序使用的请求方法为 **POST**\r\n\r\n    若程序确认无问题\r\n\r\n    则可使用封包截取软件\r\n\r\n    截录程序实际送出的请求封包\r\n\r\n    观察程序请求及壹支付回应是否正常\r\n\r\n3. 原始资料应为 **JSON** 格式\r\n\r\n    确认原始资料可正常解析出 **JSON** 物件\r\n\r\n4. 加密结果正确\r\n\r\n    从 ***商户后台 > 接入信息*** 取得商户密钥\r\n\r\n    利用此密钥将原始资料经过加密方法后所产生的密文\r\n\r\n    应可由解密方法还原出原始资料\r\n\r\n    在开发加解密方法完成后\r\n\r\n    可自行透过该方法验证加解密是否正确\r\n\r\n    或可利用 ***商户后台 > 解密工具*** 验证加密结果是否可正常解密\r\n\r\n5. 请求 Payload 仅可放入加密后的密文\r\n\r\n    不得包含任何其他非密文的内容\r\n\r\n    假设密文为 `eyJpdiI6...`\r\n\r\n    则 Payload 只能是 `eyJpdiI6...`\r\n\r\n    以下皆为 Payload 错误范例\r\n\r\n    - `\"eyJpdiI6...\"`\r\n\r\n    - `data=eyJpdiI6...`\r\n\r\n    - `{\"data\":\"eyJpdiI6...\"}`\r\n\r\n6. 利用 HTTP 请求开发工具测试 API\r\n\r\n    将开发的程序汇整其请求资料\r\n\r\n    使用测试工具([Postman](https://www.postman.com/)、[Curl](https://curl.haxx.se/)...)手动发送请求\r\n\r\n    确认测试工具所得的结果与程序是否一致\r\n\r\n若全部确认完成后仍无法解决问题\r\n\r\n请将测试工具所测试结果截图并存入纯文字档(需包含请求位址和请求与回应的 Header、Payload)\r\n\r\n提供予壹支付协助解决"
+						"description": "### 备注：基础验证错误由於无机敏资讯且为开发便利性而采用明文回传，解密验证错误包含机敏资讯为提昇安全性则采用密文回传。 ###\r\n\r\n| 错误类型 | 错误回传信息 | 可能的错误原因 |\r\n|---|---|---|\r\n| 基础验证错误 | The API request method must be POST | 请求方法为非 POST |\r\n| 基础验证错误 | The request payload is empty |  payload 信息为空，可尝试检查是否请求错误 错误使用请求协定 ~http~ ，应改为 ```https``` <li>错误使用请求方法 GET，应改为 ```POST```</li>\r\n| 基础验证错误 | Invalid merchant id | 无效的 merchant id，请於商户後台取得正确的接入网址 |\r\n| 解密验证错误 | Could not decrypt the payload | 接入网址、商户密钥、加密流程或方法有误，请参考加解密文档 |\r\n| 解密验证错误 | The payload is invalid | payload 信息有误，可尝试检查是否 payload 附加於 body 方式有误或参考加解密文档 <li>payload 置於 body 传输即可，无须加入任何键值後传输 。</li> ```错误范例：data={payload}```|\r\n| 解密验证错误 | json decode failed | payload  信息经解密後非 JSON 格式, 请参考加解密文档 |\r\n| 充值验证错误 | IP x.x.x.x not allowed | 请检查 商户後台/商户资讯/白名单 该 IP 是否已加白於对应的 IP 类型 |\r\n| 充值验证错误 | No card available | 请联系壹支付财务 |\r\n| 充值验证错误 | Deposit domain is not configured properly, please contact us. | 请联系壹支付财务 |\r\n| 充值验证错误 | The notify url not in the whitelist | notify url(callback) 未添加入白名单内，请提供 notify url(callback) 给壹支付，进行白名单添加。 |\r\n| 代付验证错误 | IP x.x.x.x not allowed | 请检查 商户後台/商户资讯/白名单 该 IP 是否已加白於对应的 IP 类型 |\r\n| 代付验证错误 | balance is not enough | 请检查商户钱包余额是否足够处理代付订单请求 |\r\n| 代付验证错误 | No card available | 请联系壹支付财务 |\r\n| 代付验证错误 | The notify url not in the whitelist | notify url(callback) 未添加入白名单内，请提供 notify url(callback) 给壹支付，进行白名单添加。 |\r\n\r\n若发生基础验证、解密验证错误，可按照以下项目确认问题\r\n\r\n1. 请求位址\r\n\r\n    由 ***商户后台 > 接入信息*** 内的接入网址及各 API 位址所组成\r\n\r\n    请求协定固定为 **https**\r\n\r\n    范例的充值位址格式： https://domain.com/11-xxx/SH/sendPay\r\n\r\n2. 请求方法应为 **POST**\r\n\r\n    确认程序使用的请求方法为 **POST**\r\n\r\n    若程序确认无问题\r\n\r\n    则可使用封包截取软件\r\n\r\n    截录程序实际送出的请求封包\r\n\r\n    观察程序请求及壹支付回应是否正常\r\n\r\n3. 原始资料应为 **JSON** 格式\r\n\r\n    确认原始资料可正常解析出 **JSON** 物件\r\n\r\n4. 加密结果正确\r\n\r\n    从 ***商户后台 > 接入信息*** 取得商户密钥\r\n\r\n    利用此密钥将原始资料经过加密方法后所产生的密文\r\n\r\n    应可由解密方法还原出原始资料\r\n\r\n    在开发加解密方法完成后\r\n\r\n    可自行透过该方法验证加解密是否正确\r\n\r\n    或可利用 ***商户后台 > 解密工具*** 验证加密结果是否可正常解密\r\n\r\n5. 请求 Payload 仅可放入加密后的密文\r\n\r\n    不得包含任何其他非密文的内容\r\n\r\n    假设密文为 `eyJpdiI6...`\r\n\r\n    则 Payload 只能是 `eyJpdiI6...`\r\n\r\n    以下皆为 Payload 错误范例\r\n\r\n    - `\"eyJpdiI6...\"`\r\n\r\n    - `data=eyJpdiI6...`\r\n\r\n    - `{\"data\":\"eyJpdiI6...\"}`\r\n\r\n6. 利用 HTTP 请求开发工具测试 API\r\n\r\n    将开发的程序汇整其请求资料\r\n\r\n    使用测试工具([Postman](https://www.postman.com/)、[Curl](https://curl.haxx.se/)...)手动发送请求\r\n\r\n    确认测试工具所得的结果与程序是否一致\r\n\r\n若全部确认完成后仍无法解决问题\r\n\r\n请将测试工具所测试结果截图并存入纯文字档(需包含请求位址和请求与回应的 Header、Payload)\r\n\r\n提供予壹支付协助解决"
 					},
 					"response": []
 				},
@@ -107,10 +107,10 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "支付",
+			"name": "充值",
 			"item": [
 				{
-					"name": "银行支付",
+					"name": "银行充值",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -139,13 +139,13 @@
 								{
 									"key": "order_type",
 									"value": "100",
-									"description": "* __string(10)__\n* 必填\n* 订单支付类型<br>\n`100: 网银类型`",
+									"description": "* __string(10)__\n* 必填\n* 订单充值类型<br>\n`100: 网银类型`",
 									"type": "text"
 								},
 								{
 									"key": "bank_code",
 									"value": "",
-									"description": "* __string(50)__\n* 必填\n* 银行代码, 网银支付时提供<br>\n参考[银行代码列表](#0bc3706f-0bab-48e5-9c55-7745d8588d7a)",
+									"description": "* __string(50)__\n* 必填\n* 银行代码, 网银充值时提供<br>\n参考[银行代码列表](#0bc3706f-0bab-48e5-9c55-7745d8588d7a)",
 									"type": "text"
 								},
 								{
@@ -179,12 +179,12 @@
 								"sendPay"
 							]
 						},
-						"description": "# 接入网址请参考下图\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/IntergrationUrl.png)\n\n\n# [资料传送需经过加密](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67) #\n[请参考AES加解密/加密流程](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67)\n\n\n## 由商户对壹支付平台发起请求 ##\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/SendPayFlow.png)\n\n>支付接口返回数据结构\n\n字段          | 描述\n:---:|:---\nerror_code          | 订单发起处理状态代码<br>**若处理成功则回传 200，除此之外皆为处理失败<br>应以此状态判断订单请求成功后再做接续处理**<br>相关状态代码可参考[错误代码列表](#49436352-ad18-4d12-8cce-a1f0db01c050) 或 [常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed)\ndata                | 回传信息\ndata.order_id       | 第三方订单号\ndata.order_amount   | 商户订单金额\ndata.request_amount | 壹支付产生充值金额\ndata.url            | 充值网站网址，需使用 GET 请求方法<br>`可用网站位址数组, 请测速後择一跳转` [测速程式码示例](https://raw.githubusercontent.com/devkhgy/top/doc/zh/客户端浏览器域名测速自動版.html)\ndata.token          | 跳转至充值网站验证用口令\n\n\n>支付接口返回示例\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"order_id\": \"D-0103201000001\",\n    \"order_amount\": 10.01,\n    \"request_amount\": 10.01,\n    \"url\": [\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```"
+						"description": "# 接入网址请参考下图\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/IntergrationUrl.png)\n\n\n# [资料传送需经过加密](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67) #\n[请参考AES加解密/加密流程](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67)\n\n\n## 由商户对壹支付平台发起请求 ##\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/SendPayFlow.png)\n\n>充值接口返回数据结构\n\n字段          | 描述\n:---:|:---\nerror_code          | 订单发起处理状态代码<br>**若处理成功则回传 200，除此之外皆为处理失败<br>应以此状态判断订单请求成功后再做接续处理**<br>相关状态代码可参考[错误代码列表](#49436352-ad18-4d12-8cce-a1f0db01c050) 或 [常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed)\ndata                | 回传信息\ndata.order_id       | 第三方订单号\ndata.order_amount   | 商户订单金额\ndata.request_amount | 壹支付产生充值金额\ndata.url            | 充值网站网址，需使用 GET 请求方法<br>`可用网站位址数组, 请测速後择一跳转` [测速程式码示例](https://raw.githubusercontent.com/devkhgy/top/doc/zh/客户端浏览器域名测速自動版.html)\ndata.token          | 跳转至充值网站验证用口令\n\n\n>充值接口返回示例\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"order_id\": \"D-0103201000001\",\n    \"order_amount\": 10.01,\n    \"request_amount\": 10.01,\n    \"url\": [\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```"
 					},
 					"response": []
 				},
 				{
-					"name": "QRPay 支付",
+					"name": "QRPay 充值",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -206,7 +206,7 @@
 								{
 									"key": "order_type",
 									"value": "QRPay",
-									"description": "* __string(10)__\n* 必填\n* 订单支付类型<br>\n`QRPay: QR Code 扫码支付`",
+									"description": "* __string(10)__\n* 必填\n* 订单充值类型<br>\n`QRPay: QR Code 扫码充值`",
 									"type": "text"
 								},
 								{
@@ -234,12 +234,12 @@
 								"sendPay"
 							]
 						},
-						"description": "# 接入网址请参考下图\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/IntergrationUrl.png)\n\n\n# [资料传送需经过加密](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67) #\n[请参考AES加解密/加密流程](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67)\n\n\n## 由商户对壹支付平台发起请求 ##\n\n![Alt text](https://github.com/devkhgy/top/blob/doc/zh/SendQRPayFlow.png?raw=true)\n\n>支付接口返回数据结构\n\n字段          | 描述\n:---:|:---\nerror_code          | 订单发起处理状态代码<br>**若处理成功则回传 200，除此之外皆为处理失败<br>应以此状态判断订单请求成功后再做接续处理**<br>相关状态代码可参考[错误代码列表](#49436352-ad18-4d12-8cce-a1f0db01c050) 或 [常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed)\ndata                | 回传信息\ndata.order_id       | 第三方订单号\ndata.order_amount   | 商户订单金额 <br> `注意: 若充值金额若为整数，壹支付会随机加入后两位小数供对帐使用`\ndata.request_amount | 壹支付产生充值金额\ndata.url            | 充值网站网址，需使用 GET 请求方法<br>`可用网站位址数组, 请测速後择一跳转` [测速程式码示例](https://raw.githubusercontent.com/devkhgy/top/doc/zh/客户端浏览器域名测速自動版.html)\ndata.token          | 跳转至充值网站验证用口令\n\n\n>支付接口返回示例\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"order_id\": \"D-0103201000001\",\n    \"order_amount\": 10.01,\n    \"request_amount\": 10.01,\n    \"url\": [\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```"
+						"description": "# 接入网址请参考下图\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/IntergrationUrl.png)\n\n\n# [资料传送需经过加密](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67) #\n[请参考AES加解密/加密流程](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67)\n\n\n## 由商户对壹支付平台发起请求 ##\n\n![Alt text](https://github.com/devkhgy/top/blob/doc/zh/SendQRPayFlow.png?raw=true)\n\n>充值接口返回数据结构\n\n字段          | 描述\n:---:|:---\nerror_code          | 订单发起处理状态代码<br>**若处理成功则回传 200，除此之外皆为处理失败<br>应以此状态判断订单请求成功后再做接续处理**<br>相关状态代码可参考[错误代码列表](#49436352-ad18-4d12-8cce-a1f0db01c050) 或 [常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed)\ndata                | 回传信息\ndata.order_id       | 第三方订单号\ndata.order_amount   | 商户订单金额 <br> `注意: 若充值金额若为整数，壹支付会随机加入后两位小数供对帐使用`\ndata.request_amount | 壹支付产生充值金额\ndata.url            | 充值网站网址，需使用 GET 请求方法<br>`可用网站位址数组, 请测速後择一跳转` [测速程式码示例](https://raw.githubusercontent.com/devkhgy/top/doc/zh/客户端浏览器域名测速自動版.html)\ndata.token          | 跳转至充值网站验证用口令\n\n\n>充值接口返回示例\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"order_id\": \"D-0103201000001\",\n    \"order_amount\": 10.01,\n    \"request_amount\": 10.01,\n    \"url\": [\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```"
 					},
 					"response": []
 				},
 				{
-					"name": "支付结果通知",
+					"name": "充值结果通知",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -255,7 +255,7 @@
 								{
 									"key": "order_status",
 									"value": "",
-									"description": "* __string(20)__\n* 支付结果<br>\n`请参考附件/订单状态`",
+									"description": "* __string(20)__\n* 充值结果<br>\n`请参考附件/订单状态`",
 									"type": "text"
 								},
 								{
@@ -267,7 +267,7 @@
 								{
 									"key": "paid_amount",
 									"value": "",
-									"description": "* __decimal(14,6)|null__\n* 用户实际支付金额",
+									"description": "* __decimal(14,6)|null__\n* 用户实际充值金额",
 									"type": "text"
 								},
 								{
@@ -279,17 +279,17 @@
 							]
 						},
 						"url": {
-							"raw": "支付请求壹支付参数 notify_url 值",
+							"raw": "充值请求壹支付参数 notify_url 值",
 							"host": [
-								"支付请求壹支付参数 notify_url 值"
+								"充值请求壹支付参数 notify_url 值"
 							]
 						},
-						"description": "# [资料接收需经过解密](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67) #\n[请参考AES加解密/解密流程](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67)\n\n## 由商户平台提供接口 ##\n\n完成支付後，壹支付平台处理完成後透过 `notify_url` 地址通知商户\n\n> 支付交易完成通知接口返回数据结构\n\n字段          | 描述\n:---:|:---\nresult        |是否接收成功，success: 是\n\n\n> 支付交易完成通知接口返回示范 <br> __若成功接收壹支付交易完成通知，无论交易結果成功與否，皆须回應下列范例。__ <br> *** 回应需进行加密处理 ***\n\n```json\n{\n  \"result\": \"success\"\n}\n```"
+						"description": "# [资料接收需经过解密](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67) #\n[请参考AES加解密/解密流程](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67)\n\n## 由商户平台提供接口 ##\n\n完成充值後，壹支付平台处理完成後透过 `notify_url` 地址通知商户\n\n> 充值交易完成通知接口返回数据结构\n\n字段          | 描述\n:---:|:---\nresult        |是否接收成功，success: 是\n\n\n> 充值交易完成通知接口返回示范 <br> __若成功接收壹支付交易完成通知，无论交易結果成功與否，皆须回應下列范例。__ <br> *** 回应需进行加密处理 ***\n\n```json\n{\n  \"result\": \"success\"\n}\n```"
 					},
 					"response": []
 				},
 				{
-					"name": "支付查询",
+					"name": "充值查询",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -315,7 +315,7 @@
 								"queryPay"
 							]
 						},
-						"description": "# 接入网址请参考下图\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/IntergrationUrl.png)\n\n\n# [资料传送需经过加密](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67) #\n[请参考AES加解密/加密流程](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67)\n\n## 由商户对壹支付平台发起请求 ##\n\n>支付查询接口返回数据结构\n\n字段              | 描述\n:---:|:---\nerror_code          |错误代码, 参考[错误代码列表](#49436352-ad18-4d12-8cce-a1f0db01c050) 或 [常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed)\ndata                |回传信息\ndata.order_id       |第三方订单号\ndata.sh_order_no    |商户系统订单号, 该订单号将作为接口的返回数据\ndata.order_type     |订单支付类型<br><table><tr><td>type</td><td>name</td></tr><tr><td>100</td><td>网银</td></tr></table>\ndata.status         |参考[订单状态](#53553cc5-6c45-41fa-8a58-b5f11907e6e5)\ndata.order_amount   |商户订单金额\ndata.paid_amount    |用户实际支付金额\ndata.request_amount |壹支付产生充值金额\ndata.created_at     |订单创建时间, 格式: `Y-m-d H:i:s`\ndata.finished_at    |订单完成时间, 格式: `Y-m-d H:i:s`\n\n\n>支付查询接口返回示例\n```json\n{\n   \"error_code\": 200,\n   \"data\": {\n      \"order_id\": \"D-0103201000001\",\n      \"sh_order_no\": \"ORDERNO0001\",\n      \"status\": 3,\n      \"order_type\": \"100\",\n      \"order_amount\": 100,\n      \"request_amount\": 100.78,\n      \"paid_amount\": 100,\n      \"created_at\": \"2019-10-10 00:00:00\",\n      \"finished_at\": \"2019-10-10 00:05:05\",\n   }\n}\n\n```"
+						"description": "# 接入网址请参考下图\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/IntergrationUrl.png)\n\n\n# [资料传送需经过加密](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67) #\n[请参考AES加解密/加密流程](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67)\n\n## 由商户对壹支付平台发起请求 ##\n\n>充值查询接口返回数据结构\n\n字段              | 描述\n:---:|:---\nerror_code          |错误代码, 参考[错误代码列表](#49436352-ad18-4d12-8cce-a1f0db01c050) 或 [常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed)\ndata                |回传信息\ndata.order_id       |第三方订单号\ndata.sh_order_no    |商户系统订单号, 该订单号将作为接口的返回数据\ndata.order_type     |订单充值类型<br><table><tr><td>type</td><td>name</td></tr><tr><td>100</td><td>网银</td></tr></table>\ndata.status         |参考[订单状态](#53553cc5-6c45-41fa-8a58-b5f11907e6e5)\ndata.order_amount   |商户订单金额\ndata.paid_amount    |用户实际充值金额\ndata.request_amount |壹支付产生充值金额\ndata.created_at     |订单创建时间, 格式: `Y-m-d H:i:s`\ndata.finished_at    |订单完成时间, 格式: `Y-m-d H:i:s`\n\n\n>充值查询接口返回示例\n```json\n{\n   \"error_code\": 200,\n   \"data\": {\n      \"order_id\": \"D-0103201000001\",\n      \"sh_order_no\": \"ORDERNO0001\",\n      \"status\": 3,\n      \"order_type\": \"100\",\n      \"order_amount\": 100,\n      \"request_amount\": 100.78,\n      \"paid_amount\": 100,\n      \"created_at\": \"2019-10-10 00:00:00\",\n      \"finished_at\": \"2019-10-10 00:05:05\",\n   }\n}\n\n```"
 					},
 					"response": []
 				}
