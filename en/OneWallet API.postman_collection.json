@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "4788996f-88b5-419f-b99f-ccddc8018b74",
 		"name": "OneWallet API",
-		"description": "### Revision Record ###\r\n\r\n| Date | Description | Ver | Modifier |\r\n|---|---|---|---|\r\n| 2019-10-01 | Initialization | v1.0.0 | Ivan |\r\n| 2020-01-30 | The parameter __notify_url__ has been altered: <li>It's length from 100 to 255</li><li>Please offer your notification callback URL to __OneWallet__ service. We will put your __notify_url__ address on IP whitelist first. </li> | v1.0.1 | Ray |\r\n| 2020-01-31 | [Troubleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9)| v1.0.2 | Ray |\r\n| 2020-02-03 | New parameter(s) joined in each API <li>Bank Deposit API: request_amount</li><li>QRPay Deposit API:  request_amount</li><li>Deposit Query API: request_amount</li><li>Deposit Notification API: request_amount,  order_amount</li><li>Withdrawal Query API: paid_amount</li><li>Withdrawal Notification API: paid_amount</li> |v1.0.3|Ray|\r\n| 2020-02-12 |Remove payment request parameter: created_at <li>Bank Deposit API Definition</li><li>QRPay Deposit API Definition</li>|v1.0.4|Ray|\r\n| 2020-03-03 |[Troubleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9) : There are 2 new error types<br><li>DepositVerificationError</li><li>WithdrawalVerificationError</li>|v1.0.5|Ray|\r\n| 2020-03-05 |[Bank Code](#cc7d8d7a-6b7b-4297-ab96-9982aa88c66a)<br>New bank code __TMB Bank__ involved in the list. | v1.0.6 |Ray|\r\n|2020-03-19|Add Gateway Order ID|v1.0.7|Ray|\r\n|2020-04-16|Add Deposit website language|v1.0.8|Ray|\r\n|2020-07-27|Support VND|v1.1.0|Ivan|\r\n|2020-09-18|Deposit & Withdrawal API may trigger error notification.|v1.1.1|Randolph|\r\n\r\n### Warning ###\r\n\r\n+ In UAT, all transactions with testing banks will be mocked. You need to be aware that picking non-testing banks will proceed with an **ACTUAL** transaction.\r\n+ The timezone used in all One Wallet responses is **GMT + 8 (Beijing)**",
+		"description": "### Revision Record ###\r\n\r\n| Date | Description | Ver | Modifier |\r\n|---|---|---|---|\r\n| 2019-10-01 | Initialization | v1.0.0 | Ivan |\r\n| 2020-01-30 | The parameter __notify_url__ has been altered: <li>It's length from 100 to 255</li><li>Please offer your notification callback URL to __OneWallet__ service. We will put your __notify_url__ address on IP whitelist first. </li> | v1.0.1 | Ray |\r\n| 2020-01-31 | [Troubleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9)| v1.0.2 | Ray |\r\n| 2020-02-03 | New parameter(s) joined in each API <li>Bank Deposit API: request_amount</li><li>QRPay Deposit API:  request_amount</li><li>Deposit Query API: request_amount</li><li>Deposit Notification API: request_amount,  order_amount</li><li>Withdrawal Query API: paid_amount</li><li>Withdrawal Notification API: paid_amount</li> |v1.0.3|Ray|\r\n| 2020-02-12 |Remove payment request parameter: created_at <li>Bank Deposit API Definition</li><li>QRPay Deposit API Definition</li>|v1.0.4|Ray|\r\n| 2020-03-03 |[Troubleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9) : There are 2 new error types<br><li>DepositVerificationError</li><li>WithdrawalVerificationError</li>|v1.0.5|Ray|\r\n| 2020-03-05 |[Bank Code](#cc7d8d7a-6b7b-4297-ab96-9982aa88c66a)<br>New bank code __TMB Bank__ involved in the list. | v1.0.6 |Ray|\r\n|2020-03-19|Add Gateway Order ID|v1.0.7|Ray|\r\n|2020-04-16|Add Deposit website language|v1.0.8|Ray|\r\n|2020-07-27|Support VND|v1.1.0|Ivan|\r\n|2020-09-18|Deposit & Withdrawal API may trigger error notification.|v1.1.1|Randolph|\r\n|2020-09-21|Support IDR|v1.2.0|Ivan|\r\n\r\n### Warning ###\r\n\r\n+ In UAT, all transactions with testing banks will be mocked. You need to be aware that picking non-testing banks will proceed with an **ACTUAL** transaction.\r\n+ The timezone used in all One Wallet responses is **GMT + 8 (Beijing)**",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -41,7 +41,7 @@
 						"url": {
 							"raw": ""
 						},
-						"description": "Test Bank Code (Only UAT)\n----------------\nbank_code | bank |\n:---:|:---:|\nTEST_HGY    |TEST_HGY\n\nVietnam Bank Code\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nVCB  | Vietcom Bank |\nVTB  | Vietin Bank |\nTCB  | Techcombank |\nBIDV | Bank for Investment and Development of Vietnam |\nACB  | Asia Commercial Bank |\nDAB  | DongA BANK |\nSAC  | Sacom Bank |\n\nThailand Bank Code\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nBBL | Bangkok Bank\nKB  | Kasikorn Bank\nSCB | Siam Commercial Bank\nKTB | Krung Thai Bank\nBAY | BANK OF AYUDHYA\nTMB | TMB Bank\nGSB | Goverment saving bank | Only for Withdrawal\nTBNK | Thanachart Bank | Only for Withdrawal\nCIMBT | CIMB Thai bank | Only for Withdrawal\nKK  | Kiatnakin bank | Only for Withdrawal\n\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
+						"description": "Test Bank Code (Only UAT)\n----------------\nbank_code | bank |\n:---:|:---:|\nTEST_HGY    |TEST_HGY\n\nVietnam Bank Code\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nVCB  | Vietcom Bank |\nVTB  | Vietin Bank |\nTCB  | Techcombank |\nBIDV | Bank for Investment and Development of Vietnam |\nACB  | Asia Commercial Bank |\nDAB  | DongA BANK |\nSAC  | Sacom Bank |\n\nThailand Bank Code\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nBBL | Bangkok Bank\nKB  | Kasikorn Bank\nSCB | Siam Commercial Bank\nKTB | Krung Thai Bank\nBAY | BANK OF AYUDHYA\nTMB | TMB Bank\nGSB | Goverment saving bank | Only for Withdrawal\nTBNK | Thanachart Bank | Only for Withdrawal\nCIMBT | CIMB Thai bank | Only for Withdrawal\nKK  | Kiatnakin bank | Only for Withdrawal\n\nIndonesia Bank Code\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nBCA | PT Bank Central Asia Tbk\nBNi | PT Bank Negara Indonesia (Persero) Tbk\nBRI | PT Bank Rakyat Indonesia (Persero) Tbk\nCIMB | PT Bank CIMB Niaga Tbk\n\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
 					},
 					"response": []
 				},
@@ -138,7 +138,7 @@
 								{
 									"key": "order_amount",
 									"value": "",
-									"description": "* __decimal(14,6)__\n* required\n* The amount of the order from merchant.\n* The amount should be integer in VND. (Number without any decimal places)",
+									"description": "* __decimal(14,6)__\n* required\n* The amount of the order from merchant.\n* The amount should be integer in VND or IDR. (Number without any decimal places)",
 									"type": "text"
 								},
 								{
@@ -168,7 +168,7 @@
 								{
 									"key": "language",
 									"value": "",
-									"description": "* The language intended for the user in Deposit website. If no value is specified, browser language preference is applied.\n* Supported Languages：<br>\n  - `en: English`\n  - `th: Thai(Only for Thai banks)`\n  - `vn: Vietnamese(Only for Vietnam banks)`\n* The priority language in Deposit website:\n  1. Recently used language in Deposit website.\n  2. \"language\" parameter.\n  3. Browser language preferences.\n\n* It needs to clean cookies for testing if \"language\" parameter works.",
+									"description": "* The language intended for the user in Deposit website. If no value is specified, browser language preference is applied.\n* Supported Languages：<br>\n  - `en: English`\n  - `th: Thai(Only for Thai banks)`\n  - `vn: Vietnamese(Only for Vietnam banks)`\n  - `id: Indonesian(Only for Indonesia banks)`\n* The priority language in Deposit website:\n  1. Recently used language in Deposit website.\n  2. \"language\" parameter.\n  3. Browser language preferences.\n\n* It needs to clean cookies for testing if \"language\" parameter works.",
 									"type": "text"
 								}
 							]
@@ -393,7 +393,7 @@
 								{
 									"key": "order_amount",
 									"value": "",
-									"description": "* __decimal(14,6)__\n* required\n* The amount of the order from merchant.\n* The amount should be integer in VND. (Number without any decimal places)",
+									"description": "* __decimal(14,6)__\n* required\n* The amount of the order from merchant.\n* The amount should be integer in VND or IDR. (Number without any decimal places)",
 									"type": "text"
 								},
 								{

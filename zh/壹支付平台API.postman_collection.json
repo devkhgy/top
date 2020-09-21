@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "324913ee-44c9-4047-a66c-67e648bbf586",
 		"name": "壹支付平台API",
-		"description": "### 修订记录 ###\r\n\r\n| 日期 | 描述 | 版本号 | 编辑 |\r\n|---|---|---|---|\r\n|2019-10-01|初始版本|v1.0.0|Ivan|\r\n|2020-01-30|参数 notify_url 相关调整如下 <li>长度由 100 改为 255</li><li>必须先提供网址给壹支付加入回呼白名单</li>|v1.0.1|Ray|\r\n|2020-01-31|新增 [常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed)|v1.0.2|Ray|\r\n|2020-02-03| API 回应金额信息完善 <li>银行充值: 加入 request_amount</li><li>QRPay 充值: 加入 request_amount</li><li>充值查询: 加入 request_amount</li><li>充值结果通知: 加入 request_amount, order_amount</li><li>代付查询: 加入 paid_amount</li><li>代付结果通知: 加入 paid_amount</li> |v1.0.3|Ray|\r\n|2020-02-12|移除充值请求参数 created_at <li>银行充值</li><li>QRPay 充值</li>|v1.0.4|Ray|\r\n|2020-03-03|[常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed) 加入充值验证错误与代付验证错误|v1.0.5|Ray|\r\n|2020-03-03|新增 TMB Bank 服务|v1.0.6|Ray|\r\n|2020-03-19|新增第三方订单号|v1.0.7|Ray|\r\n|2020-04-16|新增充值网语系|v1.0.8|Ray|\r\n|2020-07-27|新增支援越南银行|v1.1.0|Ivan|\r\n|2020-09-09|充值及代付API有時觸發結果通知|v1.1.1|Randolph|\r\n\r\n### 请注意 ###\r\n+ 在 UAT 环境的转帐交易，若选择测试用银行代码，则所有交易皆以模拟的方式替代，并不会真实完成现金交易，但是若所选用的银行为正式银行代码，将会向网银执行真实的转帐交易，会从所选择的银行帐户 **执行真正的现金交易**\r\n+ 壹支付所有回传时间信息均为 **北京时区(GMT+8)**",
+		"description": "### 修订记录 ###\r\n\r\n| 日期 | 描述 | 版本号 | 编辑 |\r\n|---|---|---|---|\r\n|2019-10-01|初始版本|v1.0.0|Ivan|\r\n|2020-01-30|参数 notify_url 相关调整如下 <li>长度由 100 改为 255</li><li>必须先提供网址给壹支付加入回呼白名单</li>|v1.0.1|Ray|\r\n|2020-01-31|新增 [常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed)|v1.0.2|Ray|\r\n|2020-02-03| API 回应金额信息完善 <li>银行充值: 加入 request_amount</li><li>QRPay 充值: 加入 request_amount</li><li>充值查询: 加入 request_amount</li><li>充值结果通知: 加入 request_amount, order_amount</li><li>代付查询: 加入 paid_amount</li><li>代付结果通知: 加入 paid_amount</li> |v1.0.3|Ray|\r\n|2020-02-12|移除充值请求参数 created_at <li>银行充值</li><li>QRPay 充值</li>|v1.0.4|Ray|\r\n|2020-03-03|[常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed) 加入充值验证错误与代付验证错误|v1.0.5|Ray|\r\n|2020-03-03|新增 TMB Bank 服务|v1.0.6|Ray|\r\n|2020-03-19|新增第三方订单号|v1.0.7|Ray|\r\n|2020-04-16|新增充值网语系|v1.0.8|Ray|\r\n|2020-07-27|新增支援越南银行|v1.1.0|Ivan|\r\n|2020-09-09|充值及代付API有時觸發結果通知|v1.1.1|Randolph|\r\n|2020-09-21|新增支援印尼银行|v1.2.0|Ivan|\r\n\r\n### 请注意 ###\r\n+ 在 UAT 环境的转帐交易，若选择测试用银行代码，则所有交易皆以模拟的方式替代，并不会真实完成现金交易，但是若所选用的银行为正式银行代码，将会向网银执行真实的转帐交易，会从所选择的银行帐户 **执行真正的现金交易**\r\n+ 壹支付所有回传时间信息均为 **北京时区(GMT+8)**",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -41,7 +41,7 @@
 						"url": {
 							"raw": ""
 						},
-						"description": "测试用银行代码列表 (UAT 环境专用)\n----------------\nbank_code | bank |\n:---:|:---:|\nTEST_HGY    |TEST_HGY\n\n越南银行代码列表\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nVCB  | Vietcom Bank |\nVTB  | Vietin Bank |\nTCB  | Techcombank |\nBIDV | Bank for Investment and Development of Vietnam |\nACB  | Asia Commercial Bank |\nDAB  | DongA BANK |\nSAC  | Sacom Bank |\n\n泰国银行代码列表\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nBBL | Bangkok Bank |\nKB  | Kasikorn Bank |\nSCB | Siam Commercial Bank |\nKTB | Krung Thai Bank |\nBAY | BANK OF AYUDHYA |\nTMB | TMB Bank |\nGSB | Goverment saving bank | 仅可用于代付\nTBNK | Thanachart Bank | 仅可用于代付\nCIMBT | CIMB Thai bank | 仅可用于代付\nKK  | Kiatnakin bank | 仅可用于代付\n\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
+						"description": "测试用银行代码列表 (UAT 环境专用)\n----------------\nbank_code | bank |\n:---:|:---:|\nTEST_HGY    |TEST_HGY\n\n越南银行代码列表\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nVCB  | Vietcom Bank |\nVTB  | Vietin Bank |\nTCB  | Techcombank |\nBIDV | Bank for Investment and Development of Vietnam |\nACB  | Asia Commercial Bank |\nDAB  | DongA BANK |\nSAC  | Sacom Bank |\n\n泰国银行代码列表\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nBBL | Bangkok Bank |\nKB  | Kasikorn Bank |\nSCB | Siam Commercial Bank |\nKTB | Krung Thai Bank |\nBAY | BANK OF AYUDHYA |\nTMB | TMB Bank |\nGSB | Goverment saving bank | 仅可用于代付\nTBNK | Thanachart Bank | 仅可用于代付\nCIMBT | CIMB Thai bank | 仅可用于代付\nKK  | Kiatnakin bank | 仅可用于代付\n\n印尼银行代码列表\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nBCA | PT Bank Central Asia Tbk\nBNi | PT Bank Negara Indonesia (Persero) Tbk\nBRI | PT Bank Rakyat Indonesia (Persero) Tbk\nCIMB | PT Bank CIMB Niaga Tbk\n\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
 					},
 					"response": []
 				},
@@ -145,7 +145,7 @@
 								{
 									"key": "order_amount",
 									"value": "",
-									"description": "* __decimal(14,6)__\n* 必填\n* 订单提交金额\n* 使用越南银行时应为正整数，不允许含有小数的金额",
+									"description": "* __decimal(14,6)__\n* 必填\n* 订单提交金额\n* 使用越南、印尼银行时应为正整数，不允许含有小数的金额",
 									"type": "text"
 								},
 								{
@@ -175,7 +175,7 @@
 								{
 									"key": "language",
 									"value": "",
-									"description": "* 用户进入充值网后所要显示的语系，预设为用户浏览器语系\n* 已支援语系：<br>\n  - `en: 英文`\n  - `th: 泰文(仅限泰国银行)`\n  - `vn: 越南文(仅限越南银行)`\n* 用户进入充值网显示语系的优先顺序\n  1. 最近一次于充值网所选择的语系\n  2. 参数 language\n  3. 用户浏览器的语系\n* 如需测试参数 language 能否正确运作，可清除 cookie 后再做测试",
+									"description": "* 用户进入充值网后所要显示的语系，预设为用户浏览器语系\n* 已支援语系：<br>\n  - `en: 英文`\n  - `th: 泰文(仅限泰国银行)`\n  - `vn: 越南文(仅限越南银行)`\n  - `id: 印尼文(仅限印尼银行)`\n* 用户进入充值网显示语系的优先顺序\n  1. 最近一次于充值网所选择的语系\n  2. 参数 language\n  3. 用户浏览器的语系\n* 如需测试参数 language 能否正确运作，可清除 cookie 后再做测试",
 									"type": "text"
 								}
 							]
@@ -230,7 +230,7 @@
 								{
 									"key": "language",
 									"value": "",
-									"description": "* 用户进入充值网后所要显示的语系，预设为用户浏览器语系\n* 已支援语系：<br>\n  - `en: 英文`\n  - `th: 泰文(仅限泰国银行)`\n  - `vn: 越南文(仅限越南银行)`\n* 用户进入充值网显示语系的优先顺序\n  1. 最近一次于充值网所选择的语系\n  2. 参数 language\n  3. 用户浏览器的语系\n* 如需测试参数 language 能否正确运作，可清除 cookie 后再做测试",
+									"description": "* 用户进入充值网后所要显示的语系，预设为用户浏览器语系\n* 已支援语系：<br>\n  - `en: 英文`\n  - `th: 泰文(仅限泰国银行)`\n  - `vn: 越南文(仅限越南银行)`\n  - `id: 印尼文(仅限印尼银行)`\n* 用户进入充值网显示语系的优先顺序\n  1. 最近一次于充值网所选择的语系\n  2. 参数 language\n  3. 用户浏览器的语系\n* 如需测试参数 language 能否正确运作，可清除 cookie 后再做测试",
 									"type": "text"
 								}
 							]
@@ -372,7 +372,7 @@
 								{
 									"key": "order_amount",
 									"value": "",
-									"description": "* __decimal(14,6)__\n* 必填\n* 商户订单金额\n* 使用越南银行时应为正整数，不允许含有小数的金额",
+									"description": "* __decimal(14,6)__\n* 必填\n* 商户订单金额\n* 使用越南、印尼银行时应为正整数，不允许含有小数的金额",
 									"type": "text"
 								},
 								{
