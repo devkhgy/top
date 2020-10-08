@@ -41,7 +41,7 @@
 						"url": {
 							"raw": ""
 						},
-						"description": "测试用银行代码列表 (UAT 环境专用)\n----------------\nbank_code | bank |\n:---:|:---:|\nTEST_HGY    |TEST_HGY\n\n越南银行代码列表\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nVCB  | Vietcom Bank |\nVTB  | Vietin Bank |\nTCB  | Techcombank |\nBIDV | Bank for Investment and Development of Vietnam |\nACB  | Asia Commercial Bank |\nDAB  | DongA BANK |\nSAC  | Sacom Bank |\n\n泰国银行代码列表\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nBBL | Bangkok Bank |\nKB  | Kasikorn Bank |\nSCB | Siam Commercial Bank |\nKTB | Krung Thai Bank |\nBAY | BANK OF AYUDHYA |\nTMB | TMB Bank |\nGSB | Goverment saving bank | 仅可用于代付\nTBNK | Thanachart Bank | 仅可用于代付\nCIMBT | CIMB Thai bank | 仅可用于代付\nKK  | Kiatnakin bank | 仅可用于代付\n\n印尼银行代码列表\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nBCA | PT Bank Central Asia Tbk\nBNI | PT Bank Negara Indonesia (Persero) Tbk\nBRI | PT Bank Rakyat Indonesia (Persero) Tbk\nCIMB | PT Bank CIMB Niaga Tbk\n\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
+						"description": "测试用银行代码列表 (UAT 环境专用)\n----------------\nbank_code | bank |\n:---:|:---:|\nTEST_HGY    |TEST_HGY\n\n越南银行代码列表\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nVCB  | Vietcom Bank |\nVTB  | Vietin Bank |\nTCB  | Techcombank |\nBIDV | Bank for Investment and Development of Vietnam |\nACB  | Asia Commercial Bank |\nDAB  | DongA BANK |\nSAC  | Sacom Bank |\n\n泰国银行代码列表\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nBBL | Bangkok Bank |\nKB  | Kasikorn Bank |\nSCB | Siam Commercial Bank |\nKTB | Krung Thai Bank |\nBAY | BANK OF AYUDHYA |\nTMB | TMB Bank |\nGSB | Goverment saving bank | 仅可用于代付\nTBNK | Thanachart Bank | 仅可用于代付\nCIMBT | CIMB Thai bank | 仅可用于代付\nKK  | Kiatnakin bank | 仅可用于代付\n\n印尼银行代码列表\n----------------\nbank_code | bank | note\n:---:|:---:|:---:\nBCA | PT Bank Central Asia Tbk\nBNI | PT Bank Negara Indonesia (Persero) Tbk\nBRI | PT Bank Rakyat Indonesia (Persero) Tbk\nCIMB | PT Bank CIMB Niaga Tbk\nMDR | PT Bank Mandiri (Persero) Tbk | 仅可用于充值\n\n\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>"
 					},
 					"response": []
 				},
@@ -296,7 +296,7 @@
 								"充值请求壹支付参数 notify_url 值"
 							]
 						},
-						"description": "# [资料接收需经过解密](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67) #\n[请参考AES加解密/解密流程](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67)\n\n## 由商户平台提供接口 ##\n\n完成充值後，壹支付平台处理完成後透过 `notify_url` 地址通知商户\n\n> 充值交易完成通知接口返回数据结构\n\n字段          | 描述\n:---:|:---\nresult        |是否接收成功，success: 是\n\n\n> 充值交易完成通知接口返回示范 <br> __若成功接收壹支付交易完成通知，无论交易結果成功與否，皆须回應下列范例。__ <br> *** 回应需进行加密处理 ***\n\n```json\n{\n  \"result\": \"success\"\n}\n```"
+						"description": "# [资料接收需经过解密](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67) #\n[请参考AES加解密/解密流程](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67)\n\n## 由商户平台提供接口 ##\n\n完成充值後，壹支付平台处理完成後透过 `notify_url` 地址通知商户\n\n> 充值交易完成通知接口返回数据结构\n\n字段          | 描述\n:---:|:---\nresult        |是否接收成功，success: 是\n\n\n> 充值交易完成通知接口返回示例，内容需可反解成 JSON 物件之格式 <br> __若成功接收壹支付交易完成通知，无论交易結果成功與否，皆须回應下列范例。__ <br> *** 回应需进行加密处理 ***\n\n```json\n{\"result\":\"success\"}\n```"
 					},
 					"response": []
 				},
@@ -445,7 +445,7 @@
 								"代付请求壹支付参数 notify_url 值"
 							]
 						},
-						"description": "# [资料接收需经过解密](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67) #\n[请参考AES加解密/解密流程](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67)\n\n## 由商户平台提供接口 ##\n\n完成代付後，壹支付平台处理完成後透过 `notify_url` 地址通知商户\n\n>代付交易完成通知接口数据结构\n\n字段          | 描述\n:---:|:---\nresult        |是否接收成功，success: 是\n\n\n> 代付交易完成通知接口返回示范 <br> __若成功接收壹支付交易完成通知，无论交易結果成功與否，皆须回應下列范例。__ <br> *** 回应需进行加密处理 ***\n\n```json\n{\n  \"result\": \"success\"\n}\n```"
+						"description": "# [资料接收需经过解密](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67) #\n[请参考AES加解密/解密流程](#0798ff90-2dc2-47f9-a2f8-f6802f18bc67)\n\n## 由商户平台提供接口 ##\n\n完成代付後，壹支付平台处理完成後透过 `notify_url` 地址通知商户\n\n>代付交易完成通知接口数据结构\n\n字段          | 描述\n:---:|:---\nresult        |是否接收成功，success: 是\n\n\n> 代付交易完成通知接口返回示例，内容需可反解成 JSON 物件之格式 <br> __若成功接收壹支付交易完成通知，无论交易結果成功與否，皆须回應下列范例。__ <br> *** 回应需进行加密处理 ***\n\n```json\n{\"result\":\"success\"}\n```"
 					},
 					"response": []
 				},
