@@ -41,7 +41,7 @@
 						"url": {
 							"raw": ""
 						},
-						"description": "测试用银行代码列表 (UAT 环境专用)\n----------------\nbank_code | bank |\n:---:|:---:|\nTEST_HGY    |TEST_HGY\n\n越南银行代码列表\n----------------\nbank_code | bank | 可用服务类型\n:---:|:---:|:---:\nACB     | Asia Commercial Bank | 网银, 银行卡转账, 银行卡扫码, 代付\nAGRI    | AGRI Bank | 网银, 银行卡转账\nBIDV    | Bank for Investment and Development of Vietnam | 网银, 银行卡转账, 银行卡扫码, 代付\nDAB     | DongA BANK | 网银, 银行卡转账, 代付\nEXB     | EXIM Bank | 网银, 银行卡转账\nMB      | Military Commercial Joint Stock Bank | 网银, 银行卡转账\nSAC     | Sacom Bank | 网银, 银行卡转账, 代付\nSAIGON  | SAIGON Bank | 网银, 银行卡转账\nSCB     | Siam Commercial Bank | 网银, 银行卡转账, 银行卡扫码\nTCB     | Techcombank | 网银, 银行卡转账, 代付\nTPB     | Tanganyika Postal Office Savings Bank | 网银, 银行卡转账, 银行卡扫码\nVCB     | Vietcom Bank | 网银, 银行卡转账, 银行卡扫码, 代付\nVP      | Vietnam Prosperity Joint‑Stock Commercial Bank | 网银, 银行卡转账, 银行卡扫码\nVTB     | Vietin Bank | 网银, 银行卡转账, 银行卡扫码, 代付"
+						"description": "越南银行代码列表\n----------------\nbank_code | bank | 可用服务类型\n:---:|:---:|:---:\nACB     | Asia Commercial Bank | 网银, 银行卡转账, 银行卡扫码, 代付\nAGRI    | AGRI Bank | 网银, 银行卡转账\nBIDV    | Bank for Investment and Development of Vietnam | 网银, 银行卡转账, 银行卡扫码, 代付\nDAB     | DongA BANK | 网银, 银行卡转账, 代付\nEXB     | EXIM Bank | 网银, 银行卡转账\nMB      | Military Commercial Joint Stock Bank | 网银, 银行卡转账\nSAC     | Sacom Bank | 网银, 银行卡转账, 代付\nSAIGON  | SAIGON Bank | 网银, 银行卡转账\nSCB     | Siam Commercial Bank | 网银, 银行卡转账, 银行卡扫码\nTCB     | Techcombank | 网银, 银行卡转账, 代付\nTPB     | Tanganyika Postal Office Savings Bank | 网银, 银行卡转账, 银行卡扫码\nVCB     | Vietcom Bank | 网银, 银行卡转账, 银行卡扫码, 代付\nVP      | Vietnam Prosperity Joint‑Stock Commercial Bank | 网银, 银行卡转账, 银行卡扫码\nVTB     | Vietin Bank | 网银, 银行卡转账, 银行卡扫码, 代付"
 					},
 					"response": []
 				},
@@ -138,7 +138,7 @@
 							"urlencoded": [
 								{
 									"key": "sh_order_no",
-									"value": "",
+									"value": "123",
 									"description": "* __string(50)__\n* 必填\n* 商户订单号, 该订单号将作为接口的返回数据<br>\n`该值需在商户系统内唯一存在`",
 									"type": "text"
 								},
@@ -188,7 +188,7 @@
 								"sendPay"
 							]
 						},
-						"description": "1.接入网址请参考下图\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/IntergrationUrl.png)\n\n\n# 2.资料传送需经过加密，请参考 [A-g. \\*\\*\\* AES 加解密与请求 (串接前必读) \\*\\*\\*](#7040668b-b6ff-4c6c-9f2a-6cd717bbb97c) #\n\n\n3.由商户对壹支付平台发起请求\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/SendPayFlow2.png)\n\n> ## 充值接口返回数据结构 ##\n\n字段          | 描述\n:---:|:---\nerror_code          | 订单发起处理状态代码<br>**若处理成功则回传 200，除此之外皆为处理失败<br>应以此状态判断订单请求成功后再做接续处理**<br>相关状态代码可参考 [A-e. 错误代码列表](#4ad306ad-e218-4e88-8ce6-18d926f67518) 或 [A-f. 常见错误类型说明](#53c7bc97-bfe0-484d-be0c-65eaa7c8c7ca)<br>部份錯誤也會觸發充值結果通知，請參考 [B-c. 充值结果通知](#5135ea5c-3a9d-45bd-a5dc-a2c9394d8238)。\ndata                | 回传信息\ndata.order_id       | 第三方订单号\ndata.order_amount   | 商户订单金额\ndata.request_amount | 壹支付产生充值金额\ndata.url            | 充值网站网址，每次配给网域不同，需使用 GET 请求方法<br>`可用网站位址数组, 请测速後择一跳转` [测速程式码示例](https://raw.githubusercontent.com/devkhgy/top/doc/zh/客户端浏览器域名测速自動版.html)\ndata.token          | 跳转至充值网站验证用口令\n\n\n> ## 充值接口返回示例 ##\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"order_id\": \"D-0103201000001\",\n    \"order_amount\": 10.01,\n    \"request_amount\": 10.01,\n    \"url\": [\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```"
+						"description": "1.接入网址请参考下图\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/IntergrationUrl.png)\n\n\n# 2.资料传送需经过加密，请参考 [A-g. \\*\\*\\* AES 加解密与请求 (串接前必读) \\*\\*\\*](#7040668b-b6ff-4c6c-9f2a-6cd717bbb97c) #\n\n\n3.由商户对壹支付平台发起请求\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/SendPayFlow2.png)\n\n> ## 充值接口返回数据结构 ##\n\n字段          | 描述\n:---:|:---\nerror_code          | 订单发起处理状态代码<br>**若处理成功则回传 200，除此之外皆为处理失败<br>应以此状态判断订单请求成功后再做接续处理**<br>相关状态代码可参考 [A-e. 错误代码列表](#4ad306ad-e218-4e88-8ce6-18d926f67518) 或 [A-f. 常见错误类型说明](#53c7bc97-bfe0-484d-be0c-65eaa7c8c7ca)<br>部份錯誤也會觸發充值結果通知，請參考 [B-b. 充值结果通知](#5135ea5c-3a9d-45bd-a5dc-a2c9394d8238)。\ndata                | 回传信息\ndata.order_id       | 第三方订单号\ndata.order_amount   | 商户订单金额\ndata.request_amount | 壹支付产生充值金额\ndata.url            | 充值网站网址，每次配给网域不同，需使用 GET 请求方法<br>`可用网站位址数组, 请测速後择一跳转` [测速程式码示例](https://raw.githubusercontent.com/devkhgy/top/doc/zh/客户端浏览器域名测速自動版.html)\ndata.token          | 跳转至充值网站验证用口令\n\n\n> ## 充值接口返回示例 ##\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"order_id\": \"D-0103201000001\",\n    \"order_amount\": 10.01,\n    \"request_amount\": 10.01,\n    \"url\": [\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```"
 					},
 					"response": [
 						{
@@ -226,7 +226,7 @@
 										},
 										{
 											"key": "bank_code",
-											"value": "BBL",
+											"value": "ACB",
 											"description": "* __string(50)__\n* 必填\n* 银行代码, 网银充值时提供<br>\n参考[银行代码列表](#0bc3706f-0bab-48e5-9c55-7745d8588d7a)\n* 请选择商户币种其所属的银行代码，单一商户仅能使用单一币种",
 											"type": "text"
 										},
@@ -240,12 +240,6 @@
 											"key": "note",
 											"value": "test",
 											"description": "* __string(100)__\n* 备注",
-											"type": "text"
-										},
-										{
-											"key": "language",
-											"value": "en",
-											"description": "* 用户进入充值网后所要显示的语系，预设为用户浏览器语系\n* 已支援语系：<br>\n  - `en: 英文`\n  - `th: 泰文(仅限泰国银行)`\n  - `vn: 越南文(仅限越南银行)`\n  - `id: 印尼文(仅限印尼银行)`\n* 用户进入充值网显示语系的优先顺序\n  1. 最近一次于充值网所选择的语系\n  2. 参数 language\n  3. 用户浏览器的语系\n* 如需测试参数 language 能否正确运作，可清除 cookie 后再做测试",
 											"type": "text"
 										}
 									]
@@ -271,7 +265,7 @@
 					]
 				},
 				{
-					"name": "c. 充值结果通知",
+					"name": "b. 充值结果通知",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -375,7 +369,7 @@
 					]
 				},
 				{
-					"name": "d. 充值查询",
+					"name": "c. 充值查询",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -585,7 +579,7 @@
 					]
 				},
 				{
-					"name": "b. 代付结果通知",
+					"name": "b. 代付结果通知.",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -750,6 +744,72 @@
 			"item": [
 				{
 					"name": "a. 帐户余额",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "request_time",
+									"value": "",
+									"description": "执行请求時當下的时间，格式必需为 YYYY-MM-DD HH:mm:ss，示例： 2020-04-29 21:59:49",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://[接入网址]/SH/queryBalance",
+							"protocol": "https",
+							"host": [
+								"[接入网址]"
+							],
+							"path": [
+								"SH",
+								"queryBalance"
+							]
+						},
+						"description": "1.接入网址请参考下图\r\n\r\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/IntergrationUrl.png)\r\n\r\n\r\n# 2.资料传送需经过加密,请参考<br> [A-g. \\*\\*\\* AES 加解密与请求 (串接前必读) \\*\\*\\*](#7040668b-b6ff-4c6c-9f2a-6cd717bbb97c) #\r\n\r\n\r\n3.由商户对壹支付平台发起请求\r\n\r\n> ## 帐户余额查询接口返回数据结构 ##\r\n\r\n字段              | 描述\r\n:---:|:---\r\nerror_code            | 错误代码, 参考 [A-e. 错误代码列表](#4ad306ad-e218-4e88-8ce6-18d926f67518) 或 [A-f. 常见错误类型说明](#53c7bc97-bfe0-484d-be0c-65eaa7c8c7ca)\r\ndata                  | 回传信息\r\ndata.current_balance  | 余额\r\ndata.frozen_balance   | 冻结金额\r\ndata.balance          | 可用余额\r\ndata.unsettle_balance | 不可用金额\r\n\r\n\r\n> ## 帐户余额查询接口返回示例 ##\r\n```json\r\n{\r\n   \"error_code\": 200,\r\n   \"data\": {\r\n      \"current_balance\": 10000,\r\n      \"frozen_balance\": 3,\r\n      \"balance\": 7000,\r\n      \"unsettle_balance\": 3000\r\n   }\r\n}\r\n```"
+					},
+					"response": [
+						{
+							"name": "成功",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "request_time",
+											"value": "2020-04-29 21:59:49",
+											"description": "执行请求時當下的时间，格式必需为 YYYY-MM-DD HH:mm:ss，示例： 2020-04-29 21:59:49",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://[Integration URL]/SH/queryBalance",
+									"protocol": "https",
+									"host": [
+										"[Integration URL]"
+									],
+									"path": [
+										"SH",
+										"queryBalance"
+									]
+								}
+							},
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"error_code\": 200,\n    \"data\": {\n        \"current_balance\": 10000,\n        \"frozen_balance\": 3,\n        \"balance\": 7000,\n        \"unsettle_balance\": 3000\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "a. 帐户余额 Copy",
 					"request": {
 						"method": "POST",
 						"header": [],
