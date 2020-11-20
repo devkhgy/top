@@ -41,7 +41,7 @@
 						"url": {
 							"raw": ""
 						},
-						"description": "越南银行代码列表\n----------------\nbank_code | bank | 可用服务类型\n:---:|:---:|:---:\nACB     | Asia Commercial Bank | 网银, 银行卡转账, 银行卡扫码, 代付\nAGRI    | AGRI Bank | 网银, 银行卡转账\nBIDV    | Bank for Investment and Development of Vietnam | 网银, 银行卡转账, 银行卡扫码, 代付\nDAB     | DongA BANK | 网银, 银行卡转账, 代付\nEXB     | EXIM Bank | 网银, 银行卡转账\nMB      | Military Commercial Joint Stock Bank | 网银, 银行卡转账\nSAC     | Sacom Bank | 网银, 银行卡转账, 代付\nSAIGON  | SAIGON Bank | 网银, 银行卡转账\nSCB     | Siam Commercial Bank | 网银, 银行卡转账, 银行卡扫码\nTCB     | Techcombank | 网银, 银行卡转账, 代付\nTPB     | Tanganyika Postal Office Savings Bank | 网银, 银行卡转账, 银行卡扫码\nVCB     | Vietcom Bank | 网银, 银行卡转账, 银行卡扫码, 代付\nVP      | Vietnam Prosperity Joint‑Stock Commercial Bank | 网银, 银行卡转账, 银行卡扫码\nVTB     | Vietin Bank | 网银, 银行卡转账, 银行卡扫码, 代付"
+						"description": "越南交易类型： 网银, 银行卡转账 可用銀行代码列表\n----------------\nbank_code | bank\n:---:|:---:\nACB     | Asia Commercial Bank\nAGRI    | AGRI Bank\nBIDV    | Bank for Investment and Development of Vietnam\nDAB     | DongA BANK\nEXB     | EXIM Bank\nMB      | Military Commercial Joint Stock Bank\nSAC     | Sacom Bank\nSAIGON  | Saigon Bank\nSCB     | Saigon Commercial Bank\nTCB     | Techcombank\nTPB     | Tanganyika Postal Office Savings Bank\nVCB     | Vietcom Bank\nVP      | Vietnam Prosperity Joint‑Stock Commercial Bank\nVTB     | Vietin Bank\n\n越南交易类型： 银行卡扫码 可用銀行代码列表\n----------------\nbank_code | bank\n:---:|:---:\nACB     | Asia Commercial Bank\nBIDV    | Bank for Investment and Development of Vietnam\nSCB     | Saigon Commercial Bank\nTPB     | Tanganyika Postal Office Savings Bank\nVCB     | Vietcom Bank\nVP      | Vietnam Prosperity Joint‑Stock Commercial Bank\nVTB     | Vietin Bank\n\n越南交易类型： 代付 可用銀行代码列表\n----------------\nbank_code | bank\n:---:|:---:\nACB     | Asia Commercial Bank\nBIDV    | Bank for Investment and Development of Vietnam\nDAB     | DongA BANK\nSAC     | Sacom Bank\nTCB     | Techcombank\nVCB     | Vietcom Bank\nVTB     | Vietin Bank"
 					},
 					"response": []
 				},
@@ -138,7 +138,7 @@
 							"urlencoded": [
 								{
 									"key": "sh_order_no",
-									"value": "123",
+									"value": "",
 									"description": "* __string(50)__\n* 必填\n* 商户订单号, 该订单号将作为接口的返回数据<br>\n`该值需在商户系统内唯一存在`",
 									"type": "text"
 								},
@@ -281,7 +281,7 @@
 								{
 									"key": "order_status",
 									"value": "",
-									"description": "* __string(20)__\n* 充值结果<br>\n* 请参考[A-d. 订单状态](#53553cc5-6c45-41fa-8a58-b5f11907e6e5)",
+									"description": "* __string(20)__\n* 充值结果<br>\n* 请参考[A-d. 订单状态](#58c2f281-734f-4e80-bf8e-95b16cb269aa)",
 									"type": "text"
 								},
 								{
@@ -744,72 +744,6 @@
 			"item": [
 				{
 					"name": "a. 帐户余额",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "request_time",
-									"value": "",
-									"description": "执行请求時當下的时间，格式必需为 YYYY-MM-DD HH:mm:ss，示例： 2020-04-29 21:59:49",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "https://[接入网址]/SH/queryBalance",
-							"protocol": "https",
-							"host": [
-								"[接入网址]"
-							],
-							"path": [
-								"SH",
-								"queryBalance"
-							]
-						},
-						"description": "1.接入网址请参考下图\r\n\r\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/IntergrationUrl.png)\r\n\r\n\r\n# 2.资料传送需经过加密,请参考<br> [A-g. \\*\\*\\* AES 加解密与请求 (串接前必读) \\*\\*\\*](#7040668b-b6ff-4c6c-9f2a-6cd717bbb97c) #\r\n\r\n\r\n3.由商户对壹支付平台发起请求\r\n\r\n> ## 帐户余额查询接口返回数据结构 ##\r\n\r\n字段              | 描述\r\n:---:|:---\r\nerror_code            | 错误代码, 参考 [A-e. 错误代码列表](#4ad306ad-e218-4e88-8ce6-18d926f67518) 或 [A-f. 常见错误类型说明](#53c7bc97-bfe0-484d-be0c-65eaa7c8c7ca)\r\ndata                  | 回传信息\r\ndata.current_balance  | 余额\r\ndata.frozen_balance   | 冻结金额\r\ndata.balance          | 可用余额\r\ndata.unsettle_balance | 不可用金额\r\n\r\n\r\n> ## 帐户余额查询接口返回示例 ##\r\n```json\r\n{\r\n   \"error_code\": 200,\r\n   \"data\": {\r\n      \"current_balance\": 10000,\r\n      \"frozen_balance\": 3,\r\n      \"balance\": 7000,\r\n      \"unsettle_balance\": 3000\r\n   }\r\n}\r\n```"
-					},
-					"response": [
-						{
-							"name": "成功",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "request_time",
-											"value": "2020-04-29 21:59:49",
-											"description": "执行请求時當下的时间，格式必需为 YYYY-MM-DD HH:mm:ss，示例： 2020-04-29 21:59:49",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "https://[Integration URL]/SH/queryBalance",
-									"protocol": "https",
-									"host": [
-										"[Integration URL]"
-									],
-									"path": [
-										"SH",
-										"queryBalance"
-									]
-								}
-							},
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": null,
-							"cookie": [],
-							"body": "{\n    \"error_code\": 200,\n    \"data\": {\n        \"current_balance\": 10000,\n        \"frozen_balance\": 3,\n        \"balance\": 7000,\n        \"unsettle_balance\": 3000\n    }\n}"
-						}
-					]
-				},
-				{
-					"name": "a. 帐户余额 Copy",
 					"request": {
 						"method": "POST",
 						"header": [],

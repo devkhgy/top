@@ -41,7 +41,7 @@
 						"url": {
 							"raw": ""
 						},
-						"description": "Vietnam Bank Code\n----------------\nbank_code | bank | available order type\n:---:|:---:|:---:\nACB     | Asia Commercial Bank | 100(Online banking), Bank transfer, Bank QR, Withdrawal\nAGRI    | AGRI Bank | 100(Online banking), Bank transfer\nBIDV    | Bank for Investment and Development of Vietnam | 100(Online banking), Bank transfer, Bank QR, Withdrawal\nDAB     | DongA BANK | 100(Online banking), Bank transfer, Withdrawal\nEXB     | EXIM Bank | 100(Online banking), Bank transfer\nMB      | Military Commercial Joint Stock Bank | 100(Online banking), Bank transfer\nSAC     | Sacom Bank | 100(Online banking), Bank transfer, Withdrawal\nSAIGON  | SAIGON Bank | 100(Online banking), Bank transfer\nSCB     | Siam Commercial Bank | 100(Online banking), Bank transfer, Bank QR\nTCB     | Techcombank | 100(Online banking), Bank transfer, Withdrawal\nTPB     | Tanganyika Postal Office Savings Bank | 100(Online banking), Bank transfer, Bank QR\nVCB     | Vietcom Bank | 100(Online banking), Bank transfer, Bank QR, Withdrawal\nVP      | Vietnam Prosperity Joint‑Stock Commercial Bank | 100(Online banking), Bank transfer, Bank QR\nVTB     | Vietin Bank | 100(Online banking), Bank transfer, Bank QR, Withdrawal"
+						"description": "Available bank codes for Online Banking, bank_transfer in Vietnam\n----------------\nbank_code | bank\n:---:|:---:\nACB     | Asia Commercial Bank\nAGRI    | AGRI Bank\nBIDV    | Bank for Investment and Development of Vietnam\nDAB     | DongA BANK\nEXB     | EXIM Bank\nMB      | Military Commercial Joint Stock Bank\nSAC     | Sacom Bank\nSAIGON  | Saigon Bank\nSCB     | Saigon Commercial Bank\nTCB     | Techcombank\nTPB     | Tanganyika Postal Office Savings Bank\nVCB     | Vietcom Bank\nVP      | Vietnam Prosperity Joint‑Stock Commercial Bank\nVTB     | Vietin Bank\n\nAvailable bank codes for bank_qr in Vietnam\n----------------\nbank_code | bank\n:---:|:---:\nACB     | Asia Commercial Bank\nBIDV    | Bank for Investment and Development of Vietnam\nSCB     | Saigon Commercial Bank\nTPB     | Tanganyika Postal Office Savings Bank\nVCB     | Vietcom Bank\nVP      | Vietnam Prosperity Joint‑Stock Commercial Bank\nVTB     | Vietin Bank\n\nAvailable bank codes for Withdrawal in Vietnam\n----------------\nbank_code | bank\n:---:|:---:\nACB     | Asia Commercial Bank\nBIDV    | Bank for Investment and Development of Vietnam\nDAB     | DongA BANK\nSAC     | Sacom Bank\nTCB     | Techcombank\nVCB     | Vietcom Bank\nVTB     | Vietin Bank"
 					},
 					"response": []
 				},
@@ -414,135 +414,6 @@
 							"header": null,
 							"cookie": [],
 							"body": "{\r\n   \"error_code\": 200,\r\n   \"data\": {\r\n      \"order_id\": \"D-0103201000001\",\r\n      \"sh_order_no\": \"ORDERNO0001\",\r\n      \"status\": 3,\r\n      \"order_type\": \"100\",\r\n      \"order_amount\": 100,\r\n      \"request_amount\": 100.78,\r\n      \"paid_amount\": 100,\r\n      \"created_at\": \"2019-10-10 00:00:00\",\r\n      \"finished_at\": \"2019-10-10 00:05:05\",\r\n   }\r\n}\r\n"
-						}
-					]
-				},
-				{
-					"name": "a. Bank Deposit API Definition Copy",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "sh_order_no",
-									"value": "",
-									"description": "* __string(50)__\n* required\n* Merchant order number, which will be used as the response data<br>\n__The order number must be unique__",
-									"type": "text"
-								},
-								{
-									"key": "order_amount",
-									"value": "",
-									"description": "* __decimal(14,6)__\n* required\n* The amount of the order from merchant.\n* The amount should be integer in VND. (Number without any decimal places)",
-									"type": "text"
-								},
-								{
-									"key": "order_type",
-									"value": "100",
-									"description": "* __string(30)__\n* required\n* Order type<br>\n`100: Online banking`<br>\n`zalo_qr: Zalo QR`<br>\n`momo_qr: Momo QR`<br>\n`viettel_qr: Viettelpay QR`<br>\n`viettel_fix_qr: Viettelpay Fix QR`<br>\n`bank_qr: Bank QR`<br>\n`bank_transfer: Bank transfer`<br>\n`rcgcard_pc_viettel: Prepaid Viettel`<br>\n`rcgcard_pc_mobifone: Prepaid Mobifone`<br>\n`rcgcard_pc_vinaphone: Prepaid Vinaphone`<br>\n`rcgcard_zing: Prepaid Zing`<br>\n",
-									"type": "text"
-								},
-								{
-									"key": "bank_code",
-									"value": "",
-									"description": "* __string(50)__\n* The field is required if 'order_type' is 100, bank_qr, or bank_transfer.\n* Bank Code, Provide when online banking payment, please refer to the bank code list<br>\nref. [A-c. Bank Code](#04798067-a098-461a-9532-a4ef6d376f33)\n* Please choose the bank to match the currency of the merchant since only one currency supports on each merchant.",
-									"type": "text"
-								},
-								{
-									"key": "notify_url",
-									"value": "",
-									"description": "* __string(255)__\n* Asynchronous notification address, Return address of the asynchronous notification process.\n* MUST offer your notify_url to us first; otherwise, you will get \"The notify url not in the whitelist\" error. <br>\nref. [A-f. Troubleshooting & FAQ](#37339d61-07fb-447f-aaf9-595162bcdd22)\n* You may goto __Merchant Back Office__, then step into __Transaction__ to resend the outcome of the one of orders. \n* __Do NOT encode url.__\n* __e.g.1  http(s)://{your domain}/sendPay/notification__\n* __e.g.2  http(s)://{your domain}/sendPay/notification?key1=value1__",
-									"type": "text"
-								},
-								{
-									"key": "note",
-									"value": "",
-									"description": "* __string(100)__\n* Remarks",
-									"type": "text"
-								}
-							],
-							"options": {
-								"urlencoded": {}
-							}
-						},
-						"url": {
-							"raw": "https://[Integration URL]/SH/sendPay",
-							"protocol": "https",
-							"host": [
-								"[Integration URL]"
-							],
-							"path": [
-								"SH",
-								"sendPay"
-							]
-						},
-						"description": "1.Refer to the below figure for integration URL.\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/IntergrationUrl.png)\n\n\n# 2.Before sending the request, the data must be encrypted, and vice versa.Please refer to Encryption process of [A-g. \\*\\*\\* AES Encryption, Decryption and Request (Must Read) \\*\\*\\*](#f7141d55-39c6-42e8-a669-ea477b0039b5)\n\n\n3.Merchant initiates a request to OneWallet service\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/SendPayFlow2.png)\n\n> ## Deposit API Response Structure ##\n\n__Caution__: Must use our [A-g. \\*\\*\\* AES Encryption, Decryption and Request (Must Read) \\*\\*\\*](#f7141d55-39c6-42e8-a669-ea477b0039b5) to unwrap the data of body.\n\nKey           |Description\n:---:|:---\nerror_code          |Error Code<br>This value returns the status code 200 if the transaction completed correctly and an error code otherwise.<br>Determining if the status code is 200 and proceeding is essential.<br>For more further information, please refer to [A-e. Error Code](#8b2a4f43-901e-479f-aee3-5f1b4fc0798c) & [A-f. Trobleshooting & FAQ](#37339d61-07fb-447f-aaf9-595162bcdd22)<br>Some error also trigger Deposit Notification, please refer to [B-c. Deposit Notification API Definition](#cdd947b9-8aec-4928-8f2d-fe8636aa5c8f).\ndata                |Return information\ndata.order_id       |Gateway Order ID\ndata.order_amount   |The amount of the order from merchant\ndata.request_amount |The real amount of the order.\ndata.url            |Available Deposit URLs (Must use GET request method; Domain changes for each request)<br>__Propose to do speed-testing before redirecting as__ [Example](https://github.com/devkhgy/top/blob/doc/code/DepositSpeedTest.html)\ndata.token          |Deposit token\n\n> ## Deposit API Response Instance ##\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"order_id\": \"D-0103201000001\",\n    \"order_amount\": 10.01,\n    \"request_amount\": 10.01,\n    \"url\": [\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```\n\n\n> ## Deposit API Request Structure ##\n\n__Caution__: Must use our [A-g. \\*\\*\\* AES Encryption, Decryption and Request (Must Read) \\*\\*\\*](#f7141d55-39c6-42e8-a669-ea477b0039b5) to wrap the data of body."
-					},
-					"response": [
-						{
-							"name": "Success",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "sh_order_no",
-											"value": "DEB000001",
-											"description": "* __string(50)__\n* required\n* Merchant order number, which will be used as the response data<br>\n__The order number must be unique__",
-											"type": "text"
-										},
-										{
-											"key": "order_amount",
-											"value": "10.01",
-											"description": "* __decimal(14,6)__\n* required\n* The amount of the order from merchant.\n* The amount should be integer in VND or IDR. (Number without any decimal places)",
-											"type": "text"
-										},
-										{
-											"key": "order_type",
-											"value": "100",
-											"description": "* __string(10)__\n* required\n* Order type<br>\n__100 as Internet Banking__",
-											"type": "text"
-										},
-										{
-											"key": "bank_code",
-											"value": "ACB",
-											"description": "* __string(50)__\n* required\n* Bank Code, Provide when online banking payment, please refer to the bank code list<br>\nref. [Bank Code](#cc7d8d7a-6b7b-4297-ab96-9982aa88c66a)\n* Please choose the bank to match the currency of the merchant since only one currency supports on each merchant.",
-											"type": "text"
-										},
-										{
-											"key": "notify_url",
-											"value": "https://example.com/callback",
-											"description": "* __string(255)__\n* Asynchronous notification address, Return address of the asynchronous notification process.\n* MUST offer your notify_url to us first; otherwise, you will get [The notify url not in the whitelist](#f90e9510-0d5e-4489-9634-410c4f8849a9) error.\n* You may goto __Merchant Back Office__, then step into __Transaction__ to resend the outcome of the one of orders. \n* __Do NOT encode url.__\n* __e.g.1  http(s)://{your domain}/sendPay/notification__\n* __e.g.2  http(s)://{your domain}/sendPay/notification?key1=value1__",
-											"type": "text"
-										},
-										{
-											"key": "note",
-											"value": "test",
-											"description": "* __string(100)__\n* Remarks",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "https://[Integration URL]/SH/sendPay",
-									"protocol": "https",
-									"host": [
-										"[Integration URL]"
-									],
-									"path": [
-										"SH",
-										"sendPay"
-									]
-								}
-							},
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": null,
-							"cookie": [],
-							"body": "{\r\n  \"error_code\": 200,\r\n  \"data\": {\r\n    \"order_id\": \"D-0103201000001\",\r\n    \"order_amount\": 10.01,\r\n    \"request_amount\": 10.01,\r\n    \"url\": [\r\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\r\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\r\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\r\n    ],\r\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\r\n  }\r\n}"
 						}
 					]
 				}
