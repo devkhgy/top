@@ -77,7 +77,7 @@
 						"url": {
 							"raw": ""
 						},
-						"description": "### 备注：基础验证错误由於无机敏资讯且为开发便利性而采用明文回传，解密验证错误包含机敏资讯为提昇安全性则采用密文回传。 ###\r\n\r\n| 错误类型 | 错误回传信息 | 可能的错误原因 |\r\n|---|---|---|\r\n| 基础验证错误 | The API request method must be POST | 请求方法为非 POST |\r\n| 基础验证错误 | The request payload is empty |  payload 信息为空，可尝试检查是否请求错误 错误使用请求协定 ~http~ ，应改为 ```https``` <li>错误使用请求方法 GET，应改为 ```POST```</li>\r\n| 基础验证错误 | Invalid merchant id | 无效的 merchant id，请於商户後台取得正确的接入网址 |\r\n| 解密验证错误 | Could not decrypt the payload | 接入网址、商户密钥、加密流程或方法有误，请参考 [A-g. \\*\\*\\* AES 加解密与请求 (串接前必读) \\*\\*\\*](#3be4aa04-f140-40d6-b2fc-fd0cd3f5152d) |\r\n| 解密验证错误 | The payload is invalid | payload 信息有误，可尝试检查是否 payload 附加於 body 方式有误或参考 [A-g. \\*\\*\\* AES 加解密与请求 (串接前必读) \\*\\*\\*](#3be4aa04-f140-40d6-b2fc-fd0cd3f5152d) <li>payload 置於 body 传输即可，无须加入任何键值後传输 。</li> ```错误范例：data={payload}```|\r\n| 解密验证错误 | json decode failed | payload  信息经解密後非 JSON 格式, 请参考 [A-g. \\*\\*\\* AES 加解密与请求 (串接前必读) \\*\\*\\*](#3be4aa04-f140-40d6-b2fc-fd0cd3f5152d) |\r\n| 充值验证错误 | IP x.x.x.x not allowed | 请检查 商户後台/商户资讯/白名单 该 IP 是否已加白於对应的 IP 类型 |\r\n| 充值验证错误 | Channel error. Please contact customer service | 请联系壹支付财务 |\r\n| 充值验证错误 | Deposit domain is not configured properly, please contact us. | 请联系壹支付财务 |\r\n| 充值验证错误 | The notify url not in the whitelist | notify url(callback) 未添加入白名单内，请提供 notify url(callback) 给壹支付，进行白名单添加。 |\r\n| 充值验证错误 | NO QR SERVICE. This bank doesn't provide the QR PAY payment. | 此银行不支援QR PAY支付服务。 |\r\n| 代付验证错误 | IP x.x.x.x not allowed | 请检查 商户後台/商户资讯/白名单 该 IP 是否已加白於对应的 IP 类型 |\r\n| 代付验证错误 | balance is not enough | 请检查商户钱包余额是否足够处理代付订单请求 |\r\n| 代付验证错误 | No card available | 请联系壹支付财务 |\r\n| 代付验证错误 | The notify url not in the whitelist | notify url(callback) 未添加入白名单内，请提供 notify url(callback) 给壹支付，进行白名单添加。 |\r\n\r\n若发生基础验证、解密验证错误，可按照以下项目确认问题\r\n\r\n1. 请求位址\r\n\r\n    由 ***商户后台 > 接入信息*** 内的接入网址及各 API 位址所组成\r\n\r\n    请求协定固定为 **https**\r\n\r\n    范例的充值位址格式： https://domain.com/11-xxx/SH/sendPay\r\n\r\n2. 请求方法应为 **POST**\r\n\r\n    确认程序使用的请求方法为 **POST**\r\n\r\n    若程序确认无问题\r\n\r\n    则可使用封包截取软件\r\n\r\n    截录程序实际送出的请求封包\r\n\r\n    观察程序请求及壹支付回应是否正常\r\n\r\n3. 原始资料应为 **JSON** 格式\r\n\r\n    确认原始资料可正常解析出 **JSON** 物件\r\n\r\n4. 加密结果正确\r\n\r\n    从 ***商户后台 > 接入信息*** 取得商户密钥\r\n\r\n    利用此密钥将原始资料经过加密方法后所产生的密文\r\n\r\n    应可由解密方法还原出原始资料\r\n\r\n    在开发加解密方法完成后\r\n\r\n    可自行透过该方法验证加解密是否正确\r\n\r\n    或可利用 ***商户后台 > 解密工具*** 验证加密结果是否可正常解密\r\n\r\n5. 请求 Payload 仅可放入加密后的密文\r\n\r\n    不得包含任何其他非密文的内容\r\n\r\n    假设密文为 `eyJpdiI6...`\r\n\r\n    则 Payload 只能是 `eyJpdiI6...`\r\n\r\n    以下皆为 Payload 错误范例\r\n\r\n    - `\"eyJpdiI6...\"`\r\n\r\n    - `data=eyJpdiI6...`\r\n\r\n    - `{\"data\":\"eyJpdiI6...\"}`\r\n\r\n6. 利用 HTTP 请求开发工具测试 API\r\n\r\n    将开发的程序汇整其请求资料\r\n\r\n    使用测试工具([Postman](https://www.postman.com/)、[Curl](https://curl.haxx.se/)...)手动发送请求\r\n\r\n    确认测试工具所得的结果与程序是否一致\r\n\r\n若全部确认完成后仍无法解决问题\r\n\r\n请将测试工具所测试结果截图并存入纯文字档(需包含请求位址和请求与回应的 Header、Payload)\r\n\r\n提供予壹支付协助解决"
+						"description": "### 备注：基础验证错误由於无机敏资讯且为开发便利性而采用明文回传，解密验证错误包含机敏资讯为提昇安全性则采用密文回传。 ###\r\n\r\n| 错误类型 | 错误回传信息 | 可能的错误原因 |\r\n|---|---|---|\r\n| 基础验证错误 | The API request method must be POST | 请求方法为非 POST |\r\n| 基础验证错误 | The request payload is empty |  payload 信息为空，可尝试检查是否请求错误 错误使用请求协定 ~http~ ，应改为 ```https``` <li>错误使用请求方法 GET，应改为 ```POST```</li>\r\n| 基础验证错误 | Invalid merchant id | 无效的 merchant id，请於商户後台取得正确的接入网址 |\r\n| 解密验证错误 | Could not decrypt the payload | 接入网址、商户密钥、加密流程或方法有误，请参考 [A-g. \\*\\*\\* AES 加解密与请求 (串接前必读) \\*\\*\\*](#3be4aa04-f140-40d6-b2fc-fd0cd3f5152d) |\r\n| 解密验证错误 | The payload is invalid | payload 信息有误，可尝试检查是否 payload 附加於 body 方式有误或参考 [A-g. \\*\\*\\* AES 加解密与请求 (串接前必读) \\*\\*\\*](#3be4aa04-f140-40d6-b2fc-fd0cd3f5152d) <li>payload 置於 body 传输即可，无须加入任何键值後传输 。</li> ```错误范例：data={payload}```|\r\n| 解密验证错误 | json decode failed | payload  信息经解密後非 JSON 格式, 请参考 [A-g. \\*\\*\\* AES 加解密与请求 (串接前必读) \\*\\*\\*](#3be4aa04-f140-40d6-b2fc-fd0cd3f5152d) |\r\n| 充值验证错误 | IP x.x.x.x not allowed | 请检查 商户後台/商户资讯/白名单 该 IP 是否已加白於对应的 IP 类型 |\r\n| 充值验证错误 | Channel error. Please contact customer service | 请联系壹支付财务 |\r\n| 充值验证错误 | Deposit domain is not configured properly, please contact us. | 请联系壹支付财务 |\r\n| 充值验证错误 | The notify url not in the whitelist | notify url(callback) 未添加入白名单内，请提供 notify url(callback) 给壹支付，进行白名单添加。 |\r\n| 充值验证错误 | NO QR SERVICE. This bank doesn't provide the QR PAY payment. | 此银行不支援QR PAY支付服务。 |\r\n| 代付验证错误 | IP x.x.x.x not allowed | 请检查 商户後台/商户资讯/白名单 该 IP 是否已加白於对应的 IP 类型 |\r\n| 代付验证错误 | balance is not enough | 请检查商户钱包余额是否足够处理代付订单请求 |\r\n| 代付验证错误 | No card available | 请联系壹支付财务 |\r\n| 代付验证错误 | The notify url not in the whitelist | notify url(callback) 未添加入白名单内，请提供 notify url(callback) 给壹支付，进行白名单添加。 |\r\n\r\n若发生基础验证、解密验证错误，可按照以下项目确认问题\r\n\r\n1. 请求位址\r\n\r\n    由 ***商户后台 > 接入信息*** 内的接入网址及各 API 位址所组成\r\n\r\n    请求协定固定为 **https**\r\n\r\n    范例的充值位址格式： https://domain.com/11-xxx/SH/sendPay\r\n\r\n2. 请求方法应为 **POST**\r\n\r\n    确认程序使用的请求方法为 **POST**\r\n\r\n    若程序确认无问题\r\n\r\n    则可使用封包截取软件\r\n\r\n    截录程序实际送出的请求封包\r\n\r\n    观察程序请求及壹支付回应是否正常\r\n\r\n3. 原始资料应为 **JSON** 格式\r\n\r\n    确认原始资料可正常解析出 **JSON** 物件\r\n\r\n4. 加密结果正确\r\n\r\n    从 ***商户后台 > 接入信息*** 取得商户密钥\r\n\r\n    利用此密钥将原始资料经过加密方法后所产生的密文\r\n\r\n    应可由解密方法还原出原始资料\r\n\r\n    在开发加解密方法完成后\r\n\r\n    可自行透过该方法验证加解密是否正确\r\n\r\n    或可利用 ***商户后台 > 解密工具*** 验证加密结果是否可正常解密\r\n\r\n5. 请求 Payload 仅可放入加密后的密文\r\n\r\n    不得包含任何其他非密文的内容\r\n\r\n    假设密文为 `eyJpdiI6...`\r\n\r\n    则 Payload 只能是 `eyJpdiI6...`\r\n\r\n    以下皆为 Payload 错误范例\r\n\r\n    - `\"eyJpdiI6...\"`\r\n\r\n    - `data=eyJpdiI6...`\r\n\r\n    - `{\"data\":\"eyJpdiI6...\"}`\r\n\r\n6. 利用 HTTP 请求开发工具测试 API\r\n\r\n    将开发的程序汇整其请求资料\r\n\r\n    使用测试工具([Postman](https://www.postman.com/)、[Curl](https://curl.haxx.se/)...)手动发送请求\r\n\r\n    确认测试工具所得的结果与程序是否一致\r\n\r\n    使用 Curl 示范充值请求方法\r\n\r\n    `curl https://domain.com/11-xxx/SH/sendPay -d 'eyJpdiI6...'`\r\n\r\n若全部确认完成后仍无法解决问题\r\n\r\n请将测试工具所测试结果截图并存入纯文字档(需包含请求位址和请求与回应的 Header、Payload)\r\n\r\n提供予壹支付协助解决"
 					},
 					"response": []
 				},
@@ -441,7 +441,7 @@
 								{
 									"key": "order_type",
 									"value": "zalo_qr",
-									"description": "* __string(30)__\n* 必填\n* 以下充值类型仅可用于越南银行\n* 订单充值类型<br>\n`zalo_qr: Zalo 扫码`<br>\n`momo_qr: Momo 扫码`<br>\n`viettel_qr: Viettelpay 扫码`<br>\n`viettel_fix_qr: Viettelpay 固码扫码`<br>\n`bank_qr: 银行卡扫码`<br>\n`bank_transfer: 银行卡转账`<br>\n`rcgcard_pc_viettel: 充值卡 Viettel`<br>\n`rcgcard_pc_mobifone: 充值卡 Mobifone`<br>\n`rcgcard_pc_vinaphone: 充值卡 Vinaphone`<br>\n`rcgcard_zing: 充值卡 Zing`<br>\n",
+									"description": "* __string(30)__\n* 必填\n* 可使用的充值类型会因商户设置而有所不同，请由 商户后台 > 商户资讯 取得可用类型\n* 以下充值类型仅可用于越南银行\n* 订单充值类型<br>\n`zalo_qr: Zalo 扫码`<br>\n`momo_qr: Momo 扫码`<br>\n`viettel_qr: Viettelpay 扫码`<br>\n`viettel_fix_qr: Viettelpay 固码扫码`<br>\n`bank_qr: 银行卡扫码`<br>\n`bank_transfer: 银行卡转账`<br>\n`rcgcard_pc_viettel: 充值卡 Viettel`<br>\n`rcgcard_pc_mobifone: 充值卡 Mobifone`<br>\n`rcgcard_pc_vinaphone: 充值卡 Vinaphone`<br>\n`rcgcard_zing: 充值卡 Zing`<br>\n",
 									"type": "text"
 								},
 								{
@@ -721,6 +721,149 @@
 							"header": null,
 							"cookie": [],
 							"body": "{\r\n   \"error_code\": 200,\r\n   \"data\": {\r\n      \"order_id\": \"D-0103201000001\",\r\n      \"sh_order_no\": \"ORDERNO0001\",\r\n      \"status\": 3,\r\n      \"order_type\": \"100\",\r\n      \"order_amount\": 100,\r\n      \"request_amount\": 100.78,\r\n      \"paid_amount\": 100,\r\n      \"created_at\": \"2019-10-10 00:00:00\",\r\n      \"finished_at\": \"2019-10-10 00:05:05\",\r\n   }\r\n}\r\n"
+						}
+					]
+				},
+				{
+					"name": "f. 中国专用充值服务",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "sh_order_no",
+									"value": "",
+									"description": "* __string(50)__\n* 必填\n* 商户订单号, 该订单号将作为接口的返回数据<br>\n`该值需在商户系统内唯一存在`",
+									"type": "text"
+								},
+								{
+									"key": "order_amount",
+									"value": "",
+									"description": "* __decimal(14,6)__\n* 必填\n* 订单提交金额",
+									"type": "text"
+								},
+								{
+									"key": "order_type",
+									"value": "ZFBYHK",
+									"description": "* __string(30)__\n* 必填\n* 可使用的充值类型会因商户设置而有所不同，请由 商户后台 > 商户资讯 取得可用类型\n* 以下充值类型仅可用于中国银行\n* 订单充值类型<br>\n`ZFBYHK: 支付宝转银行卡`",
+									"type": "text"
+								},
+								{
+									"key": "notify_url",
+									"value": "",
+									"description": "* __string(255)__\n* 异步通知商户地址 (必须先提供网址给壹支付加入回呼白名单，否则会失败)，请参考 [A-f. 常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed) : The notify url not in the whitelist\n* 若有需要可於 商户後台/交易纪录 中手动操作结果通知\n* __无需进行 encode url 处理__ \n* __范例: http(s)://{your domain}/sendWithdraw/notification__\n* __范例2: http(s)://{your domain}/sendPay/notification?key1=value1__",
+									"type": "text"
+								},
+								{
+									"key": "note",
+									"value": "",
+									"description": "* __string(100)__\n* 备注",
+									"type": "text"
+								},
+								{
+									"key": "language",
+									"value": "",
+									"description": "* 用户进入充值网后所要显示的语系，预设为用户浏览器语系\n* 已支援语系：<br>\n  - `en: 英文`\n  - `cn: 中文`\n* 用户进入充值网显示语系的优先顺序\n  1. 最近一次于充值网所选择的语系\n  2. 参数 language\n  3. 用户浏览器的语系\n* 如需测试参数 language 能否正确运作，可清除 cookie 后再做测试",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "https://[接入网址]/SH/sendPay",
+							"protocol": "https",
+							"host": [
+								"[接入网址]"
+							],
+							"path": [
+								"SH",
+								"sendPay"
+							]
+						},
+						"description": "1.接入网址请参考下图\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/IntergrationUrl.png)\n\n\n# 2.资料传送需经过加密，请参考 [A-g. \\*\\*\\* AES 加解密与请求 (串接前必读) \\*\\*\\*](#3be4aa04-f140-40d6-b2fc-fd0cd3f5152d) #\n\n\n3.由商户对壹支付平台发起请求\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/SendPayFlow2.png)\n\n> ## 充值接口返回数据结构 ##\n\n字段          | 描述\n:---:|:---\nerror_code          | 订单发起处理状态代码<br>**若处理成功则回传 200，除此之外皆为处理失败<br>应以此状态判断订单请求成功后再做接续处理**<br>相关状态代码可参考 [A-e. 错误代码列表](#49436352-ad18-4d12-8cce-a1f0db01c050) 或 [A-f. 常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed)<br>部份錯誤也會觸發充值結果通知，請參考 [B-d. 充值结果通知](#1b5c1b75-585c-4119-9228-b92f4c28c8be)。\ndata                | 回传信息\ndata.order_id       | 第三方订单号\ndata.order_amount   | 商户订单金额\ndata.request_amount | 壹支付产生充值金额\ndata.url            | 充值网站网址，每次配给网域不同，需使用 GET 请求方法<br>`可用网站位址数组, 请测速後择一跳转` [测速程式码示例](https://raw.githubusercontent.com/devkhgy/top/doc/zh/客户端浏览器域名测速自動版.html)\ndata.token          | 跳转至充值网站验证用口令\n\n\n> ## 充值接口返回示例 ##\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"order_id\": \"D-0103201000001\",\n    \"order_amount\": 10.01,\n    \"request_amount\": 10.01,\n    \"url\": [\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```"
+					},
+					"response": [
+						{
+							"name": "成功",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "sh_order_no",
+											"value": "DEB000001",
+											"description": "* __string(50)__\n* 必填\n* 商户订单号, 该订单号将作为接口的返回数据<br>\n`该值需在商户系统内唯一存在`",
+											"type": "text"
+										},
+										{
+											"key": "order_amount",
+											"value": "10.01",
+											"description": "* __decimal(14,6)__\n* 必填\n* 订单提交金额",
+											"type": "text"
+										},
+										{
+											"key": "order_type",
+											"value": "ZFBYHK",
+											"description": "* __string(30)__\n* 必填\n* 可使用的充值类型会因商户设置而有所不同，请由 商户后台 > 商户资讯 取得可用类型\n* 以下充值类型仅可用于中国银行\n* 订单充值类型<br>\n`ZFBYHK: 支付宝转银行卡`",
+											"type": "text"
+										},
+										{
+											"key": "notify_url",
+											"value": "https://example.com/callback",
+											"description": "* __string(255)__\n* 异步通知商户地址 (必须先提供网址给壹支付加入回呼白名单，否则会失败)，请参考[The notify url not in the whitelist](#bf653f9c-c700-4bc2-a838-fed19b58f3ed)\n* 若有需要可於 商户後台/交易纪录 中手动操作结果通知\n* __无需进行 encode url 处理__ \n* __范例: http(s)://{your domain}/sendWithdraw/notification__\n* __范例2: http(s)://{your domain}/sendPay/notification?key1=value1__",
+											"type": "text"
+										},
+										{
+											"key": "note",
+											"value": "test",
+											"description": "* __string(100)__\n* 备注",
+											"type": "text"
+										},
+										{
+											"key": "language",
+											"value": "cn",
+											"description": "* 用户进入充值网后所要显示的语系，预设为用户浏览器语系\n* 已支援语系：<br>\n  - `en: 英文`\n  - `cn: 中文`\n* 用户进入充值网显示语系的优先顺序\n  1. 最近一次于充值网所选择的语系\n  2. 参数 language\n  3. 用户浏览器的语系\n* 如需测试参数 language 能否正确运作，可清除 cookie 后再做测试",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://[接入网址]/SH/sendPay",
+									"protocol": "https",
+									"host": [
+										"[接入网址]"
+									],
+									"path": [
+										"SH",
+										"sendPay"
+									]
+								}
+							},
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n  \"error_code\": 200,\r\n  \"data\": {\r\n    \"order_id\": \"D-0103201000001\",\r\n    \"order_amount\": 10.01,\r\n    \"request_amount\": 10.01,\r\n    \"url\": [\r\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\r\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\r\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\r\n    ],\r\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\r\n  }\r\n}"
 						}
 					]
 				}

@@ -77,7 +77,7 @@
 						"url": {
 							"raw": ""
 						},
-						"description": "## Notes: There are two kinds of error type. One is `BasicError` for none sensitive information and bypassing in plaintext. Another is `EncrytionError` for sensitive information and bypassing in ciphertext. ##\r\n\r\n\r\n| Error Type | Error Message | Description |\r\n|---|---|---|\r\n| `BasicError` | The API request method must be __POST__ | You may use the improper method in the request of API service, like GET, PUT, DELETE, and so forth. |\r\n| `BasicError` | The request payload is empty | Please check your protocol of API service. Use __https://__ instead of __http://__, and make sure the method must be __POST__. |\r\n| `BasicError` | Invalid merchant id | Go __Merchant Back Office__, our OneWallet backend could help to get your merchant id.  |\r\n| `EncrytionError` | Could not decrypt the payload | Any issues with Integration URL, Merchant Key, and encryption process flow or any others. Please refer to Encryption process of [A-g. \\*\\*\\* AES Encryption, Decryption and Request (Must Read) \\*\\*\\*](#49c0aa9c-af68-4836-b740-55048c7a6e3d). |\r\n| `EncrytionError` | The payload is invalid | This error happens when the body of the request is invalid. Just put the data payload encryted in your body without any keys. Here is an incorrect example as below:<br>__data=payload__|\r\n| `EncrytionError` | json decode failed | OneWallet backend recevied the data payload and tried to do decrytion. If this error comes out, your encryption process may not be proper. Please refer to Encryption process of [A-g. \\*\\*\\* AES Encryption, Decryption and Request (Must Read) \\*\\*\\*](#49c0aa9c-af68-4836-b740-55048c7a6e3d). |\r\n| `DepositVerificationError` | IP x.x.x.x not allowed | Please goto __Merchant Back Office__, and step into __Merchant__ > __White List__. Then check your server IP has been in our white list. |\r\n| `DepositVerificationError` | Channel error. Please contact customer service | Please contact us. |\r\n| `DepositVerificationError` | Deposit domain is not configured properly. | Please contact us. |\r\n| `DepositVerificationError` | The notify url not in the whitelist | Please offer your notification callback URL to OneWallet service. We will put your notify_url address on our whitelist first. |\r\n| `DepositVerificationError` | NO QR SERVICE. This bank doesn't provide the QR PAY payment. | This bank doesn't provide the QR PAY payment. |\r\n| `WithdrawalVerificationError` | IP x.x.x.x not allowed | Please goto __Merchant Back Office__, and step into __Merchant__ > __White List__. Then check your server IP has been in our white list. |\r\n| `WithdrawalVerificationError` | balance is not enough | Please goto __Merchant Back Office__, and step into __Merchant__. Then check your __Available Balance__ is enough or not. |\r\n| `WithdrawalVerificationError` | No card available | Please contact us. |\r\n| `WithdrawalVerificationError` | The notify url not in the whitelist | Please offer your notification callback URL to OneWallet service. We will put your notify_url address on our whitelist first. |\r\n\r\nIf one encounter any issues with BasicError/EncrytionError, please follow the instruction below.\r\n\r\n1. Requesting URL Endpoint\r\n\r\n   The endpoint is composed of the root URL in Integration in Merchant Back Office and the API route.\r\n\r\n   It must start with https:// (protocol; ex. https://domain.com/11-xxx/SH/sendPay )\r\n\r\n2. HTTP method always being POST\r\n\r\n   Confirm HTTP methods in each requests if they are POST.\r\n\r\n   We suggest using a packet analyzer to debug requests if they are properly request.\r\n\r\n3. Embed JSON Data\r\n\r\n   Confirm the data in each requests is correct JSON.\r\n\r\n4. Decryptable encryption\r\n\r\n   After implemented encryption, one should check if the implemented decrytion is able to decrypt the data from encryption which uses the same key that from Integration in Merchant Back Office.\r\n\r\n   The other useful tool to debug encryption implementation is using our Decryption Tool in Merchant Back Office.\r\n\r\n5. Encrypted data in payload is required\r\n\r\n   The payload in each requests must be encrypted, API resources don't accept any other non-encrypted contents.\r\n\r\n   If the encrypted data is `eyJpdiI6...`, the payload must be `eyJpdiI6...` and cannot be the following instances:\r\n\r\n   * `\"eyJpdiI6...\"` (Unnecessary quotes)\r\n   * `data=eyJpdiI6...`\r\n   * `{\"data\":\"eyJpdiI6...\"}`\r\n\r\n6. Using HTTP development tools to help\r\n\r\n   Use HTTP tools ([Postman](https://www.postman.com/)、[Curl](https://curl.haxx.se/)...) to confirm if getting the same response in the implementation.\r\n\r\nIf the above instruction are not able to resolve any encrytion issues.\r\n\r\nPlease save the transmission into a plain file (Request URL, Response, Header, and Payload are essential to be included.) and send to us for the further assistance."
+						"description": "## Notes: There are two kinds of error type. One is `BasicError` for none sensitive information and bypassing in plaintext. Another is `EncrytionError` for sensitive information and bypassing in ciphertext. ##\r\n\r\n\r\n| Error Type | Error Message | Description |\r\n|---|---|---|\r\n| `BasicError` | The API request method must be __POST__ | You may use the improper method in the request of API service, like GET, PUT, DELETE, and so forth. |\r\n| `BasicError` | The request payload is empty | Please check your protocol of API service. Use __https://__ instead of __http://__, and make sure the method must be __POST__. |\r\n| `BasicError` | Invalid merchant id | Go __Merchant Back Office__, our OneWallet backend could help to get your merchant id.  |\r\n| `EncrytionError` | Could not decrypt the payload | Any issues with Integration URL, Merchant Key, and encryption process flow or any others. Please refer to Encryption process of [A-g. \\*\\*\\* AES Encryption, Decryption and Request (Must Read) \\*\\*\\*](#49c0aa9c-af68-4836-b740-55048c7a6e3d). |\r\n| `EncrytionError` | The payload is invalid | This error happens when the body of the request is invalid. Just put the data payload encryted in your body without any keys. Here is an incorrect example as below:<br>__data=payload__|\r\n| `EncrytionError` | json decode failed | OneWallet backend recevied the data payload and tried to do decrytion. If this error comes out, your encryption process may not be proper. Please refer to Encryption process of [A-g. \\*\\*\\* AES Encryption, Decryption and Request (Must Read) \\*\\*\\*](#49c0aa9c-af68-4836-b740-55048c7a6e3d). |\r\n| `DepositVerificationError` | IP x.x.x.x not allowed | Please goto __Merchant Back Office__, and step into __Merchant__ > __White List__. Then check your server IP has been in our white list. |\r\n| `DepositVerificationError` | Channel error. Please contact customer service | Please contact us. |\r\n| `DepositVerificationError` | Deposit domain is not configured properly. | Please contact us. |\r\n| `DepositVerificationError` | The notify url not in the whitelist | Please offer your notification callback URL to OneWallet service. We will put your notify_url address on our whitelist first. |\r\n| `DepositVerificationError` | NO QR SERVICE. This bank doesn't provide the QR PAY payment. | This bank doesn't provide the QR PAY payment. |\r\n| `WithdrawalVerificationError` | IP x.x.x.x not allowed | Please goto __Merchant Back Office__, and step into __Merchant__ > __White List__. Then check your server IP has been in our white list. |\r\n| `WithdrawalVerificationError` | balance is not enough | Please goto __Merchant Back Office__, and step into __Merchant__. Then check your __Available Balance__ is enough or not. |\r\n| `WithdrawalVerificationError` | No card available | Please contact us. |\r\n| `WithdrawalVerificationError` | The notify url not in the whitelist | Please offer your notification callback URL to OneWallet service. We will put your notify_url address on our whitelist first. |\r\n\r\nIf one encounter any issues with BasicError/EncrytionError, please follow the instruction below.\r\n\r\n1. Requesting URL Endpoint\r\n\r\n   The endpoint is composed of the root URL in Integration in Merchant Back Office and the API route.\r\n\r\n   It must start with https:// (protocol; ex. https://domain.com/11-xxx/SH/sendPay )\r\n\r\n2. HTTP method always being POST\r\n\r\n   Confirm HTTP methods in each requests if they are POST.\r\n\r\n   We suggest using a packet analyzer to debug requests if they are properly request.\r\n\r\n3. Embed JSON Data\r\n\r\n   Confirm the data in each requests is correct JSON.\r\n\r\n4. Decryptable encryption\r\n\r\n   After implemented encryption, one should check if the implemented decrytion is able to decrypt the data from encryption which uses the same key that from Integration in Merchant Back Office.\r\n\r\n   The other useful tool to debug encryption implementation is using our Decryption Tool in Merchant Back Office.\r\n\r\n5. Encrypted data in payload is required\r\n\r\n   The payload in each requests must be encrypted, API resources don't accept any other non-encrypted contents.\r\n\r\n   If the encrypted data is `eyJpdiI6...`, the payload must be `eyJpdiI6...` and cannot be the following instances:\r\n\r\n   * `\"eyJpdiI6...\"` (Unnecessary quotes)\r\n   * `data=eyJpdiI6...`\r\n   * `{\"data\":\"eyJpdiI6...\"}`\r\n\r\n6. Using HTTP development tools to help\r\n\r\n   Use HTTP tools ([Postman](https://www.postman.com/)、[Curl](https://curl.haxx.se/)...) to confirm if getting the same response in the implementation.\r\n   \r\n   Here's an example that uses curl for Deposit\r\n\r\n    `curl https://domain.com/11-xxx/SH/sendPay -d 'eyJpdiI6...'`\r\n\r\nIf the above instruction are not able to resolve any encrytion issues.\r\n\r\nPlease save the transmission into a plain file (Request URL, Response, Header, and Payload are essential to be included.) and send to us for the further assistance."
 					},
 					"response": []
 				},
@@ -420,7 +420,7 @@
 								{
 									"key": "order_type",
 									"value": "zalo_qr",
-									"description": "* __string(30)__\n* required\n* The following order typs are only available in Vietnam Bank\n* Order type<br>\n`zalo_qr: Zalo QR`<br>\n`momo_qr: Momo QR`<br>\n`viettel_qr: Viettelpay QR`<br>\n`viettel_fix_qr: Viettelpay Fix QR`<br>\n`bank_qr: Bank QR`<br>\n`bank_transfer: Bank transfer`<br>\n`rcgcard_pc_viettel: Prepaid Viettel`<br>\n`rcgcard_pc_mobifone: Prepaid Mobifone`<br>\n`rcgcard_pc_vinaphone: Prepaid Vinaphone`<br>\n`rcgcard_zing: Prepaid Zing`<br>\n",
+									"description": "* __string(30)__\n* required\n* Order types are not all available due to different settings, please refer to __Merchant Back Office__ > __Merchant__ to get the available order types.\n* The following order typs are only available in Vietnam Bank\n* Order type<br>\n`zalo_qr: Zalo QR`<br>\n`momo_qr: Momo QR`<br>\n`viettel_qr: Viettelpay QR`<br>\n`viettel_fix_qr: Viettelpay Fix QR`<br>\n`bank_qr: Bank QR`<br>\n`bank_transfer: Bank transfer`<br>\n`rcgcard_pc_viettel: Prepaid Viettel`<br>\n`rcgcard_pc_mobifone: Prepaid Mobifone`<br>\n`rcgcard_pc_vinaphone: Prepaid Vinaphone`<br>\n`rcgcard_zing: Prepaid Zing`<br>\n",
 									"type": "text"
 								},
 								{
@@ -690,6 +690,135 @@
 							"header": null,
 							"cookie": [],
 							"body": "{\r\n   \"error_code\": 200,\r\n   \"data\": {\r\n      \"order_id\": \"D-0103201000001\",\r\n      \"sh_order_no\": \"ORDERNO0001\",\r\n      \"status\": 3,\r\n      \"order_type\": \"100\",\r\n      \"order_amount\": 100,\r\n      \"request_amount\": 100.78,\r\n      \"paid_amount\": 100,\r\n      \"created_at\": \"2019-10-10 00:00:00\",\r\n      \"finished_at\": \"2019-10-10 00:05:05\",\r\n   }\r\n}\r\n"
+						}
+					]
+				},
+				{
+					"name": "f. Supported deposit order types in China",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "sh_order_no",
+									"value": "",
+									"description": "* __string(50)__\n* required\n* Merchant order number, which will be used as the response data<br>\n__The order number must be unique__",
+									"type": "text"
+								},
+								{
+									"key": "order_amount",
+									"value": "",
+									"description": "* __decimal(14,6)__\n* required\n* The amount of the order from merchant.",
+									"type": "text"
+								},
+								{
+									"key": "order_type",
+									"value": "ZFBYHK",
+									"description": "* __string(30)__\n* required\n* Order types are not all available due to different settings, please refer to __Merchant Back Office__ > __Merchant__ to get the available order types.\n* The following order typs are only available in China Bank\n* Order type<br>\n`ZFBYHK: Alipay to bank`",
+									"type": "text"
+								},
+								{
+									"key": "notify_url",
+									"value": "",
+									"description": "* __string(255)__\n* Asynchronous notification address, Return address of the asynchronous notification process.\n* MUST offer your notify_url to us first; otherwise, you will get \"The notify url not in the whitelist\" error. <br>\nref. [A-f. Troubleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9)\n* You may goto __Merchant Back Office__, then step into __Transaction__ to resend the outcome of the one of orders. \n* __Do NOT encode url.__\n* __e.g.1  http(s)://{your domain}/sendPay/notification__\n* __e.g.2  http(s)://{your domain}/sendPay/notification?key1=value1__",
+									"type": "text"
+								},
+								{
+									"key": "note",
+									"value": "",
+									"description": "* __string(100)__\n* Remarks",
+									"type": "text"
+								},
+								{
+									"key": "language",
+									"value": "",
+									"description": "* The language intended for the user in Deposit website. If no value is specified, browser language preference is applied.\n* Supported Languages：<br>\n  - `en: English`\n  - `cn: Chinese simplified`\n* The priority language in Deposit website:\n  1. Recently used language in Deposit website.\n  2. \"language\" parameter.\n  3. Browser language preferences.\n* It needs to clean cookies for testing if \"language\" parameter works.",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "https://[Integration URL]/SH/sendPay",
+							"protocol": "https",
+							"host": [
+								"[Integration URL]"
+							],
+							"path": [
+								"SH",
+								"sendPay"
+							]
+						},
+						"description": "1.Refer to the below figure for integration URL.\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/IntergrationUrl.png)\n\n\n# 2.Before sending the request, the data must be encrypted, and vice versa.Please refer to Encryption process of [A-g. \\*\\*\\* AES Encryption, Decryption and Request (Must Read) \\*\\*\\*](#49c0aa9c-af68-4836-b740-55048c7a6e3d)\n\n\n3.Merchant initiates a request to OneWallet service\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/SendPayFlow2.png)\n\n> ## Deposit API Response Structure ##\n\n__Caution__: Must use our [A-g. \\*\\*\\* AES Encryption, Decryption and Request (Must Read) \\*\\*\\*](#49c0aa9c-af68-4836-b740-55048c7a6e3d) to unwrap the data of body.\n\nKey           |Description\n:---:|:---\nerror_code          |Error Code<br>This value returns the status code 200 if the transaction completed correctly and an error code otherwise.<br>Determining if the status code is 200 and proceeding is essential.<br>For more further information, please refer to [A-e. Error Code](#dbec66e6-bb41-4636-924b-8ea0539dbfb7) & [A-f. Trobleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9)<br>Some error also trigger Deposit Notification, please refer to [B-d. Deposit Notification API Definition](#9a33b004-23d5-43d5-bc10-853da98ef361).\ndata                |Return information\ndata.order_id       |Gateway Order ID\ndata.order_amount   |The amount of the order from merchant\ndata.request_amount |The real amount of the order.\ndata.url            |Available Deposit URLs (Must use GET request method; Domain changes for each request)<br>__Propose to do speed-testing before redirecting as__ [Example](https://github.com/devkhgy/top/blob/doc/code/DepositSpeedTest.html)\ndata.token          |Deposit token\n\n> ## Deposit API Response Instance ##\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"order_id\": \"D-0103201000001\",\n    \"order_amount\": 10.01,\n    \"request_amount\": 10.01,\n    \"url\": [\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```\n\n\n> ## Deposit API Request Structure ##\n\n__Caution__: Must use our [A-g. \\*\\*\\* AES Encryption, Decryption and Request (Must Read) \\*\\*\\*](#49c0aa9c-af68-4836-b740-55048c7a6e3d) to wrap the data of body."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "sh_order_no",
+											"value": "DEB000001",
+											"description": "* __string(50)__\n* required\n* Merchant order number, which will be used as the response data<br>\n__The order number must be unique__",
+											"type": "text"
+										},
+										{
+											"key": "order_amount",
+											"value": "10.01",
+											"description": "* __decimal(14,6)__\n* required\n* The amount of the order from merchant.",
+											"type": "text"
+										},
+										{
+											"key": "order_type",
+											"value": "ZFBYHK",
+											"description": "* __string(30)__\n* required\n* Order types are not all available due to different settings, please refer to __Merchant Back Office__ > __Merchant__ to get the available order types.\n* The following order typs are only available in China Bank\n* Order type<br>\n`ZFBYHK: Alipay to bank`",
+											"type": "text"
+										},
+										{
+											"key": "notify_url",
+											"value": "https://example.com/callback",
+											"description": "* __string(255)__\n* Asynchronous notification address, Return address of the asynchronous notification process.\n* MUST offer your notify_url to us first; otherwise, you will get [The notify url not in the whitelist](#f90e9510-0d5e-4489-9634-410c4f8849a9) error.\n* You may goto __Merchant Back Office__, then step into __Transaction__ to resend the outcome of the one of orders. \n* __Do NOT encode url.__\n* __e.g.1  http(s)://{your domain}/sendPay/notification__\n* __e.g.2  http(s)://{your domain}/sendPay/notification?key1=value1__",
+											"type": "text"
+										},
+										{
+											"key": "note",
+											"value": "test",
+											"description": "* __string(100)__\n* Remarks",
+											"type": "text"
+										},
+										{
+											"key": "language",
+											"value": "cn",
+											"description": "* The language intended for the user in Deposit website. If no value is specified, browser language preference is applied.\n* Supported Languages：<br>\n  - `en: English`\n  - `cn: Chinese simplified`\n* The priority language in Deposit website:\n  1. Recently used language in Deposit website.\n  2. \"language\" parameter.\n  3. Browser language preferences.\n* It needs to clean cookies for testing if \"language\" parameter works.",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://[Integration URL]/SH/sendPay",
+									"protocol": "https",
+									"host": [
+										"[Integration URL]"
+									],
+									"path": [
+										"SH",
+										"sendPay"
+									]
+								}
+							},
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n  \"error_code\": 200,\r\n  \"data\": {\r\n    \"order_id\": \"D-0103201000001\",\r\n    \"order_amount\": 10.01,\r\n    \"request_amount\": 10.01,\r\n    \"url\": [\r\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\r\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\r\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\r\n    ],\r\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\r\n  }\r\n}"
 						}
 					]
 				}
