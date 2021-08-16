@@ -395,6 +395,144 @@
 					]
 				},
 				{
+					"name": "b.1. TrueWallet Deposit API Definition (Only supports all banks in Thai.)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "sh_order_no",
+									"value": "",
+									"description": "* __string(50)__\n* required\n* Merchant order number, which will be used as the response data<br>\n__The order number must be unique__",
+									"type": "text"
+								},
+								{
+									"key": "order_amount",
+									"value": "",
+									"description": "* __decimal(14,6)__\n* required\n* The amount of the order from merchant.",
+									"type": "text"
+								},
+								{
+									"key": "order_type",
+									"value": "TrueWallet",
+									"description": "* __string(10)__\n* required\n* Order type<br>\n__TrueWallet as TrueWallet scan to pay__",
+									"type": "text"
+								},
+								{
+									"key": "bank_code",
+									"value": "",
+									"description": "* __string(50)__\n* Bank Code, Provide when online banking payment, please refer to the bank code list<br>\nref. [A-c. Bank Code](#cc7d8d7a-6b7b-4297-ab96-9982aa88c66a)\n* Please choose the bank to match the currency of the merchant since only one currency supports on each merchant.\n",
+									"type": "text"
+								},
+								{
+									"key": "notify_url",
+									"value": "",
+									"description": "* __string(255)__\n* Asynchronous notification address, Return address of the asynchronous notification process.\n* MUST offer your notify_url to us first; otherwise, you will get \"The notify url not in the whitelist\" error. <br>\nref. [A-f. Troubleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9)\n* You may goto __Merchant Back Office__, then step into __Transaction__ to resend the outcome of the one of orders. \n* __Do NOT encode url.__\n* __e.g.1  http(s)://{your domain}/sendPay/notification__\n* __e.g.2  http(s)://{your domain}/sendPay/notification?key1=value1__",
+									"type": "text"
+								},
+								{
+									"key": "note",
+									"value": "",
+									"description": "* __string(100)__\n* Remarks",
+									"type": "text"
+								},
+								{
+									"key": "language",
+									"value": "",
+									"description": "* The language intended for the user in Deposit website. If no value is specified, browser language preference is applied.\n* Supported Languages：<br>\n  - `en: English`\n  - `th: Thai(Only for Thai banks)`\n* The priority language in Deposit website:\n  1. Recently used language in Deposit website.\n  2. \"language\" parameter.\n  3. Browser language preferences.\n\n* It needs to clean cookies for testing if \"language\" parameter works.",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://[Integration URL]/SH/sendPay",
+							"protocol": "https",
+							"host": [
+								"[Integration URL]"
+							],
+							"path": [
+								"SH",
+								"sendPay"
+							]
+						},
+						"description": "1.Refer to the below figure for integration URL.\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/en/IntergrationUrl.png)\n\n\n# 2.Before sending the request, the data must be encrypted, and vice versa.Please refer to Encryption process of [A-g. \\*\\*\\* AES Encryption, Decryption and Request (Must Read) \\*\\*\\*](#49c0aa9c-af68-4836-b740-55048c7a6e3d)\n\n\n3.Merchant initiates a request to OneWallet service\n\n![Alt text](https://github.com/devkhgy/top/blob/doc/en/SendQRPayFlow.png?raw=true)\n\n> ## Deposit API Response Structure ##\n\n__Caution__: Must use our [A-g. \\*\\*\\* AES Encryption, Decryption and Request (Must Read) \\*\\*\\*](#49c0aa9c-af68-4836-b740-55048c7a6e3d) to unwrap the data of body.\n\nKey           |Description\n:---:|:---\nerror_code          |Error Code<br>This value returns the status code 200 if the transaction completed correctly and an error code otherwise.<br>Determining if the status code is 200 and proceeding is essential.<br>For more further information, please refer to [A-e. Error Code](#dbec66e6-bb41-4636-924b-8ea0539dbfb7) & [A-f. Trobleshooting & FAQ](#f90e9510-0d5e-4489-9634-410c4f8849a9)<br>Some error also trigger Deposit Notification, please refer to [B-d. Deposit Notification API Definition](#9a33b004-23d5-43d5-bc10-853da98ef361).\ndata                |Return information.\ndata.order_id       |Gateway Order ID\ndata.order_amount   |The amount of the order from merchant.\ndata.request_amount |The real amount of the order.<br>__Caution: If amount is integer, `OneWallet` will add 2 decimal places randomly for account statement.__\ndata.url            |Available Deposit URLs (Must use GET request method; Domain changes for each request)<br>__Propose to do speed-testing with GET request before redirecting as__ [Example](https://github.com/devkhgy/top/blob/doc/code/DepositSpeedTest.html)\ndata.token          |Deposit token.\n\n> ## Deposit API Response Instance ##\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"order_id\": \"D-0103201000001\",\n    \"order_amount\": 10.01,\n    \"request_amount\": 10.01,\n    \"url\": [\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```\n\n> ## Deposit API Request Structure ##\n\n__Caution__: Must use our [A-g. \\*\\*\\* AES Encryption, Decryption and Request (Must Read) \\*\\*\\*](#49c0aa9c-af68-4836-b740-55048c7a6e3d) to wrap the data of body.\n> TrueWallet transaction only supports all banks in Thai."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "sh_order_no",
+											"value": "DEX123456789",
+											"description": "* __string(50)__\n* required\n* Merchant order number, which will be used as the response data<br>\n__The order number must be unique__",
+											"type": "text"
+										},
+										{
+											"key": "order_amount",
+											"value": "10.01",
+											"description": "* __decimal(14,6)__\n* required\n* The amount of the order from merchant.",
+											"type": "text"
+										},
+										{
+											"key": "order_type",
+											"value": "QRPay",
+											"description": "* __string(10)__\n* required\n* Order type<br>\n__QRPay as QR code scan to pay__",
+											"type": "text"
+										},
+										{
+											"key": "bank_code",
+											"value": "BNI",
+											"description": "* __string(50)__\n* The field is required when an Indonesian bank is picked.\n* Bank Code, Provide when online banking payment, please refer to the bank code list<br>\nref. [Bank Code](#cc7d8d7a-6b7b-4297-ab96-9982aa88c66a)\n* Only a number of banks (BCA, BNI) and internal transfers are supported for QR Pay. (External transfers are not supported.)\n* Please choose the bank to match the currency of the merchant since only one currency supports on each merchant.",
+											"type": "text"
+										},
+										{
+											"key": "notify_url",
+											"value": "https://example.com/callback",
+											"description": "* __string(255)__\n* Asynchronous notification address, Return address of the asynchronous notification process.\n* MUST offer your notify_url to us first; otherwise, you will get [The notify url not in the whitelist](#f90e9510-0d5e-4489-9634-410c4f8849a9) error.\n* You may goto __Merchant Back Office__, then step into __Transaction__ to resend the outcome of the one of orders. \n* __Do NOT encode url.__\n* __e.g.1  http(s)://{your domain}/sendPay/notification__\n* __e.g.2  http(s)://{your domain}/sendPay/notification?key1=value1__",
+											"type": "text"
+										},
+										{
+											"key": "note",
+											"value": "testing",
+											"description": "* __string(100)__\n* Remarks",
+											"type": "text"
+										},
+										{
+											"key": "language",
+											"value": "en",
+											"description": "* The language intended for the user in Deposit website. If no value is specified, browser language preference is applied.\n* Supported Languages：<br>\n  - `en: English`\n  - `th: Thai(Only for Thai banks)`\n  - `vn: Vietnamese(Only for Vietnam banks)`\n* The priority language in Deposit website:\n  1. Recently used language in Deposit website.\n  2. \"language\" parameter.\n  3. Browser language preferences.\n\n* It needs to clean cookies for testing if \"language\" parameter works.",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://[Integration URL]/SH/sendPay",
+									"protocol": "https",
+									"host": [
+										"[Integration URL]"
+									],
+									"path": [
+										"SH",
+										"sendPay"
+									]
+								}
+							},
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"error_code\": 200,\r\n    \"data\": {\r\n        \"order_id\": \"D-0103201000001\",\r\n        \"order_amount\": 10.01,\r\n        \"request_amount\": 10.01,\r\n        \"url\": [\r\n            \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\r\n            \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\r\n            \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\r\n        ],\r\n        \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\r\n    }\r\n}"
+						}
+					]
+				},
+				{
 					"name": "c. Deposit Notification API Definition",
 					"request": {
 						"method": "POST",
