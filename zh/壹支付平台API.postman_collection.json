@@ -409,6 +409,144 @@
 					]
 				},
 				{
+					"name": "b.1. TrueWallet 充值 (仅支援泰国银行)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "sh_order_no",
+									"value": "",
+									"description": "* __string(50)__\n* 必填\n* 商户订单号, 该订单号将作为接口的返回数据<br>\n`该值需在商户系统内唯一存在`",
+									"type": "text"
+								},
+								{
+									"key": "order_amount",
+									"value": "",
+									"description": "* __decimal(14,6)__\n* 必填\n* 订单提交金额",
+									"type": "text"
+								},
+								{
+									"key": "order_type",
+									"value": "TrueWallet",
+									"description": "* __string(10)__\n* 必填\n* 订单充值类型<br>\n`TrueWallet: TrueWallet 扫码充值`",
+									"type": "text"
+								},
+								{
+									"key": "bank_code",
+									"value": "",
+									"description": "* __string(50)__\n* 银行代码, 充值时提供<br>\n参考 [A-c. 银行代码列表](#0bc3706f-0bab-48e5-9c55-7745d8588d7a)\n* 请选择商户币种其所属的银行代码，单一商户仅能使用单一币种",
+									"type": "text"
+								},
+								{
+									"key": "notify_url",
+									"value": "",
+									"description": "* __string(255)__\n* 异步通知商户地址 (必须先提供网址给壹支付加入回呼白名单，否则会失败)，请参考 [A-f. 常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed) : The notify url not in the whitelist\n* 若有需要可於 商户後台/交易纪录 中手动操作结果通知\n* __无需进行 encode url 处理__ \n* __范例: http(s)://{your domain}/sendWithdraw/notification__\n* __范例2: http(s)://{your domain}/sendPay/notification?key1=value1__",
+									"type": "text"
+								},
+								{
+									"key": "note",
+									"value": "",
+									"description": "* __string(100)__\n* 备注",
+									"type": "text"
+								},
+								{
+									"key": "language",
+									"value": "",
+									"description": "* 用户进入充值网后所要显示的语系，预设为用户浏览器语系\n* 已支援语系：<br>\n  - `en: 英文`\n  - `th: 泰文(仅限泰国银行)`\n* 用户进入充值网显示语系的优先顺序\n  1. 最近一次于充值网所选择的语系\n  2. 参数 language\n  3. 用户浏览器的语系\n* 如需测试参数 language 能否正确运作，可清除 cookie 后再做测试",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://[接入网址]/SH/sendPay",
+							"protocol": "https",
+							"host": [
+								"[接入网址]"
+							],
+							"path": [
+								"SH",
+								"sendPay"
+							]
+						},
+						"description": "1.接入网址请参考下图\n\n![Alt text](https://raw.githubusercontent.com/devkhgy/top/doc/zh/IntergrationUrl.png)\n\n\n# 2.资料传送需经过加密,请参考<br> [A-g. \\*\\*\\* AES 加解密与请求 (串接前必读) \\*\\*\\*](#3be4aa04-f140-40d6-b2fc-fd0cd3f5152d) #\n\n\n3.由商户对壹支付平台发起请求\n\n![Alt text](https://github.com/devkhgy/top/blob/doc/zh/SendQRPayFlow.png?raw=true)\n\n> ## 充值接口返回数据结构 ##\n\n字段          | 描述\n:---:|:---\nerror_code          | 订单发起处理状态代码<br>**若处理成功则回传 200，除此之外皆为处理失败<br>应以此状态判断订单请求成功后再做接续处理**<br>相关状态代码可参考 [A-e. 错误代码列表](#49436352-ad18-4d12-8cce-a1f0db01c050) 或 [A-f. 常见错误类型说明](#bf653f9c-c700-4bc2-a838-fed19b58f3ed)<br>部份錯誤也會觸發充值結果通知，請參考 [B-d. 充值结果通知](#1b5c1b75-585c-4119-9228-b92f4c28c8be)。\ndata                | 回传信息\ndata.order_id       | 第三方订单号\ndata.order_amount   | 商户订单金额 <br> `注意: 若充值金额若为整数，壹支付会随机加入后两位小数供对帐使用`\ndata.request_amount | 壹支付产生充值金额\ndata.url            | 充值网站网址，每次配给网域不同，需使用 GET 请求方法<br>`可用网站位址数组, 请测速後择一跳转` [测速程式码示例](https://raw.githubusercontent.com/devkhgy/top/doc/zh/客户端浏览器域名测速自動版.html)\ndata.token          | 跳转至充值网站验证用口令\n\n\n> ## 充值接口返回示例 ##\n```json\n{\n  \"error_code\": 200,\n  \"data\": {\n    \"order_id\": \"D-0103201000001\",\n    \"order_amount\": 10.01,\n    \"request_amount\": 10.01,\n    \"url\": [\n      \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n      \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n    ],\n    \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n  }\n}\n```\n\n\n> 注意: TrueWallet 充值 仅支援泰国银行"
+					},
+					"response": [
+						{
+							"name": "成功",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "sh_order_no",
+											"value": "DEX123456789",
+											"description": "* __string(50)__\n* 必填\n* 商户订单号, 该订单号将作为接口的返回数据<br>\n`该值需在商户系统内唯一存在`",
+											"type": "text"
+										},
+										{
+											"key": "order_amount",
+											"value": "10.01",
+											"description": "* __decimal(14,6)__\n* 必填\n* 订单提交金额",
+											"type": "text"
+										},
+										{
+											"key": "order_type",
+											"value": "QRPay",
+											"description": "* __string(10)__\n* 必填\n* 订单充值类型<br>\n`QRPay: QR Code 扫码充值`",
+											"type": "text"
+										},
+										{
+											"key": "bank_code",
+											"value": "BNI",
+											"description": "* __string(50)__\n* 仅在选择印尼银行时必填\n* 银行代码, 充值时提供<br>\n参考[银行代码列表](#0bc3706f-0bab-48e5-9c55-7745d8588d7a)\n* 印尼银行仅支援 BCA, BNI, 且仅可同行交易，不可跨行\n* 请选择商户币种其所属的银行代码，单一商户仅能使用单一币种",
+											"type": "text"
+										},
+										{
+											"key": "notify_url",
+											"value": "https://example.com/callback",
+											"description": "* __string(255)__\n* 异步通知商户地址 (必须先提供网址给壹支付加入回呼白名单，否则会失败)，请参考[The notify url not in the whitelist](#bf653f9c-c700-4bc2-a838-fed19b58f3ed)\n* 若有需要可於 商户後台/交易纪录 中手动操作结果通知\n* __无需进行 encode url 处理__ \n* __范例: http(s)://{your domain}/sendWithdraw/notification__\n* __范例2: http(s)://{your domain}/sendPay/notification?key1=value1__",
+											"type": "text"
+										},
+										{
+											"key": "note",
+											"value": "testing",
+											"description": "* __string(100)__\n* 备注",
+											"type": "text"
+										},
+										{
+											"key": "language",
+											"value": "en",
+											"description": "* 用户进入充值网后所要显示的语系，预设为用户浏览器语系\n* 已支援语系：<br>\n  - `en: 英文`\n  - `th: 泰文(仅限泰国银行)`\n  - `vn: 越南文(仅限越南银行)`\n  - `id: 印尼文(仅限印尼银行)`\n* 用户进入充值网显示语系的优先顺序\n  1. 最近一次于充值网所选择的语系\n  2. 参数 language\n  3. 用户浏览器的语系\n* 如需测试参数 language 能否正确运作，可清除 cookie 后再做测试",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://[接入网址]/SH/sendPay",
+									"protocol": "https",
+									"host": [
+										"[接入网址]"
+									],
+									"path": [
+										"SH",
+										"sendPay"
+									]
+								}
+							},
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"error_code\": 200,\n    \"data\": {\n        \"order_id\": \"D-0103201000001\",\n        \"order_amount\": 10.01,\n        \"request_amount\": 10.01,\n        \"url\": [\n            \"https://deposit1.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n            \"https://deposit2.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\",\n            \"https://deposit3.com?token=1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n        ],\n        \"token\": \"1AYo99S4vymMeAWHsvWeWGH7XKblhL8tuDYlfhAN\"\n    }\n}"
+						}
+					]
+				},
+				{
 					"name": "c. 充值结果通知",
 					"request": {
 						"method": "POST",
