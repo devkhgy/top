@@ -285,7 +285,7 @@
 								{
 									"key": "bank_code",
 									"value": "",
-									"description": "* __string(50)__\n* The field is required when an Indonesian bank is picked.\n* Bank Code, Provide when online banking payment, please refer to the bank code list<br>\nref. [A-c. Bank Code](#cc7d8d7a-6b7b-4297-ab96-9982aa88c66a)\n* Only a number of banks (BCA, BNI) and internal transfers are supported for QR Pay. (External transfers are not supported.)\n* Please choose the bank to match the currency of the merchant since only one currency supports on each merchant.\n",
+									"description": "* __string(50)__\n* The field is required when an Vietnam bank,Indonesian bank is picked.\n* Bank Code, Provide when online banking payment, please refer to the bank code list<br>\nref. [A-c. Bank Code](#cc7d8d7a-6b7b-4297-ab96-9982aa88c66a)\n* [Vietnam bank] Only a number of banks (BIDV, VTB, ACB, VCB) and internal transfers are supported for QR Pay. (External transfers are not supported.)\n* [Indonesian bank] Only a number of banks (BCA, BNI) and internal transfers are supported for QR Pay. (External transfers are not supported.)\n* Please choose the bank to match the currency of the merchant since only one currency supports on each merchant.\n",
 									"type": "text"
 								},
 								{
